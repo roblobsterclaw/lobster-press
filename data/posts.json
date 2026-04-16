@@ -268,6 +268,44 @@
       "rejectedReason": null,
       "postedUrl": null,
       "source": "Real photo - Surfbox truck with fleet"
+    },
+    {
+      "id": "surfbox-ronjon-001",
+      "status": "pending",
+      "brand": "Surfbox",
+      "caption": "Spotted on LBI - Surfbox right next to Ron Jons. Whether you are renovating your beach rental or stocking up for the season, we are already in the neighborhood.\n\nPortable storage that goes where you need it.\n\nCall: (855) SURFBOX\nwww.surfboxstorage.com\n\n#Surfbox #LBI #RonJons #PortableStorage #BeachLife #JerseyShore #OceanCounty #StorageSolutions",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
+      "proposedDate": "2026-04-26",
+      "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/surfbox-ronjon.jpg",
+      "createdAt": "2026-04-16T16:07:01.787401",
+      "updatedAt": "2026-04-16T16:07:01.787401",
+      "approvedBy": null,
+      "approvedAt": null,
+      "rejectedReason": null,
+      "postedUrl": null,
+      "source": "Real photo - Surfbox near Ron Jons LBI"
+    },
+    {
+      "id": "surfbox-beachhouse-001",
+      "status": "pending",
+      "brand": "Surfbox",
+      "caption": "Beach house renovation season is HERE. This LBI homeowner is getting it done right - Surfbox in the driveway, materials on site, project in motion.\n\nFrom landscaping to full renovations, keep everything secure and on-site with Surfbox portable storage.\n\nWe deliver. You fill it. We pick it up.\n\nCall: (855) SURFBOX\nwww.surfboxstorage.com\n\n#Surfbox #LBI #BeachHouse #Renovation #PortableStorage #JerseyShore #CurbAppeal #HomeImprovement #OceanCounty",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
+      "proposedDate": "2026-04-27",
+      "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/surfbox-beach-house.jpg",
+      "createdAt": "2026-04-16T16:07:01.787401",
+      "updatedAt": "2026-04-16T16:07:01.787401",
+      "approvedBy": null,
+      "approvedAt": null,
+      "rejectedReason": null,
+      "postedUrl": null,
+      "source": "Real photo - Surfbox at LBI beach house renovation"
     }
   ],
   "meta": {
