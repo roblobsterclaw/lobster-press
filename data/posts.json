@@ -4,7 +4,7 @@
       "id": "post_001",
       "status": "pending",
       "brand": "TLC",
-      "caption": "Spring deck season is here! Cedar, composite, and pressure-treated \u2014 all in stock at your local yard. #TuckertonLumber #DeckSeason #LBI",
+      "caption": "Spring deck season is here! Cedar, composite, and pressure-treated — all in stock at your local yard. #TuckertonLumber #DeckSeason #LBI",
       "platforms": [
         "FB",
         "IG"
@@ -20,7 +20,7 @@
       "rejectionReason": null,
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post \u2014 TLC spring campaign"
+      "notes": "Sample draft post — TLC spring campaign"
     },
     {
       "id": "post_002",
@@ -42,7 +42,7 @@
       "rejectionReason": null,
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post \u2014 Surfbox renovation season"
+      "notes": "Sample draft post — Surfbox renovation season"
     },
     {
       "id": "post_003",
@@ -64,7 +64,7 @@
       "rejectionReason": null,
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post \u2014 Keli new listing"
+      "notes": "Sample draft post — Keli new listing"
     },
     {
       "id": "post_004",
@@ -93,7 +93,7 @@
       "id": "post_005",
       "status": "posted",
       "brand": "Surfbox",
-      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you \u2014 fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
+      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you — fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
       "platforms": [
         "FB",
         "IG"
@@ -109,7 +109,7 @@
       "rejectionReason": null,
       "publishedAt": "2026-04-10T11:00:00Z",
       "publishedUrl": "https://www.facebook.com/surfboxstorage",
-      "notes": "Posted on schedule \u2014 great engagement"
+      "notes": "Posted on schedule — great engagement"
     },
     {
       "id": "post_006",
@@ -173,7 +173,7 @@
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-15T10:15:00Z",
+    "lastUpdated": "2026-04-16T19:42:26.573Z",
     "version": "1.0.0"
   }
 }
