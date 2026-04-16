@@ -4,8 +4,11 @@
       "id": "post_001",
       "status": "pending",
       "brand": "TLC",
-      "caption": "Spring deck season is here! Cedar, composite, and pressure-treated — all in stock at your local yard. #TuckertonLumber #DeckSeason #LBI",
-      "platforms": ["FB", "IG"],
+      "caption": "Spring deck season is here! Cedar, composite, and pressure-treated \u2014 all in stock at your local yard. #TuckertonLumber #DeckSeason #LBI",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
       "proposedDate": "2026-04-18",
       "imageUrl": null,
       "createdAt": "2026-04-15T10:00:00Z",
@@ -17,14 +20,17 @@
       "rejectionReason": null,
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post — TLC spring campaign"
+      "notes": "Sample draft post \u2014 TLC spring campaign"
     },
     {
       "id": "post_002",
       "status": "pending",
       "brand": "Surfbox",
       "caption": "Big beach renovation? We deliver storage containers right to your job site. Keep materials safe all season. #Surfbox #LBI #Storage",
-      "platforms": ["FB", "IG"],
+      "platforms": [
+        "FB",
+        "IG"
+      ],
       "proposedDate": "2026-04-19",
       "imageUrl": null,
       "createdAt": "2026-04-15T10:05:00Z",
@@ -36,14 +42,17 @@
       "rejectionReason": null,
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post — Surfbox renovation season"
+      "notes": "Sample draft post \u2014 Surfbox renovation season"
     },
     {
       "id": "post_003",
       "status": "pending",
       "brand": "Keli",
       "caption": "Just listed! Beautiful 3BR ranch in Ship Bottom. Steps from the beach. Open house this weekend! #KellyLynchRealtor #LBI #JustListed",
-      "platforms": ["FB", "IG"],
+      "platforms": [
+        "FB",
+        "IG"
+      ],
       "proposedDate": "2026-04-20",
       "imageUrl": null,
       "createdAt": "2026-04-15T10:10:00Z",
@@ -55,14 +64,18 @@
       "rejectionReason": null,
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post — Keli new listing"
+      "notes": "Sample draft post \u2014 Keli new listing"
     },
     {
       "id": "post_004",
       "status": "scheduled",
       "brand": "TLC",
       "caption": "Did you know we carry over 50 Benjamin Moore paint colors in stock? Stop in and let our team help you find the perfect shade for your next project. #TuckertonLumber #BenjaminMoore #LBI",
-      "platforms": ["FB", "IG", "TikTok"],
+      "platforms": [
+        "FB",
+        "IG",
+        "TikTok"
+      ],
       "proposedDate": "2026-04-17",
       "imageUrl": null,
       "createdAt": "2026-04-14T09:00:00Z",
@@ -80,8 +93,11 @@
       "id": "post_005",
       "status": "posted",
       "brand": "Surfbox",
-      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you — fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
-      "platforms": ["FB", "IG"],
+      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you \u2014 fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
       "proposedDate": "2026-04-10",
       "imageUrl": null,
       "createdAt": "2026-04-08T08:00:00Z",
@@ -93,14 +109,17 @@
       "rejectionReason": null,
       "publishedAt": "2026-04-10T11:00:00Z",
       "publishedUrl": "https://www.facebook.com/surfboxstorage",
-      "notes": "Posted on schedule — great engagement"
+      "notes": "Posted on schedule \u2014 great engagement"
     },
     {
       "id": "post_006",
       "status": "posted",
       "brand": "Keli",
       "caption": "Thinking about selling your LBI home this spring? The market is moving fast and inventory is tight. Let's talk about what your home is worth today. #KellyLynchRealtor #LBI #RealEstate",
-      "platforms": ["FB", "IG"],
+      "platforms": [
+        "FB",
+        "IG"
+      ],
       "proposedDate": "2026-04-08",
       "imageUrl": null,
       "createdAt": "2026-04-06T08:00:00Z",
@@ -113,6 +132,44 @@
       "publishedAt": "2026-04-08T10:00:00Z",
       "publishedUrl": "https://www.facebook.com/kelikelyrealtor",
       "notes": "Good reach on this one"
+    },
+    {
+      "id": "tlc-reeb-001",
+      "status": "pending",
+      "brand": "TLC",
+      "caption": "Your front door called. It wants an upgrade.\n\nIntroducing Reeb Finish Express at Tuckerton Lumber - gorgeous pre-finished Therma-Tru fiberglass entry doors delivered in DAYS, not weeks.\n\nTotal Eclipse (black) or Alaskan Storm (white)\n10-year warranty\nPre-finished BOTH sides - no painting, no waiting\nMultiple styles with coordinated glass and hardware\n\nSummers coming. Your beach house deserves a front door that turns heads.\n\nTuckerton and Surf City | Since 1932\nwww.tlcnj.com\n\n#TuckertonLumber #FrontDoorGoals #CurbAppeal #LBI #JerseyShore #ReebFinishExpress #BeachHouse #HomeUpgrade #ShopLocal",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
+      "proposedDate": "2026-04-18",
+      "imageUrl": null,
+      "createdAt": "2026-04-16T15:34:27.210696",
+      "updatedAt": "2026-04-16T15:34:27.210696",
+      "approvedBy": null,
+      "approvedAt": null,
+      "rejectedReason": null,
+      "postedUrl": null,
+      "source": "Denise Moon email - Reeb Finish Express brochure"
+    },
+    {
+      "id": "surfbox-reeb-001",
+      "status": "pending",
+      "brand": "Surfbox",
+      "caption": "Big beach project? Weve got you covered.\n\nRenovating on LBI this summer? Dont let your materials sit in the rain. Surfbox delivers portable storage containers right to your job site - keep your lumber, tools, and supplies locked up and weather-tight all season.\n\nDelivered to your door\nSecure and weather-proof\nRent by the month\nPerfect for contractors and homeowners\n\nYour project deserves better than a tarp and a prayer.\n\nServing Ocean County and beyond\n609-709-9000\nwww.surfboxstorage.com\n\n#Surfbox #PortableStorage #LBI #Construction #JerseyShore #BeachRenovation #ContractorLife #StorageSolutions #OceanCounty",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
+      "proposedDate": "2026-04-19",
+      "imageUrl": null,
+      "createdAt": "2026-04-16T15:34:27.210696",
+      "updatedAt": "2026-04-16T15:34:27.210696",
+      "approvedBy": null,
+      "approvedAt": null,
+      "rejectedReason": null,
+      "postedUrl": null,
+      "source": "Denise Moon email - Reeb Finish Express brochure (cross-post)"
     }
   ],
   "meta": {
