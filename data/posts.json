@@ -4,7 +4,7 @@
       "id": "post_001",
       "status": "pending",
       "brand": "TLC",
-      "caption": "Spring deck season is here! Cedar, composite, and pressure-treated \u2014 all in stock at your local yard. #TuckertonLumber #DeckSeason #LBI",
+      "caption": "Spring deck season is here! Cedar, composite, and pressure-treated — all in stock at your local yard. #TuckertonLumber #DeckSeason #LBI",
       "platforms": [
         "FB",
         "IG"
@@ -20,7 +20,7 @@
       "rejectionReason": null,
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post \u2014 TLC spring campaign"
+      "notes": "Sample draft post — TLC spring campaign"
     },
     {
       "id": "post_002",
@@ -42,7 +42,7 @@
       "rejectionReason": null,
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post \u2014 Surfbox renovation season"
+      "notes": "Sample draft post — Surfbox renovation season"
     },
     {
       "id": "post_003",
@@ -64,7 +64,7 @@
       "rejectionReason": null,
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post \u2014 Keli new listing"
+      "notes": "Sample draft post — Keli new listing"
     },
     {
       "id": "post_004",
@@ -93,7 +93,7 @@
       "id": "post_005",
       "status": "posted",
       "brand": "Surfbox",
-      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you \u2014 fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
+      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you — fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
       "platforms": [
         "FB",
         "IG"
@@ -109,7 +109,7 @@
       "rejectionReason": null,
       "publishedAt": "2026-04-10T11:00:00Z",
       "publishedUrl": "https://www.facebook.com/surfboxstorage",
-      "notes": "Posted on schedule \u2014 great engagement"
+      "notes": "Posted on schedule — great engagement"
     },
     {
       "id": "post_006",
@@ -154,7 +154,7 @@
     },
     {
       "id": "surfbox-reeb-001",
-      "status": "pending",
+      "status": "rejected",
       "brand": "Surfbox",
       "caption": "Big beach project? Weve got you covered.\n\nRenovating on LBI this summer? Dont let your materials sit in the rain. Surfbox delivers portable storage containers right to your job site - keep your lumber, tools, and supplies locked up and weather-tight all season.\n\nDelivered to your door\nSecure and weather-proof\nRent by the month\nPerfect for contractors and homeowners\n\nYour project deserves better than a tarp and a prayer.\n\nServing Ocean County and beyond\n609-709-9000\nwww.surfboxstorage.com\n\n#Surfbox #PortableStorage #LBI #Construction #JerseyShore #BeachRenovation #ContractorLife #StorageSolutions #OceanCounty",
       "platforms": [
@@ -164,16 +164,19 @@
       "proposedDate": "2026-04-19",
       "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/surfbox-reeb-001.png",
       "createdAt": "2026-04-16T15:34:27.210696",
-      "updatedAt": "2026-04-16T15:34:27.210696",
+      "updatedAt": "2026-04-16T19:53:28.945Z",
       "approvedBy": null,
       "approvedAt": null,
       "rejectedReason": null,
       "postedUrl": null,
-      "source": "Denise Moon email - Reeb Finish Express brochure (cross-post)"
+      "source": "Denise Moon email - Reeb Finish Express brochure (cross-post)",
+      "rejectedBy": "Admin",
+      "rejectedAt": "2026-04-16T19:53:28.945Z",
+      "rejectionReason": "you need to put one of our actual boxes on the beach.  I can send you some pictures but you can also go online to our website Surfboxstorage.com"
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-16T19:42:26.573Z",
+    "lastUpdated": "2026-04-16T19:53:28.945Z",
     "version": "1.0.0"
   }
 }
