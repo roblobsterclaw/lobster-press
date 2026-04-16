@@ -192,6 +192,44 @@
       "rejectedReason": null,
       "postedUrl": null,
       "source": "Real photos from Surfbox operations"
+    },
+    {
+      "id": "surfbox-team-001",
+      "status": "pending",
+      "brand": "Surfbox",
+      "caption": "Another day at the office. The Surfbox crew takes their breaks seriously - Adirondack chairs, sunshine, and the best seats in the house.\n\nWe work hard, we have fun, and we deliver. Thats the Surfbox way.\n\nNeed portable storage? We make it easy.\nCall: (855) SURFBOX | (855) 787-3269\nwww.surfboxstorage.com\n\n#Surfbox #TeamSurfbox #LBI #JerseyShore #SmallBusiness #WorkHardPlayHard #PortableStorage #OceanCounty",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
+      "proposedDate": "2026-04-22",
+      "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/surfbox-team.jpg",
+      "createdAt": "2026-04-16T16:03:47.202395",
+      "updatedAt": "2026-04-16T16:03:47.202395",
+      "approvedBy": null,
+      "approvedAt": null,
+      "rejectedReason": null,
+      "postedUrl": null,
+      "source": "Real photo - Surfbox team on container"
+    },
+    {
+      "id": "surfbox-yard-001",
+      "status": "pending",
+      "brand": "Surfbox",
+      "caption": "Loaded up and ready to roll. Our containers are built for the Jersey Shore - tough enough for construction sites, clean enough for your driveway.\n\nMoving? Renovating? Decluttering? We deliver it. You fill it. We pick it up. Simple.\n\nCall: (855) SURFBOX | (855) 787-3269\nwww.surfboxstorage.com\n\n#Surfbox #PortableStorage #ReadyToRoll #LBI #JerseyShore #MovingDay #Renovation #OceanCounty #StorageMadeSimple",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
+      "proposedDate": "2026-04-23",
+      "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/surfbox-yard.jpg",
+      "createdAt": "2026-04-16T16:03:47.202395",
+      "updatedAt": "2026-04-16T16:03:47.202395",
+      "approvedBy": null,
+      "approvedAt": null,
+      "rejectedReason": null,
+      "postedUrl": null,
+      "source": "Real photo - Surfbox yard with forklift"
     }
   ],
   "meta": {
