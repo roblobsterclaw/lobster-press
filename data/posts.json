@@ -135,7 +135,7 @@
     },
     {
       "id": "tlc-reeb-001",
-      "status": "pending",
+      "status": "scheduled",
       "brand": "TLC",
       "caption": "Your front door called. It wants an upgrade.\n\nIntroducing Reeb Finish Express at Tuckerton Lumber - gorgeous pre-finished Therma-Tru fiberglass entry doors delivered in DAYS, not weeks.\n\nTotal Eclipse (black) or Alaskan Storm (white)\n10-year warranty\nPre-finished BOTH sides - no painting, no waiting\nMultiple styles with coordinated glass and hardware\n\nSummers coming. Your beach house deserves a front door that turns heads.\n\nTuckerton and Surf City | Since 1932\nwww.tlcnj.com\n\n#TuckertonLumber #FrontDoorGoals #CurbAppeal #LBI #JerseyShore #ReebFinishExpress #BeachHouse #HomeUpgrade #ShopLocal",
       "platforms": [
@@ -145,9 +145,9 @@
       "proposedDate": "2026-04-18",
       "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/tlc-reeb-001.png",
       "createdAt": "2026-04-16T15:34:27.210696",
-      "updatedAt": "2026-04-16T15:34:27.210696",
-      "approvedBy": null,
-      "approvedAt": null,
+      "updatedAt": "2026-04-16T20:07:40.794Z",
+      "approvedBy": "Admin",
+      "approvedAt": "2026-04-16T20:07:40.794Z",
       "rejectedReason": null,
       "postedUrl": null,
       "source": "Denise Moon email - Reeb Finish Express brochure"
@@ -195,7 +195,7 @@
     },
     {
       "id": "surfbox-team-001",
-      "status": "rejected",
+      "status": "pending",
       "brand": "Surfbox",
       "caption": "Another day at the office. The Surfbox crew takes their breaks seriously - Adirondack chairs, sunshine, and the best seats in the house.\n\nWe work hard, we have fun, and we deliver. Thats the Surfbox way.\n\nNeed portable storage? We make it easy.\nCall: (855) SURFBOX | (855) 787-3269\nwww.surfboxstorage.com\n\n#Surfbox #TeamSurfbox #LBI #JerseyShore #SmallBusiness #WorkHardPlayHard #PortableStorage #OceanCounty",
       "platforms": [
@@ -205,15 +205,12 @@
       "proposedDate": "2026-04-22",
       "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/surfbox-team.jpg",
       "createdAt": "2026-04-16T16:03:47.202395",
-      "updatedAt": "2026-04-16T20:07:25.110Z",
+      "updatedAt": "2026-04-16T16:03:47.202395",
       "approvedBy": null,
       "approvedAt": null,
       "rejectedReason": null,
       "postedUrl": null,
-      "source": "Real photo - Surfbox team on container",
-      "rejectedBy": "Admin",
-      "rejectedAt": "2026-04-16T20:07:25.110Z",
-      "rejectionReason": "switch ou picture use the one i just uploaded withn team on top...last picture had tom dwier on the box and he doesnt work here anymore"
+      "source": "Real photo - Surfbox team on container"
     },
     {
       "id": "surfbox-yard-001",
@@ -233,10 +230,86 @@
       "rejectedReason": null,
       "postedUrl": null,
       "source": "Real photo - Surfbox yard with forklift"
+    },
+    {
+      "id": "surfbox-loading-001",
+      "status": "pending",
+      "brand": "Surfbox",
+      "caption": "This is how we do it. Hydraulic lift, precision placement, zero hassle.\n\nOur custom flatbed trucks deliver your Surfbox container right where you need it - driveway, job site, backyard. We handle the heavy lifting so you dont have to.\n\nCall: (855) SURFBOX | (855) 787-3269\nwww.surfboxstorage.com\n\n#Surfbox #PortableStorage #DeliveryDay #HeavyLifting #LBI #JerseyShore #Construction #OceanCounty",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
+      "proposedDate": "2026-04-24",
+      "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/surfbox-loading.jpg",
+      "createdAt": "2026-04-16T16:05:08.626834",
+      "updatedAt": "2026-04-16T16:05:08.626834",
+      "approvedBy": null,
+      "approvedAt": null,
+      "rejectedReason": null,
+      "postedUrl": null,
+      "source": "Real photo - Surfbox loading operation"
+    },
+    {
+      "id": "surfbox-hero-001",
+      "status": "pending",
+      "brand": "Surfbox",
+      "caption": "The fleet is ready. Are you?\n\nSurfbox Portable Storage - we deliver secure, weather-tight containers right to your location. Moving, renovating, or just need extra space - we have got you covered from Ocean County to LBI and beyond.\n\nOne call. We deliver. You fill it. We pick it up.\n\nCall: (855) SURFBOX | (855) 787-3269\nwww.surfboxstorage.com\n\n#Surfbox #PortableStorage #FleetReady #LBI #JerseyShore #MovingSeason #StorageSolutions #OceanCounty #SurfboxStorage",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
+      "proposedDate": "2026-04-25",
+      "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/surfbox-truck-hero.jpg",
+      "createdAt": "2026-04-16T16:05:08.626834",
+      "updatedAt": "2026-04-16T16:05:08.626834",
+      "approvedBy": null,
+      "approvedAt": null,
+      "rejectedReason": null,
+      "postedUrl": null,
+      "source": "Real photo - Surfbox truck with fleet"
+    },
+    {
+      "id": "surfbox-ronjon-001",
+      "status": "pending",
+      "brand": "Surfbox",
+      "caption": "Spotted on LBI - Surfbox right next to Ron Jons. Whether you are renovating your beach rental or stocking up for the season, we are already in the neighborhood.\n\nPortable storage that goes where you need it.\n\nCall: (855) SURFBOX\nwww.surfboxstorage.com\n\n#Surfbox #LBI #RonJons #PortableStorage #BeachLife #JerseyShore #OceanCounty #StorageSolutions",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
+      "proposedDate": "2026-04-26",
+      "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/surfbox-ronjon.jpg",
+      "createdAt": "2026-04-16T16:07:01.787401",
+      "updatedAt": "2026-04-16T16:07:01.787401",
+      "approvedBy": null,
+      "approvedAt": null,
+      "rejectedReason": null,
+      "postedUrl": null,
+      "source": "Real photo - Surfbox near Ron Jons LBI"
+    },
+    {
+      "id": "surfbox-beachhouse-001",
+      "status": "pending",
+      "brand": "Surfbox",
+      "caption": "Beach house renovation season is HERE. This LBI homeowner is getting it done right - Surfbox in the driveway, materials on site, project in motion.\n\nFrom landscaping to full renovations, keep everything secure and on-site with Surfbox portable storage.\n\nWe deliver. You fill it. We pick it up.\n\nCall: (855) SURFBOX\nwww.surfboxstorage.com\n\n#Surfbox #LBI #BeachHouse #Renovation #PortableStorage #JerseyShore #CurbAppeal #HomeImprovement #OceanCounty",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
+      "proposedDate": "2026-04-27",
+      "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/surfbox-beach-house.jpg",
+      "createdAt": "2026-04-16T16:07:01.787401",
+      "updatedAt": "2026-04-16T16:07:01.787401",
+      "approvedBy": null,
+      "approvedAt": null,
+      "rejectedReason": null,
+      "postedUrl": null,
+      "source": "Real photo - Surfbox at LBI beach house renovation"
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-16T20:07:25.606Z",
+    "lastUpdated": "2026-04-16T20:07:40.794Z",
     "version": "1.0.0"
   }
 }
