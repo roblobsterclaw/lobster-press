@@ -2,17 +2,17 @@
   "posts": [
     {
       "id": "post_001",
-      "status": "rejected",
+      "status": "pending",
       "brand": "TLC",
-      "caption": "Spring deck season is here! Cedar, composite, and pressure-treated — all in stock at your local yard. #TuckertonLumber #DeckSeason #LBI",
+      "caption": "Deck season is HERE. Composite decking from Wolf and Trex - low maintenance, no splinters, no staining, and built to last 25+ years.\n\nWe carry a full line of composite and PVC decking at both locations. Stop in and see the samples - your bare feet will thank you.\n\nTuckerton Lumber - your deck headquarters since 1932.\nwww.tlcnj.com\n\n#TuckertonLumber #CompositeDeck #WolfDecking #Trex #DeckSeason #LBI #JerseyShore #OutdoorLiving #ShopLocal",
       "platforms": [
         "FB",
         "IG"
       ],
       "proposedDate": "2026-04-18",
-      "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/post_001.png",
+      "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/tlc-composite-deck.png",
       "createdAt": "2026-04-15T10:00:00Z",
-      "updatedAt": "2026-04-19T22:08:58.899Z",
+      "updatedAt": "2026-04-19T18:18:56.061103",
       "approvedBy": null,
       "approvedAt": null,
       "rejectedBy": "Admin",
@@ -20,46 +20,24 @@
       "rejectionReason": "add some pictures of wolf decking, or treks labeled appropriately",
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post — TLC spring campaign",
-      "rejectedReason": "add some pictures of wolf decking, or treks labeled appropriately"
-    },
-    {
-      "id": "post_003",
-      "status": "rejected",
-      "brand": "Keli",
-      "caption": "Just listed! Beautiful 3BR ranch in Ship Bottom. Steps from the beach. Open house this weekend! #KellyLynchRealtor #LBI #JustListed",
-      "platforms": [
-        "FB",
-        "IG"
-      ],
-      "proposedDate": "2026-04-20",
-      "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/post_003.png",
-      "createdAt": "2026-04-15T10:10:00Z",
-      "updatedAt": "2026-04-19T22:08:37.254Z",
-      "approvedBy": null,
-      "approvedAt": null,
-      "rejectedBy": "Admin",
-      "rejectedAt": "2026-04-19T22:08:37.254Z",
-      "rejectionReason": "no need to redo. She doesn’t have a listing.",
-      "publishedAt": null,
-      "publishedUrl": null,
-      "notes": "Sample draft post — Keli new listing",
-      "rejectedReason": "no need to redo. She doesn’t have a listing."
+      "notes": "Sample draft post \u2014 TLC spring campaign",
+      "rejectedReason": null,
+      "source": "Reworked per Joe feedback - added Wolf/Trex branding"
     },
     {
       "id": "post_004",
-      "status": "rejected",
+      "status": "pending",
       "brand": "TLC",
-      "caption": "The perfect color is waiting for you.\n\nTuckerton Lumber carries the full Benjamin Moore line - over 3,500 colors, premium paints, and expert advice from our team. Whether you are refreshing a room or painting the whole beach house, we have got you covered.\n\nStop by our Tuckerton or Surf City paint store and let us help you find the perfect shade.\n\nTuckerton Lumber - Your Benjamin Moore headquarters since 1932.\nwww.tlcnj.com\n\n#TuckertonLumber #BenjaminMoore #Paint #ColorInspiration #LBI #JerseyShore #HomeImprovement #BeachHouse #InteriorDesign #ShopLocal",
+      "caption": "The perfect color starts with Benjamin Moore.\n\nTuckerton Lumber is your authorized Benjamin Moore dealer - over 3,500 colors, expert color matching, and the quality paint pros trust. From Regal Select to Aura, we carry the full line.\n\nStop by Tuckerton or Surf City and let us help you find your color.\n\nTuckerton Lumber - Benjamin Moore headquarters since 1932.\nwww.tlcnj.com\n\n#TuckertonLumber #BenjaminMoore #Paint #ColorMatch #LBI #JerseyShore #HomeImprovement #ShopLocal",
       "platforms": [
         "FB",
         "IG",
         "TikTok"
       ],
       "proposedDate": "2026-04-17",
-      "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/tlc-benjamin-moore.png",
+      "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/tlc-benjamin-moore-v2.png",
       "createdAt": "2026-04-14T09:00:00Z",
-      "updatedAt": "2026-04-19T22:06:21.627Z",
+      "updatedAt": "2026-04-19T18:18:56.061103",
       "approvedBy": null,
       "approvedAt": null,
       "rejectedBy": "Admin",
@@ -68,13 +46,14 @@
       "publishedAt": null,
       "publishedUrl": null,
       "notes": "Approved for Thursday post",
-      "rejectedReason": "paint paint can should be Benjamin more labeled should be Benjamin Moore"
+      "rejectedReason": null,
+      "source": "Reworked per Joe feedback - Benjamin Moore labeled cans"
     },
     {
       "id": "post_005",
       "status": "posted",
       "brand": "Surfbox",
-      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you — fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
+      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you \u2014 fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
       "platforms": [
         "FB",
         "IG"
@@ -90,7 +69,7 @@
       "rejectionReason": null,
       "publishedAt": "2026-04-10T11:00:00Z",
       "publishedUrl": "https://www.facebook.com/surfboxstorage",
-      "notes": "Posted on schedule — great engagement"
+      "notes": "Posted on schedule \u2014 great engagement"
     },
     {
       "id": "post_006",
