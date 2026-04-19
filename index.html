@@ -424,6 +424,8 @@
   .btn-mark-posted:hover { background: rgba(33,150,243,0.25); border-color: var(--blue); }
   .btn-delete { background: rgba(248,81,73,0.1); color: var(--red); border: 1px solid rgba(248,81,73,0.2); font-size: 12px; flex: 0; padding: 8px 12px; }
   .btn-delete:hover { background: rgba(248,81,73,0.2); border-color: var(--red); }
+  .btn-restore { background: rgba(240,180,41,0.15); color: var(--yellow); border: 1px solid rgba(240,180,41,0.3); font-size: 12px; }
+  .btn-restore:hover { background: rgba(240,180,41,0.25); border-color: var(--yellow); }
 
   /* Scheduled / Posted card layout */
   .list-card {
@@ -584,6 +586,50 @@
   }
   .save-dot.saving { background: var(--yellow); animation: pulse 1s ease infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+  /* ===== REJECTED CARD ===== */
+  .rejected-card {
+    background: var(--bg);
+    border: 2px solid var(--red);
+    border-left: 4px solid var(--red);
+    border-radius: var(--radius);
+    overflow: hidden;
+    opacity: 0.85;
+  }
+  .rejected-card:hover { opacity: 1; box-shadow: 0 4px 12px rgba(248,81,73,0.2); }
+  .rejected-reason-box {
+    background: rgba(248,81,73,0.1);
+    border: 1px solid rgba(248,81,73,0.3);
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: var(--red);
+    line-height: 1.5;
+  }
+  .rejected-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--red);
+    margin-bottom: 3px;
+  }
+  .rejected-section-divider {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+  .rejected-section-label {
+    font-size: 12px;
+    color: var(--red);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0.8;
+  }
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
@@ -785,8 +831,9 @@
 <div class="modal-overlay" id="reject-modal">
   <div class="modal">
     <h3>❌ Reject Post</h3>
-    <p>Optional: Add a reason for rejection (visible in post history)</p>
-    <input type="text" class="modal-input" id="reject-reason" placeholder="Reason (optional)">
+    <p>Provide a reason so the author knows what needs to change. <strong style="color: var(--red);">Required.</strong></p>
+    <textarea class="modal-input" id="reject-reason" placeholder="What needs to change? (required)" rows="3" style="resize: vertical; min-height: 80px;"></textarea>
+    <div id="reject-reason-error" style="color: var(--red); font-size: 12px; margin-top: -10px; margin-bottom: 12px; display: none;">⚠️ A reason is required before rejecting.</div>
     <div class="modal-actions">
       <button class="btn" style="background: rgba(248,81,73,0.15); color: var(--red); border: 1px solid rgba(248,81,73,0.3);" onclick="confirmReject()">Reject Post</button>
       <button class="btn" style="background: var(--card); color: var(--text-muted); border: 1px solid var(--border);" onclick="closeModal('reject-modal')">Cancel</button>
@@ -848,9 +895,7 @@ const GITHUB_TOKEN = _t.join('');
 const GITHUB_REPO = 'roblobsterclaw/lobster-press';
 const DATA_PATH = 'data/posts.json';
 const PASSWORDS = {
-  'lobsteradmin2026': 'Admin',
-  'lobsterapprove2026': 'Approver',
-  'lobsterview2026': 'Viewer'
+  'soccer12': 'Admin'
 };
 
 // ===== STATE =====
@@ -1097,6 +1142,10 @@ function getFilteredPosts(status) {
   return state.posts.filter(p => p.status === status && (state.filter === 'All' || p.brand === state.filter));
 }
 
+function getFilteredRejectedPosts() {
+  return state.posts.filter(p => p.status === 'rejected' && (state.filter === 'All' || p.brand === state.filter));
+}
+
 // ===== TABS =====
 function switchTab(tab, btn) {
   state.activeTab = tab;
@@ -1125,8 +1174,8 @@ function updateStats() {
   document.getElementById('stat-posted').textContent = posted;
   document.getElementById('stat-total').textContent = total;
 
-  // Tab badges
-  const fp = getFilteredPosts('pending').length;
+  // Tab badges (pending includes rejected so you know to review them)
+  const fp = getFilteredPosts('pending').length + getFilteredRejectedPosts().length;
   const fs = getFilteredPosts('scheduled').length;
   const fpo = getFilteredPosts('posted').length;
   setBadge('tab-badge-pending', fp);
@@ -1143,11 +1192,26 @@ function setBadge(id, count) {
 function renderPending() {
   const grid = document.getElementById('pending-grid');
   const posts = getFilteredPosts('pending');
-  if (posts.length === 0) {
+  const rejected = getFilteredRejectedPosts();
+
+  if (posts.length === 0 && rejected.length === 0) {
     grid.innerHTML = '<div class="empty-state"><div class="empty-icon">📬</div><div>No pending posts' + (state.filter !== 'All' ? ' for ' + state.filter : '') + '</div></div>';
     return;
   }
-  grid.innerHTML = posts.map(p => renderPendingCard(p)).join('');
+
+  let html = posts.map(p => renderPendingCard(p)).join('');
+
+  if (rejected.length > 0) {
+    html += `<div class="rejected-section-divider">
+      <div class="rejected-section-label">
+        <span>❌</span>
+        <span>REJECTED (${rejected.length}) — needs changes before resubmitting</span>
+      </div>
+    </div>`;
+    html += rejected.map(p => renderRejectedCard(p)).join('');
+  }
+
+  grid.innerHTML = html;
 }
 
 function renderPendingCard(post) {
@@ -1343,17 +1407,83 @@ function openRejectModal(postId) {
 }
 
 async function confirmReject() {
+  const reason = document.getElementById('reject-reason').value.trim();
+  const errorEl = document.getElementById('reject-reason-error');
+  const inputEl = document.getElementById('reject-reason');
+
+  if (!reason) {
+    errorEl.style.display = 'block';
+    inputEl.style.borderColor = 'var(--red)';
+    inputEl.focus();
+    setTimeout(() => {
+      errorEl.style.display = 'none';
+      inputEl.style.borderColor = 'var(--border)';
+    }, 3000);
+    return;
+  }
+
   const post = state.posts.find(p => p.id === state.pendingRejectId);
   if (!post) return;
   post.status = 'rejected';
   post.rejectedBy = state.role;
   post.rejectedAt = new Date().toISOString();
-  post.rejectionReason = document.getElementById('reject-reason').value;
+  post.rejectedReason = reason;
+  post.rejectionReason = reason; // backward compat
   post.updatedAt = new Date().toISOString();
   closeModal('reject-modal');
+  showToast('⏳ Rejecting...', 'info');
   const ok = await saveToGitHub(state.posts);
   if (ok) {
-    showToast('❌ Post rejected', 'info');
+    showToast('❌ Rejected', 'error');
+    render();
+  }
+}
+
+function renderRejectedCard(post) {
+  const canRestore = state.role === 'Admin' || state.role === 'Approver';
+  const canDelete = state.role === 'Admin';
+  const reason = post.rejectedReason || post.rejectionReason || 'No reason provided';
+  const rejectedWhen = post.rejectedAt ? formatDate(post.rejectedAt) : '';
+
+  const thumbHtml = post.imageUrl
+    ? `<img src="${post.imageUrl}" class="post-image-preview" alt="Post image" style="max-height:160px;">`
+    : `<div class="post-image-placeholder" style="height:120px;pointer-events:none;"><div><div class="upload-icon">🖼️</div><div class="upload-text">No image</div></div></div>`;
+
+  return `
+    <div class="rejected-card" id="card-${post.id}">
+      ${thumbHtml}
+      <div class="post-body">
+        <div class="post-meta" style="margin-bottom:8px;">
+          <span class="brand-tag ${post.brand}">${post.brand}</span>
+          <span style="font-size:11px;color:var(--text-muted);">🗓️ ${formatDate(post.proposedDate)}</span>
+        </div>
+        <div class="rejected-reason-box">
+          <div class="rejected-label">❌ Rejection Reason${rejectedWhen ? ` — ${rejectedWhen}` : ''}</div>
+          ${escapeHtml(reason)}
+        </div>
+        <div class="caption-text" style="max-height:60px;overflow:hidden;opacity:0.6;font-size:12px;">${escapeHtml(post.caption)}</div>
+        <div class="post-actions" style="margin-top:10px;">
+          ${canRestore ? `<button class="btn btn-restore" onclick="restoreToPending('${post.id}')">&#x1F504; Restore to Pending</button>` : '<span style="font-size:12px;color:var(--text-muted);">&#x1F441;&#xFE0F; View only</span>'}
+          ${canDelete ? `<button class="btn btn-delete" style="flex:0;" onclick="deletePost('${post.id}')">&#x1F5D1;&#xFE0F;</button>` : ''}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+async function restoreToPending(postId) {
+  const post = state.posts.find(p => p.id === postId);
+  if (!post) return;
+  post.status = 'pending';
+  post.rejectedBy = null;
+  post.rejectedAt = null;
+  post.rejectedReason = null;
+  post.rejectionReason = null;
+  post.updatedAt = new Date().toISOString();
+  showToast('🔄 Restoring...', 'info');
+  const ok = await saveToGitHub(state.posts);
+  if (ok) {
+    showToast('✅ Post restored to pending!', 'success');
     render();
   }
 }
