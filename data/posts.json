@@ -4,7 +4,7 @@
       "id": "post_001",
       "status": "rejected",
       "brand": "TLC",
-      "caption": "Spring deck season is here! Cedar, composite, and pressure-treated \u2014 all in stock at your local yard. #TuckertonLumber #DeckSeason #LBI",
+      "caption": "Spring deck season is here! Cedar, composite, and pressure-treated — all in stock at your local yard. #TuckertonLumber #DeckSeason #LBI",
       "platforms": [
         "FB",
         "IG"
@@ -20,7 +20,7 @@
       "rejectionReason": "Need a picture of wolf decking or treks find and make it sexy",
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post \u2014 TLC spring campaign"
+      "notes": "Sample draft post — TLC spring campaign"
     },
     {
       "id": "post_003",
@@ -39,14 +39,14 @@
       "approvedAt": null,
       "rejectedBy": "Admin",
       "rejectedAt": "2026-04-19T21:13:31.259Z",
-      "rejectionReason": "She doesn\u2019t have a lead in lbi",
+      "rejectionReason": "She doesn’t have a lead in lbi",
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post \u2014 Keli new listing"
+      "notes": "Sample draft post — Keli new listing"
     },
     {
       "id": "post_004",
-      "status": "pending",
+      "status": "rejected",
       "brand": "TLC",
       "caption": "The perfect color is waiting for you.\n\nTuckerton Lumber carries the full Benjamin Moore line - over 3,500 colors, premium paints, and expert advice from our team. Whether you are refreshing a room or painting the whole beach house, we have got you covered.\n\nStop by our Tuckerton or Surf City paint store and let us help you find the perfect shade.\n\nTuckerton Lumber - Your Benjamin Moore headquarters since 1932.\nwww.tlcnj.com\n\n#TuckertonLumber #BenjaminMoore #Paint #ColorInspiration #LBI #JerseyShore #HomeImprovement #BeachHouse #InteriorDesign #ShopLocal",
       "platforms": [
@@ -57,21 +57,21 @@
       "proposedDate": "2026-04-17",
       "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/tlc-benjamin-moore.png",
       "createdAt": "2026-04-14T09:00:00Z",
-      "updatedAt": "2026-04-16T16:11:20.848151",
+      "updatedAt": "2026-04-19T21:14:37.841Z",
       "approvedBy": null,
       "approvedAt": null,
-      "rejectedBy": null,
-      "rejectedAt": null,
-      "rejectionReason": null,
+      "rejectedBy": "Admin",
+      "rejectedAt": "2026-04-19T21:14:37.841Z",
+      "rejectionReason": "Should be Benjamin Moore labeled cans",
       "publishedAt": null,
       "publishedUrl": null,
       "notes": "Approved for Thursday post"
     },
     {
       "id": "post_005",
-      "status": "pending",
+      "status": "posted",
       "brand": "Surfbox",
-      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you \u2014 fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
+      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you — fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
       "platforms": [
         "FB",
         "IG"
@@ -80,19 +80,18 @@
       "imageUrl": null,
       "createdAt": "2026-04-08T08:00:00Z",
       "updatedAt": "2026-04-10T11:00:00Z",
-      "approvedBy": null,
-      "approvedAt": null,
+      "approvedBy": "Admin",
+      "approvedAt": "2026-04-09T10:00:00Z",
       "rejectedBy": null,
       "rejectedAt": null,
       "rejectionReason": null,
       "publishedAt": "2026-04-10T11:00:00Z",
       "publishedUrl": "https://www.facebook.com/surfboxstorage",
-      "notes": "Posted on schedule \u2014 great engagement",
-      "postedUrl": null
+      "notes": "Posted on schedule — great engagement"
     },
     {
       "id": "post_006",
-      "status": "pending",
+      "status": "posted",
       "brand": "Keli",
       "caption": "Thinking about selling your LBI home this spring? The market is moving fast and inventory is tight. Let's talk about what your home is worth today. #KellyLynchRealtor #LBI #RealEstate",
       "platforms": [
@@ -103,19 +102,18 @@
       "imageUrl": null,
       "createdAt": "2026-04-06T08:00:00Z",
       "updatedAt": "2026-04-08T10:00:00Z",
-      "approvedBy": null,
-      "approvedAt": null,
+      "approvedBy": "Admin",
+      "approvedAt": "2026-04-07T09:00:00Z",
       "rejectedBy": null,
       "rejectedAt": null,
       "rejectionReason": null,
       "publishedAt": "2026-04-08T10:00:00Z",
       "publishedUrl": "https://www.facebook.com/kelikelyrealtor",
-      "notes": "Good reach on this one",
-      "postedUrl": null
+      "notes": "Good reach on this one"
     },
     {
       "id": "tlc-reeb-001",
-      "status": "pending",
+      "status": "scheduled",
       "brand": "TLC",
       "caption": "Your front door called. It wants an upgrade.\n\nIntroducing Reeb Finish Express at Tuckerton Lumber - gorgeous pre-finished Therma-Tru fiberglass entry doors delivered in DAYS, not weeks.\n\nTotal Eclipse (black) or Alaskan Storm (white)\n10-year warranty\nPre-finished BOTH sides - no painting, no waiting\nMultiple styles with coordinated glass and hardware\n\nSummers coming. Your beach house deserves a front door that turns heads.\n\nTuckerton and Surf City | Since 1932\nwww.tlcnj.com\n\n#TuckertonLumber #FrontDoorGoals #CurbAppeal #LBI #JerseyShore #ReebFinishExpress #BeachHouse #HomeUpgrade #ShopLocal",
       "platforms": [
@@ -126,8 +124,8 @@
       "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/tlc-reeb-001.png",
       "createdAt": "2026-04-16T15:34:27.210696",
       "updatedAt": "2026-04-16T20:07:40.794Z",
-      "approvedBy": null,
-      "approvedAt": null,
+      "approvedBy": "Admin",
+      "approvedAt": "2026-04-16T20:07:40.794Z",
       "rejectedReason": null,
       "postedUrl": null,
       "source": "Denise Moon email - Reeb Finish Express brochure"
@@ -346,7 +344,7 @@
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-19T21:13:31.259Z",
+    "lastUpdated": "2026-04-19T21:14:38.226Z",
     "version": "1.0.0"
   }
 }
