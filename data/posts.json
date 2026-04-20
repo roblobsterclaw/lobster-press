@@ -20,7 +20,7 @@
       "rejectionReason": "add some pictures of wolf decking, or treks labeled appropriately",
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post — TLC spring campaign",
+      "notes": "Sample draft post \u2014 TLC spring campaign",
       "rejectedReason": null,
       "source": "Reworked per Joe feedback - added Wolf/Trex branding",
       "postedUrl": null
@@ -55,7 +55,7 @@
       "id": "post_005",
       "status": "pending",
       "brand": "Surfbox",
-      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you — fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
+      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you \u2014 fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
       "platforms": [
         "FB",
         "IG"
@@ -71,7 +71,7 @@
       "rejectionReason": null,
       "publishedAt": "2026-04-10T11:00:00Z",
       "publishedUrl": "https://www.facebook.com/surfboxstorage",
-      "notes": "Posted on schedule — great engagement",
+      "notes": "Posted on schedule \u2014 great engagement",
       "postedUrl": null
     },
     {
@@ -99,7 +99,7 @@
     },
     {
       "id": "tlc-reeb-001",
-      "status": "post_now",
+      "status": "posted",
       "brand": "TLC",
       "caption": "Your front door called. It wants an upgrade.\n\nIntroducing Reeb Finish Express at Tuckerton Lumber - gorgeous pre-finished Therma-Tru fiberglass entry doors delivered in DAYS, not weeks.\n\nTotal Eclipse (black) or Alaskan Storm (white)\n10-year warranty\nPre-finished BOTH sides - no painting, no waiting\nMultiple styles with coordinated glass and hardware\n\nSummers coming. Your beach house deserves a front door that turns heads.\n\nTuckerton and Surf City | Since 1932\nwww.tlcnj.com\n\n#TuckertonLumber #FrontDoorGoals #CurbAppeal #LBI #JerseyShore #ReebFinishExpress #BeachHouse #HomeUpgrade #ShopLocal",
       "platforms": [
@@ -112,9 +112,13 @@
       "approvedBy": "Admin",
       "approvedAt": "2026-04-20T21:01:24.935Z",
       "rejectedReason": null,
-      "postedUrl": null,
+      "postedUrl": "https://www.facebook.com/1474235451380439",
       "source": "Denise Moon email - Reeb Finish Express brochure",
-      "postNowAt": "2026-04-20T21:01:38.823Z"
+      "postNowAt": "2026-04-20T21:01:38.823Z",
+      "postedAt": "2026-04-20T17:15:12.777590",
+      "postedPlatforms": [
+        "Facebook"
+      ]
     },
     {
       "id": "surfbox-warehouse-001",
