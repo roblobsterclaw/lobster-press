@@ -1160,7 +1160,7 @@ function render() {
 function updateStats() {
   const pending = state.posts.filter(p => p.status === 'pending').length;
   const approved = state.posts.filter(p => p.status === 'approved').length;
-  const scheduled = state.posts.filter(p => p.status === 'scheduled').length;
+  const scheduled = state.posts.filter(p => p.status === 'scheduled' || p.status === 'post_now').length;
   const posted = state.posts.filter(p => p.status === 'posted').length;
 
   document.getElementById('stat-pending').textContent = pending;
@@ -1170,7 +1170,7 @@ function updateStats() {
 
   const fp = getFiltered('pending').length + getFiltered('rejected').length;
   const fa = getFiltered('approved').length;
-  const fs = getFiltered('scheduled').length;
+  const fs = getFiltered('scheduled').length + state.posts.filter(p => p.status === 'post_now' && (state.filter === 'All' || p.brand === state.filter)).length;
   const fpo = getFiltered('posted').length;
   setBadge('tab-badge-pending', fp, '');
   setBadge('tab-badge-approved', fa, 'green');
@@ -1347,7 +1347,9 @@ function renderApproved() {
 // ===== SCHEDULED TAB =====
 function renderScheduled() {
   const list = document.getElementById('scheduled-list');
-  const posts = getFiltered('scheduled');
+  const postNow = state.posts.filter(p => p.status === 'post_now' && (state.filter === 'All' || p.brand === state.filter));
+  const scheduled = getFiltered('scheduled');
+  const posts = [...postNow, ...scheduled];
   if (posts.length === 0) {
     list.innerHTML = `<div class="empty-state"><div class="empty-icon">📅</div><div>No scheduled posts${state.filter !== 'All' ? ' for ' + state.filter : ''}<br><small style="font-size:11px;margin-top:4px;display:block;">Pick a date from the ✅ Approved tab</small></div></div>`;
     return;
