@@ -20,7 +20,7 @@
       "rejectionReason": "add some pictures of wolf decking, or treks labeled appropriately",
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post — TLC spring campaign",
+      "notes": "Sample draft post \u2014 TLC spring campaign",
       "rejectedReason": null,
       "source": "Reworked per Joe feedback - added Wolf/Trex branding",
       "postedUrl": null
@@ -55,7 +55,7 @@
       "id": "post_005",
       "status": "pending",
       "brand": "Surfbox",
-      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you — fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
+      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you \u2014 fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
       "platforms": [
         "FB",
         "IG"
@@ -71,7 +71,7 @@
       "rejectionReason": null,
       "publishedAt": "2026-04-10T11:00:00Z",
       "publishedUrl": "https://www.facebook.com/surfboxstorage",
-      "notes": "Posted on schedule — great engagement",
+      "notes": "Posted on schedule \u2014 great engagement",
       "postedUrl": null
     },
     {
@@ -200,7 +200,7 @@
     },
     {
       "id": "surfbox-hero-001",
-      "status": "post_now",
+      "status": "posted",
       "brand": "Surfbox",
       "caption": "The fleet is ready. Are you?\n\nSurfbox Portable Storage - we deliver secure, weather-tight containers right to your location. Moving, renovating, or just need extra space - we have got you covered from Ocean County to LBI and beyond.\n\nOne call. We deliver. You fill it. We pick it up.\n\nCall: (855) SURFBOX | (855) 787-3269\nwww.surfboxstorage.com\n\n#Surfbox #PortableStorage #FleetReady #LBI #JerseyShore #MovingSeason #StorageSolutions #OceanCounty #SurfboxStorage",
       "platforms": [
@@ -214,9 +214,13 @@
       "approvedBy": "Admin",
       "approvedAt": "2026-04-20T21:16:28.094Z",
       "rejectedReason": null,
-      "postedUrl": null,
+      "postedUrl": "https://www.facebook.com/962015789919532",
       "source": "Real photo - Surfbox truck with fleet",
-      "postNowAt": "2026-04-20T21:16:52.385Z"
+      "postNowAt": "2026-04-20T21:16:52.385Z",
+      "postedAt": "2026-04-20T17:28:20.556534",
+      "postedPlatforms": [
+        "Facebook"
+      ]
     },
     {
       "id": "surfbox-ronjon-001",
