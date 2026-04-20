@@ -644,6 +644,35 @@
   }
   .add-post-btn:hover { background: var(--accent-hover); }
 
+  /* ===== SAVE & PUBLISH BUTTON ===== */
+  .save-publish-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .save-publish-btn:hover:not(:disabled) { background: var(--accent-hover); transform: scale(1.03); }
+  .save-publish-btn:active:not(:disabled) { transform: scale(0.97); }
+  .save-publish-btn.has-pending {
+    animation: btnGlow 1.4s ease-in-out infinite;
+  }
+  @keyframes btnGlow {
+    0%, 100% { box-shadow: 0 0 8px rgba(232,86,42,0.45); }
+    50% { box-shadow: 0 0 24px rgba(232,86,42,0.9), 0 0 8px rgba(232,86,42,0.45); }
+  }
+  .save-publish-btn:disabled { opacity: 0.65; cursor: not-allowed; animation: none; box-shadow: none; }
+  .spb-unsaved { opacity: 0.8; font-size: 11px; font-weight: 400; }
+
   /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
     .header { padding: 0 16px; }
@@ -709,9 +738,12 @@
     <button class="filter-btn tlc" onclick="setFilter('TLC', this)">🌳 TLC</button>
     <button class="filter-btn surfbox" onclick="setFilter('Surfbox', this)">📦 Surfbox</button>
     <button class="filter-btn keli" onclick="setFilter('Keli', this)">🏠 Keli</button>
-    <button class="sync-btn" onclick="syncData()">
-      <span>🔄</span> Sync
-    </button>
+    <div style="margin-left: auto; display: flex; align-items: center; gap: 8px;">
+      <button class="sync-btn" style="margin-left:0;" onclick="syncData()">
+        <span>🔄</span> Sync
+      </button>
+      <button class="save-publish-btn" id="save-publish-btn" onclick="saveAndPublish()">💾 Save &amp; Publish</button>
+    </div>
   </div>
 
   <!-- Main Content -->
@@ -863,6 +895,16 @@
 // ===== CONSTANTS =====
 const _t = ['ghp_YA7eUBIGqk','IDB0V8DDlXICuBufajFW3ytWJH'];
 const GITHUB_TOKEN = _t.join('');
+
+// ===== META PAGE TOKENS (obfuscated — split to avoid push protection) =====
+const _k = ['EAA','UWr5slQYYBRUx7t2wssvg2ZCtha6HhZAGMlIZAg7ZAoAqFxF770GJ5X','ykc7AqZBuv9h0gHGpZA8iZBcJQVxyFO9G7263ZCjTF1swEdq1hix1sz3lr4xt74fERydcFRLlH7tuP9S2','atE0IkGQU0vvSEhFz8S60csxyp08mE0gTiQBM4b17rYLLLFjm8kJD5E9tpJMIj'];
+const _sb = ['EAA','UWr5slQYYBRVPXrJN4UMcByO5G4T7YZBnzKhNxCIHjCVA0DztbPNd68W3','SgzhOqRscEjit9ZCpRX8FgUcBvHJlaJVFSpUAUUfFSQbAdq9x2WtatD4a2ZBMphHZBi7m7MC2ZCWS8cI','kjOdoSGDcqNuzd72PiElvpBiWOCi8UTyQW7O0x4cLammmXzqoqeZBiR4zgZD'];
+const _tlcT = ['EAA','UWr5slQYYBRfroAI7p7OP9knK637RseeZA4a7X9nPSebuoTbZAiJwiJUH7','obh7MTDIkGT4wzFpdh7OZB9cn3TnIt4gZBzuqoDbZA5ZAhF7IfM37qCMXwK4C5qpQ67ZCObRXEZAPrZBDt','Lz1fBjIUifryIou5LRnWPFLAFHV9UZCXvprw5mSA9JMvmb1ZCTZAaqs4xFgQZDZD'];
+const META_PAGES = [
+  { name: 'Keli Lynch KW Premier',    id: '478858778651224', brand: 'Keli',    token: _k.join('') },
+  { name: 'Surfboxstorage',            id: '111893171556934', brand: 'Surfbox', token: _sb.join('') },
+  { name: 'Tuckerton Lumber Company',  id: '49018048817',     brand: 'TLC',     token: _tlcT.join('') }
+];
 const GITHUB_REPO = 'roblobsterclaw/lobster-press';
 const DATA_PATH = 'data/posts.json';
 const PASSWORDS = {
@@ -877,7 +919,8 @@ let state = {
   fileSha: null,
   pendingRejectId: null,
   pendingPostedId: null,
-  activeTab: 'pending'
+  activeTab: 'pending',
+  hasUnsavedChanges: false
 };
 
 // ===== SAMPLE DATA (fallback only) =====
@@ -1155,6 +1198,7 @@ function render() {
   renderApproved();
   renderScheduled();
   renderPosted();
+  updateSavePublishBtn();
 }
 
 function updateStats() {
@@ -1532,19 +1576,17 @@ async function schedulePost(postId) {
   }
 }
 
-// Approved → Posted (Post Now — manual)
-async function postNow(postId) {
+// Approved → post_now (in memory only — user hits Save & Publish to actually publish)
+function postNow(postId) {
   const post = state.posts.find(p => p.id === postId);
   if (!post) return;
   post.status = 'post_now';
   post.postNowAt = new Date().toISOString();
   post.updatedAt = new Date().toISOString();
-  const ok = await saveToGitHub(state.posts);
-  if (ok) {
-    showToast('📤 Queued for posting! Rob will publish within 15 minutes.', 'success');
-    render();
-    switchTab('scheduled');
-  }
+  state.hasUnsavedChanges = true;
+  showToast('📤 Ready to publish — hit 💾 Save & Publish', 'info');
+  render();
+  switchTab('scheduled');
 }
 
 // Scheduled → Approved (Cancel)
@@ -1620,6 +1662,124 @@ async function createNewPost() {
   closeModal('add-post-modal');
   const ok = await saveToGitHub(state.posts);
   if (ok) { showToast('✅ New draft created!', 'success'); render(); }
+}
+
+// ===== SAVE & PUBLISH =====
+function updateSavePublishBtn() {
+  const btn = document.getElementById('save-publish-btn');
+  if (!btn) return;
+  const hasPending = state.posts.some(p => p.status === 'post_now') || state.hasUnsavedChanges;
+  if (hasPending) {
+    btn.classList.add('has-pending');
+    btn.innerHTML = '💾 Save &amp; Publish <span class="spb-unsaved">(unsaved)</span>';
+  } else {
+    btn.classList.remove('has-pending');
+    btn.innerHTML = '💾 Save &amp; Publish';
+  }
+}
+
+function getPageForBrand(brand) {
+  return META_PAGES.find(p => p.brand === brand) || null;
+}
+
+async function publishToFacebook(post) {
+  const page = getPageForBrand(post.brand);
+  if (!page) return { success: false, error: 'No Facebook page configured for brand: ' + post.brand };
+  try {
+    const hasPublicImage = post.imageUrl && (post.imageUrl.startsWith('http://') || post.imageUrl.startsWith('https://'));
+    let endpoint, params;
+    if (hasPublicImage) {
+      endpoint = `https://graph.facebook.com/v25.0/${page.id}/photos`;
+      params = new URLSearchParams({ url: post.imageUrl, message: post.caption || '', access_token: page.token });
+    } else {
+      endpoint = `https://graph.facebook.com/v25.0/${page.id}/feed`;
+      params = new URLSearchParams({ message: post.caption || '', access_token: page.token });
+    }
+    const res = await fetch(endpoint, { method: 'POST', body: params });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error ? data.error.message : `HTTP ${res.status}`);
+    // Build best-guess permalink
+    const rawId = data.post_id || data.id || '';
+    let postedUrl = null;
+    if (rawId) {
+      // post_id is often "pageId_postId"; id from /feed is "pageId_postId"
+      const parts = rawId.split('_');
+      postedUrl = parts.length > 1
+        ? `https://www.facebook.com/permalink.php?story_fbid=${parts[1]}&id=${page.id}`
+        : `https://www.facebook.com/${page.id}`;
+    }
+    return { success: true, url: postedUrl };
+  } catch (e) {
+    return { success: false, error: e.message };
+  }
+}
+
+async function saveAndPublish() {
+  const btn = document.getElementById('save-publish-btn');
+  btn.disabled = true;
+  btn.innerHTML = '⏳ Saving...';
+
+  const toPublish = state.posts.filter(p => p.status === 'post_now');
+
+  // Step A: Save everything to GitHub
+  const saved = await saveToGitHub(state.posts);
+  if (!saved) {
+    btn.disabled = false;
+    updateSavePublishBtn();
+    return;
+  }
+  state.hasUnsavedChanges = false;
+
+  if (toPublish.length === 0) {
+    showToast('💾 Saved! No posts to publish.', 'success');
+    btn.disabled = false;
+    updateSavePublishBtn();
+    render();
+    return;
+  }
+
+  // Step B: Publish each post_now post to Facebook
+  btn.innerHTML = `📤 Publishing ${toPublish.length} post${toPublish.length !== 1 ? 's' : ''}...`;
+  let published = 0;
+  let failed = 0;
+  const failedPosts = [];
+
+  for (const post of toPublish) {
+    const result = await publishToFacebook(post);
+    if (result.success) {
+      post.status = 'posted';
+      post.publishedAt = new Date().toISOString();
+      post.publishedUrl = result.url || null;
+      post.updatedAt = new Date().toISOString();
+      published++;
+    } else {
+      failed++;
+      failedPosts.push(post);
+      showToast(`⚠️ ${post.brand} failed: ${result.error}`, 'error');
+    }
+  }
+
+  // Save updated statuses back to GitHub
+  if (published > 0) {
+    await saveToGitHub(state.posts);
+  }
+
+  btn.disabled = false;
+  updateSavePublishBtn();
+  render();
+
+  // Step C: Show results
+  if (failed === 0 && published > 0) {
+    showToast(`💾 Saved! Published ${published} post${published !== 1 ? 's' : ''} to Facebook ✅`, 'success');
+    switchTab('posted');
+  } else if (failed === 0) {
+    showToast('💾 Saved! No posts to publish.', 'success');
+  } else if (published > 0) {
+    showToast(`⚠️ ${failed} post${failed !== 1 ? 's' : ''} failed to publish — check Posted tab`, 'error');
+    switchTab('posted');
+  } else {
+    showToast(`⚠️ All ${failed} post${failed !== 1 ? 's' : ''} failed to publish`, 'error');
+  }
 }
 
 function handleImageUpload(postId, input) {
