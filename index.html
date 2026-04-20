@@ -22,6 +22,7 @@
     --yellow: #F0B429;
     --red: #F85149;
     --success: #3FB950;
+    --purple: #8B5CF6;
     --radius: 8px;
     --radius-lg: 12px;
   }
@@ -53,22 +54,9 @@
     text-align: center;
     box-shadow: 0 20px 60px rgba(0,0,0,0.5);
   }
-  .login-logo {
-    font-size: 52px;
-    margin-bottom: 8px;
-    line-height: 1;
-  }
-  .login-title {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-  .login-subtitle {
-    color: var(--text-muted);
-    font-size: 13px;
-    margin-bottom: 32px;
-  }
+  .login-logo { font-size: 52px; margin-bottom: 8px; line-height: 1; }
+  .login-title { font-size: 24px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .login-subtitle { color: var(--text-muted); font-size: 13px; margin-bottom: 32px; }
   .login-input {
     width: 100%;
     background: var(--bg);
@@ -99,12 +87,7 @@
   }
   .login-btn:hover { background: var(--accent-hover); }
   .login-btn:active { transform: scale(0.98); }
-  .login-error {
-    color: var(--red);
-    font-size: 13px;
-    margin-top: 10px;
-    display: none;
-  }
+  .login-error { color: var(--red); font-size: 13px; margin-top: 10px; display: none; }
   .login-tiers {
     margin-top: 24px;
     padding-top: 20px;
@@ -138,20 +121,10 @@
     top: 0;
     z-index: 100;
   }
-  .header-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 700;
-    font-size: 18px;
-  }
+  .header-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; }
   .header-logo { font-size: 26px; }
   .header-tagline { font-size: 11px; color: var(--text-muted); font-weight: 400; }
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+  .header-right { display: flex; align-items: center; gap: 12px; }
   .role-badge {
     background: rgba(232,86,42,0.15);
     border: 1px solid rgba(232,86,42,0.4);
@@ -217,7 +190,6 @@
     gap: 6px;
   }
   .sync-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .sync-icon { font-size: 13px; }
 
   /* ===== MAIN CONTENT ===== */
   .main {
@@ -227,6 +199,29 @@
     display: grid;
     gap: 24px;
   }
+
+  /* ===== STATS ROW ===== */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 0;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .stat-card:hover { border-color: var(--accent); }
+  .stat-num { font-size: 28px; font-weight: 700; color: var(--accent); }
+  .stat-num.approved { color: var(--success); }
+  .stat-num.scheduled { color: var(--blue); }
+  .stat-num.posted { color: var(--text-muted); }
+  .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
 
   /* ===== SECTION ===== */
   .section { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
@@ -238,28 +233,49 @@
     justify-content: space-between;
     background: rgba(255,255,255,0.02);
   }
-  .section-title {
-    font-size: 15px;
-    font-weight: 600;
+
+  /* ===== TABS ===== */
+  .section-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .section-tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 14px 18px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
   }
-  .section-icon { font-size: 18px; }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--text); border-bottom-color: var(--accent); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
   .count-badge {
     background: var(--accent);
     color: white;
     border-radius: 20px;
-    padding: 2px 8px;
+    padding: 2px 7px;
     font-size: 11px;
     font-weight: 700;
     min-width: 22px;
     text-align: center;
   }
   .count-badge.zero { background: var(--bg); color: var(--text-muted); border: 1px solid var(--border); }
-  .section-body { padding: 16px; }
+  .count-badge.green { background: var(--success); }
+  .count-badge.blue { background: var(--blue); }
 
-  /* ===== POST CARDS ===== */
+  /* ===== POST CARDS (Pending grid) ===== */
   .posts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -279,7 +295,7 @@
 
   .post-image-placeholder {
     background: linear-gradient(135deg, #1C2130, #252D3A);
-    height: 200px;
+    height: 180px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -292,20 +308,11 @@
   .post-image-placeholder:hover { background: linear-gradient(135deg, #22293B, #2C3650); }
   .post-image-placeholder .upload-icon { font-size: 24px; margin-bottom: 4px; }
   .post-image-placeholder .upload-text { text-align: center; }
-  .post-image-placeholder input[type="file"] {
-    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%;
-  }
-  .post-image-preview { width: 100%; max-height: 400px; height: auto; object-fit: contain; display: block; background: #0D1117; }
-  .list-card-image { width: 72px; height: 72px; object-fit: cover; border-radius: 6px; flex-shrink: 0; border: 1px solid var(--border); }
-  .list-card-image-placeholder { width: 72px; height: 72px; background: #1C2130; border-radius: 6px; flex-shrink: 0; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text-muted); text-align: center; }
+  .post-image-placeholder input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+  .post-image-preview { width: 100%; max-height: 360px; height: auto; object-fit: contain; display: block; background: #0D1117; }
 
   .post-body { padding: 12px; }
-  .post-meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 8px;
-  }
+  .post-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
   .brand-select, .date-input {
     background: var(--card);
     border: 1px solid var(--border);
@@ -349,7 +356,6 @@
   }
   .caption-area:focus { border-color: var(--accent); }
   .caption-area:read-only { cursor: default; opacity: 0.8; }
-
   .caption-text {
     font-size: 13px;
     color: var(--text);
@@ -375,12 +381,7 @@
     cursor: pointer;
     user-select: none;
   }
-  .platform-check input[type="checkbox"] {
-    accent-color: var(--accent);
-    width: 14px;
-    height: 14px;
-    cursor: pointer;
-  }
+  .platform-check input[type="checkbox"] { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
   .platform-badge {
     border-radius: 4px;
     padding: 2px 7px;
@@ -420,14 +421,18 @@
   .btn-reject:hover { background: rgba(248,81,73,0.25); border-color: var(--red); }
   .btn-save { background: rgba(232,86,42,0.15); color: var(--accent); border: 1px solid rgba(232,86,42,0.3); font-size: 12px; flex: 0; padding: 8px 12px; }
   .btn-save:hover { background: rgba(232,86,42,0.25); border-color: var(--accent); }
-  .btn-mark-posted { background: rgba(33,150,243,0.15); color: var(--blue); border: 1px solid rgba(33,150,243,0.3); font-size: 12px; }
-  .btn-mark-posted:hover { background: rgba(33,150,243,0.25); border-color: var(--blue); }
+  .btn-schedule { background: rgba(33,150,243,0.15); color: var(--blue); border: 1px solid rgba(33,150,243,0.3); }
+  .btn-schedule:hover { background: rgba(33,150,243,0.25); border-color: var(--blue); }
+  .btn-post-now { background: rgba(63,185,80,0.15); color: var(--success); border: 1px solid rgba(63,185,80,0.3); }
+  .btn-post-now:hover { background: rgba(63,185,80,0.25); border-color: var(--success); }
+  .btn-cancel { background: rgba(240,180,41,0.15); color: var(--yellow); border: 1px solid rgba(240,180,41,0.3); }
+  .btn-cancel:hover { background: rgba(240,180,41,0.25); border-color: var(--yellow); }
   .btn-delete { background: rgba(248,81,73,0.1); color: var(--red); border: 1px solid rgba(248,81,73,0.2); font-size: 12px; flex: 0; padding: 8px 12px; }
   .btn-delete:hover { background: rgba(248,81,73,0.2); border-color: var(--red); }
   .btn-restore { background: rgba(240,180,41,0.15); color: var(--yellow); border: 1px solid rgba(240,180,41,0.3); font-size: 12px; }
   .btn-restore:hover { background: rgba(240,180,41,0.25); border-color: var(--yellow); }
 
-  /* Scheduled / Posted card layout */
+  /* ===== LIST CARDS (Approved / Scheduled / Posted) ===== */
   .list-card {
     background: var(--bg);
     border: 1px solid var(--border);
@@ -442,11 +447,51 @@
   .list-card.brand-TLC { border-left: 3px solid var(--green); }
   .list-card.brand-Surfbox { border-left: 3px solid var(--blue); }
   .list-card.brand-Keli { border-left: 3px solid var(--pink); }
+  .list-card-image { width: 80px; height: 80px; object-fit: cover; border-radius: 6px; flex-shrink: 0; border: 1px solid var(--border); }
+  .list-card-image-placeholder { width: 80px; height: 80px; background: #1C2130; border-radius: 6px; flex-shrink: 0; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text-muted); text-align: center; }
   .list-card-info { flex: 1; min-width: 0; }
   .list-card-caption { font-size: 13px; color: var(--text); line-height: 1.5; margin-bottom: 6px; word-break: break-word; }
-  .list-card-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .list-card-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
   .list-card-date { font-size: 11px; color: var(--text-muted); }
-  .list-card-actions { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; flex-shrink: 0; }
+  .list-card-actions { display: flex; flex-direction: column; gap: 6px; align-items: stretch; flex-shrink: 0; min-width: 120px; }
+
+  /* Schedule picker row */
+  .schedule-picker-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+  }
+  .schedule-dt-input {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 6px;
+    padding: 5px 8px;
+    font-size: 12px;
+    outline: none;
+    cursor: pointer;
+    flex: 1;
+    min-width: 180px;
+    transition: border-color 0.2s;
+  }
+  .schedule-dt-input:focus { border-color: var(--blue); }
+
+  /* Countdown badge */
+  .countdown-badge {
+    background: rgba(33,150,243,0.12);
+    border: 1px solid rgba(33,150,243,0.3);
+    color: var(--blue);
+    border-radius: 20px;
+    padding: 2px 9px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  /* Posted link */
   .posted-url {
     font-size: 11px;
     color: var(--accent);
@@ -455,41 +500,14 @@
   }
   .posted-url:hover { text-decoration: underline; }
 
-  /* ===== PERFORMANCE SECTION ===== */
-  .perf-placeholder {
-    text-align: center;
-    padding: 48px 20px;
-    color: var(--text-muted);
-  }
-  .perf-placeholder .perf-icon { font-size: 48px; margin-bottom: 12px; }
-  .perf-placeholder h3 { color: var(--text); margin-bottom: 8px; font-size: 16px; }
-  .perf-placeholder p { font-size: 13px; max-width: 400px; margin: 0 auto; }
-
-  /* ===== STATS ROW ===== */
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-    margin-bottom: 24px;
-  }
-  .stat-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-    text-align: center;
-  }
-  .stat-num { font-size: 28px; font-weight: 700; color: var(--accent); }
-  .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
-
   /* ===== EMPTY STATE ===== */
   .empty-state {
     text-align: center;
-    padding: 32px;
+    padding: 40px 20px;
     color: var(--text-muted);
     font-size: 13px;
   }
-  .empty-state .empty-icon { font-size: 32px; margin-bottom: 8px; }
+  .empty-state .empty-icon { font-size: 36px; margin-bottom: 8px; }
 
   /* ===== TOAST ===== */
   .toast-container {
@@ -559,35 +577,13 @@
   }
   .modal-input:focus { border-color: var(--accent); }
 
-  /* ===== LOADING ===== */
-  .loading-spinner {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    border: 2px solid rgba(255,255,255,0.2);
-    border-top-color: white;
-    border-radius: 50%;
-    animation: spin 0.6s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
   /* ===== SAVING INDICATOR ===== */
-  .save-status {
-    font-size: 11px;
-    color: var(--text-muted);
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .save-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--success);
-  }
+  .save-status { font-size: 11px; color: var(--text-muted); display: flex; align-items: center; gap: 6px; }
+  .save-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); }
   .save-dot.saving { background: var(--yellow); animation: pulse 1s ease infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-  /* ===== REJECTED CARD ===== */
+  /* ===== REJECTED CARDS ===== */
   .rejected-card {
     background: var(--bg);
     border: 2px solid var(--red);
@@ -631,48 +627,6 @@
     opacity: 0.8;
   }
 
-  /* ===== RESPONSIVE ===== */
-  @media (max-width: 768px) {
-    .header { padding: 0 16px; }
-    .header-tagline { display: none; }
-    .filter-bar { padding: 10px 16px; }
-    .main { padding: 16px; gap: 16px; }
-    .posts-grid { grid-template-columns: 1fr; }
-    .stats-row { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 480px) {
-    .stats-row { grid-template-columns: repeat(2, 1fr); }
-    .header-brand span:not(.header-logo) { display: none; }
-  }
-
-  /* ===== SECTION TABS ===== */
-  .section-tabs {
-    display: flex;
-    border-bottom: 1px solid var(--border);
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .section-tabs::-webkit-scrollbar { display: none; }
-  .tab-btn {
-    padding: 14px 20px;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    color: var(--text-muted);
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .tab-btn:hover { color: var(--text); }
-  .tab-btn.active { color: var(--text); border-bottom-color: var(--accent); }
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
-
   /* ===== ADD POST BUTTON ===== */
   .add-post-btn {
     background: var(--accent);
@@ -689,6 +643,23 @@
     gap: 5px;
   }
   .add-post-btn:hover { background: var(--accent-hover); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .header { padding: 0 16px; }
+    .header-tagline { display: none; }
+    .filter-bar { padding: 10px 16px; }
+    .main { padding: 16px; gap: 16px; }
+    .posts-grid { grid-template-columns: 1fr; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .list-card-actions { min-width: 100px; }
+  }
+  @media (max-width: 480px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .header-brand span:not(.header-logo) { display: none; }
+    .list-card { flex-wrap: wrap; }
+    .list-card-actions { flex-direction: row; min-width: unset; width: 100%; }
+  }
 </style>
 </head>
 <body>
@@ -734,58 +705,59 @@
   <!-- Filter Bar -->
   <div class="filter-bar">
     <span class="filter-label">Filter:</span>
-    <button class="filter-btn active" data-filter="All" onclick="setFilter('All', this)">All</button>
-    <button class="filter-btn tlc" data-filter="TLC" onclick="setFilter('TLC', this)">🌳 TLC</button>
-    <button class="filter-btn surfbox" data-filter="Surfbox" onclick="setFilter('Surfbox', this)">📦 Surfbox</button>
-    <button class="filter-btn keli" data-filter="Keli" onclick="setFilter('Keli', this)">🏠 Keli</button>
+    <button class="filter-btn active" onclick="setFilter('All', this)">All</button>
+    <button class="filter-btn tlc" onclick="setFilter('TLC', this)">🌳 TLC</button>
+    <button class="filter-btn surfbox" onclick="setFilter('Surfbox', this)">📦 Surfbox</button>
+    <button class="filter-btn keli" onclick="setFilter('Keli', this)">🏠 Keli</button>
     <button class="sync-btn" onclick="syncData()">
-      <span class="sync-icon">🔄</span> Sync
+      <span>🔄</span> Sync
     </button>
   </div>
 
   <!-- Main Content -->
   <div class="main">
+
     <!-- Stats Row -->
     <div class="stats-row">
-      <div class="stat-card">
+      <div class="stat-card" onclick="switchTab('pending')">
         <div class="stat-num" id="stat-pending">0</div>
-        <div class="stat-label">Pending</div>
+        <div class="stat-label">📬 Pending</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-num" id="stat-scheduled">0</div>
-        <div class="stat-label">Scheduled</div>
+      <div class="stat-card" onclick="switchTab('approved')">
+        <div class="stat-num approved" id="stat-approved">0</div>
+        <div class="stat-label">✅ Approved</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-num" id="stat-posted">0</div>
-        <div class="stat-label">Posted</div>
+      <div class="stat-card" onclick="switchTab('scheduled')">
+        <div class="stat-num scheduled" id="stat-scheduled">0</div>
+        <div class="stat-label">📅 Scheduled</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-num" id="stat-total">0</div>
-        <div class="stat-label">Total</div>
+      <div class="stat-card" onclick="switchTab('posted')">
+        <div class="stat-num posted" id="stat-posted">0</div>
+        <div class="stat-label">📤 Posted</div>
       </div>
     </div>
 
     <!-- Tabbed Sections -->
     <div class="section">
       <div class="section-tabs">
-        <button class="tab-btn active" onclick="switchTab('pending', this)">
+        <button class="tab-btn active" data-tab="pending" onclick="switchTab('pending')">
           📬 Pending <span class="count-badge" id="tab-badge-pending">0</span>
         </button>
-        <button class="tab-btn" onclick="switchTab('scheduled', this)">
-          📅 Scheduled <span class="count-badge" id="tab-badge-scheduled">0</span>
+        <button class="tab-btn" data-tab="approved" onclick="switchTab('approved')">
+          ✅ Approved <span class="count-badge green" id="tab-badge-approved">0</span>
         </button>
-        <button class="tab-btn" onclick="switchTab('posted', this)">
-          ✅ Posted <span class="count-badge" id="tab-badge-posted">0</span>
+        <button class="tab-btn" data-tab="scheduled" onclick="switchTab('scheduled')">
+          📅 Scheduled <span class="count-badge blue" id="tab-badge-scheduled">0</span>
         </button>
-        <button class="tab-btn" onclick="switchTab('performance', this)">
-          📊 Performance
+        <button class="tab-btn" data-tab="posted" onclick="switchTab('posted')">
+          📤 Posted <span class="count-badge zero" id="tab-badge-posted">0</span>
         </button>
       </div>
 
-      <!-- Pending Tab -->
+      <!-- ===== PENDING TAB ===== -->
       <div class="tab-content active" id="tab-pending">
         <div class="section-header" style="border-top: none; border-bottom: 1px solid var(--border);">
-          <span style="color: var(--text-muted); font-size: 12px;">Review and approve draft posts before scheduling</span>
+          <span style="color: var(--text-muted); font-size: 12px;">Review drafts — approve or reject</span>
           <button class="add-post-btn" id="add-post-btn" onclick="showAddPostModal()">+ New Draft</button>
         </div>
         <div style="padding: 16px;">
@@ -793,32 +765,33 @@
         </div>
       </div>
 
-      <!-- Scheduled Tab -->
+      <!-- ===== APPROVED TAB ===== -->
+      <div class="tab-content" id="tab-approved">
+        <div class="section-header" style="border-top: none; border-bottom: 1px solid var(--border);">
+          <span style="color: var(--text-muted); font-size: 12px;">Joe approved these — pick a date/time to schedule or post now</span>
+        </div>
+        <div style="padding: 16px;">
+          <div id="approved-list" style="display: flex; flex-direction: column; gap: 12px;"></div>
+        </div>
+      </div>
+
+      <!-- ===== SCHEDULED TAB ===== -->
       <div class="tab-content" id="tab-scheduled">
         <div class="section-header" style="border-top: none; border-bottom: 1px solid var(--border);">
-          <span style="color: var(--text-muted); font-size: 12px;">Approved posts queued for publishing via Buffer</span>
+          <span style="color: var(--text-muted); font-size: 12px;">Queued with a date — Rob posts these via Meta API</span>
         </div>
         <div style="padding: 16px;">
           <div id="scheduled-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
         </div>
       </div>
 
-      <!-- Posted Tab -->
+      <!-- ===== POSTED TAB ===== -->
       <div class="tab-content" id="tab-posted">
         <div class="section-header" style="border-top: none; border-bottom: 1px solid var(--border);">
-          <span style="color: var(--text-muted); font-size: 12px;">Successfully published posts across all platforms</span>
+          <span style="color: var(--text-muted); font-size: 12px;">Confirmed live on Facebook</span>
         </div>
         <div style="padding: 16px;">
           <div id="posted-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
-        </div>
-      </div>
-
-      <!-- Performance Tab -->
-      <div class="tab-content" id="tab-performance">
-        <div class="perf-placeholder">
-          <div class="perf-icon">📊</div>
-          <h3>Analytics Coming Soon</h3>
-          <p>Once Buffer integration is live, this section will show likes, comments, reach, shares, and engagement rates per post and per brand. Check back after Buffer API setup.</p>
         </div>
       </div>
     </div>
@@ -845,7 +818,7 @@
 <div class="modal-overlay" id="add-post-modal">
   <div class="modal" style="max-width: 500px;">
     <h3>+ New Draft Post</h3>
-    <p>Create a new draft post for approval</p>
+    <p>Create a new draft post for Joe's approval</p>
     <select id="new-post-brand" class="modal-input" style="cursor: pointer;">
       <option value="TLC">🌳 TLC — Tuckerton Lumber</option>
       <option value="Surfbox">📦 Surfbox Portable Storage</option>
@@ -863,7 +836,6 @@
         <input type="checkbox" id="np-tiktok" style="accent-color: var(--accent);"> TikTok
       </label>
     </div>
-    <input type="date" id="new-post-date" class="modal-input" style="margin-bottom: 16px;">
     <div class="modal-actions">
       <button class="btn" style="background: rgba(232,86,42,0.15); color: var(--accent); border: 1px solid rgba(232,86,42,0.3);" onclick="createNewPost()">Create Draft</button>
       <button class="btn" style="background: var(--card); color: var(--text-muted); border: 1px solid var(--border);" onclick="closeModal('add-post-modal')">Cancel</button>
@@ -871,11 +843,11 @@
   </div>
 </div>
 
-<!-- Posted URL Modal -->
+<!-- Posted URL Modal (for marking scheduled posts as posted) -->
 <div class="modal-overlay" id="posted-url-modal">
   <div class="modal">
-    <h3>✅ Mark as Posted</h3>
-    <p>Enter the published post URL(s) for your records</p>
+    <h3>📤 Mark as Posted</h3>
+    <p>Enter the live Facebook URL (optional but recommended for your records)</p>
     <input type="text" class="modal-input" id="posted-url-input" placeholder="https://facebook.com/...">
     <div class="modal-actions">
       <button class="btn" style="background: rgba(63,185,80,0.15); color: var(--success); border: 1px solid rgba(63,185,80,0.3);" onclick="confirmMarkPosted()">Mark Posted ✅</button>
@@ -889,7 +861,6 @@
 
 <script>
 // ===== CONSTANTS =====
-// Token loaded from config — split to avoid scanner false-positives
 const _t = ['ghp_YA7eUBIGqk','IDB0V8DDlXICuBufajFW3ytWJH'];
 const GITHUB_TOKEN = _t.join('');
 const GITHUB_REPO = 'roblobsterclaw/lobster-press';
@@ -909,101 +880,132 @@ let state = {
   activeTab: 'pending'
 };
 
-// ===== SAMPLE DATA =====
+// ===== SAMPLE DATA (fallback only) =====
 const SAMPLE_POSTS = [
   {
-    id: 'post_001',
-    status: 'pending',
-    brand: 'TLC',
+    id: 'post_001', status: 'pending', brand: 'TLC',
     caption: 'Spring deck season is here! Cedar, composite, and pressure-treated — all in stock at your local yard. #TuckertonLumber #DeckSeason #LBI',
-    platforms: ['FB', 'IG'],
-    proposedDate: '2026-04-18',
-    imageUrl: null,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    approvedBy: null, approvedAt: null,
+    platforms: ['FB', 'IG'], proposedDate: '2026-04-18', imageUrl: null,
+    createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
+    approvedBy: null, approvedAt: null, scheduledAt: null,
     rejectedBy: null, rejectedAt: null, rejectionReason: null,
-    publishedAt: null, publishedUrl: null,
-    notes: 'TLC spring campaign'
+    publishedAt: null, publishedUrl: null, notes: 'TLC spring campaign'
   },
   {
-    id: 'post_002',
-    status: 'pending',
-    brand: 'Surfbox',
+    id: 'post_002', status: 'pending', brand: 'Surfbox',
     caption: 'Big beach renovation? We deliver storage containers right to your job site. Keep materials safe all season. #Surfbox #LBI #Storage',
-    platforms: ['FB', 'IG'],
-    proposedDate: '2026-04-19',
-    imageUrl: null,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    approvedBy: null, approvedAt: null,
+    platforms: ['FB', 'IG'], proposedDate: '2026-04-19', imageUrl: null,
+    createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
+    approvedBy: null, approvedAt: null, scheduledAt: null,
     rejectedBy: null, rejectedAt: null, rejectionReason: null,
-    publishedAt: null, publishedUrl: null,
-    notes: 'Surfbox renovation season'
+    publishedAt: null, publishedUrl: null, notes: 'Surfbox renovation season'
   },
   {
-    id: 'post_003',
-    status: 'pending',
-    brand: 'Keli',
+    id: 'post_003', status: 'pending', brand: 'Keli',
     caption: 'Just listed! Beautiful 3BR ranch in Ship Bottom. Steps from the beach. Open house this weekend! #KellyLynchRealtor #LBI #JustListed',
-    platforms: ['FB', 'IG'],
-    proposedDate: '2026-04-20',
-    imageUrl: null,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    approvedBy: null, approvedAt: null,
+    platforms: ['FB', 'IG'], proposedDate: '2026-04-20', imageUrl: null,
+    createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
+    approvedBy: null, approvedAt: null, scheduledAt: null,
     rejectedBy: null, rejectedAt: null, rejectionReason: null,
-    publishedAt: null, publishedUrl: null,
-    notes: 'Keli new listing'
+    publishedAt: null, publishedUrl: null, notes: 'Keli new listing'
   },
   {
-    id: 'post_004',
-    status: 'scheduled',
-    brand: 'TLC',
+    id: 'post_004', status: 'approved', brand: 'TLC',
     caption: 'Did you know we carry over 50 Benjamin Moore paint colors in stock? Stop in and let our team help you find the perfect shade. #TuckertonLumber #BenjaminMoore #LBI',
-    platforms: ['FB', 'IG', 'TikTok'],
-    proposedDate: '2026-04-17',
-    imageUrl: null,
-    createdAt: new Date(Date.now() - 86400000).toISOString(),
-    updatedAt: new Date().toISOString(),
-    approvedBy: 'Admin', approvedAt: new Date().toISOString(),
+    platforms: ['FB', 'IG'], proposedDate: '2026-04-21', imageUrl: null,
+    createdAt: new Date(Date.now() - 86400000).toISOString(), updatedAt: new Date().toISOString(),
+    approvedBy: 'Admin', approvedAt: new Date().toISOString(), scheduledAt: null,
     rejectedBy: null, rejectedAt: null, rejectionReason: null,
-    publishedAt: null, publishedUrl: null,
-    notes: 'Approved for Thursday'
+    publishedAt: null, publishedUrl: null, notes: 'Ready to schedule'
   },
   {
-    id: 'post_005',
-    status: 'posted',
-    brand: 'Surfbox',
+    id: 'post_005', status: 'scheduled', brand: 'Surfbox',
     caption: 'Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you. #Surfbox #SpringCleaning #LBI',
-    platforms: ['FB', 'IG'],
-    proposedDate: '2026-04-10',
-    imageUrl: null,
-    createdAt: new Date(Date.now() - 7 * 86400000).toISOString(),
-    updatedAt: new Date(Date.now() - 6 * 86400000).toISOString(),
-    approvedBy: 'Admin', approvedAt: new Date(Date.now() - 7 * 86400000).toISOString(),
+    platforms: ['FB', 'IG'], proposedDate: '2026-04-22', imageUrl: null,
+    createdAt: new Date(Date.now() - 2 * 86400000).toISOString(), updatedAt: new Date().toISOString(),
+    approvedBy: 'Admin', approvedAt: new Date(Date.now() - 86400000).toISOString(),
+    scheduledAt: '2026-04-22T10:00',
     rejectedBy: null, rejectedAt: null, rejectionReason: null,
-    publishedAt: '2026-04-10T11:00:00Z',
-    publishedUrl: 'https://www.facebook.com/surfboxstorage',
-    notes: 'Great engagement'
+    publishedAt: null, publishedUrl: null, notes: 'Scheduled for Tuesday'
   },
   {
-    id: 'post_006',
-    status: 'posted',
-    brand: 'Keli',
+    id: 'post_006', status: 'posted', brand: 'Keli',
     caption: 'Thinking about selling your LBI home this spring? The market is moving fast and inventory is tight. Let\'s talk! #KellyLynchRealtor #LBI #RealEstate',
-    platforms: ['FB', 'IG'],
-    proposedDate: '2026-04-08',
-    imageUrl: null,
-    createdAt: new Date(Date.now() - 9 * 86400000).toISOString(),
-    updatedAt: new Date(Date.now() - 8 * 86400000).toISOString(),
+    platforms: ['FB', 'IG'], proposedDate: '2026-04-08', imageUrl: null,
+    createdAt: new Date(Date.now() - 9 * 86400000).toISOString(), updatedAt: new Date(Date.now() - 8 * 86400000).toISOString(),
     approvedBy: 'Admin', approvedAt: new Date(Date.now() - 9 * 86400000).toISOString(),
+    scheduledAt: '2026-04-08T10:00',
     rejectedBy: null, rejectedAt: null, rejectionReason: null,
-    publishedAt: '2026-04-08T10:00:00Z',
-    publishedUrl: 'https://www.facebook.com/kelikelyrealtor',
-    notes: 'Good reach'
+    publishedAt: '2026-04-08T10:00:00Z', publishedUrl: 'https://www.facebook.com/kelikelyrealtor',
+    notes: 'Great reach'
   }
 ];
+
+// ===== HELPERS =====
+function getDefaultScheduleDatetime() {
+  const d = new Date();
+  d.setDate(d.getDate() + 1);
+  d.setHours(10, 0, 0, 0);
+  // Format: YYYY-MM-DDTHH:MM
+  const pad = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T10:00`;
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return 'TBD';
+  try {
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  } catch { return dateStr; }
+}
+
+function formatDatetime(dtStr) {
+  if (!dtStr) return 'TBD';
+  try {
+    const d = new Date(dtStr);
+    return d.toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+  } catch { return dtStr; }
+}
+
+function getCountdown(dtStr) {
+  if (!dtStr) return '';
+  try {
+    const target = new Date(dtStr);
+    const now = new Date();
+    const diffMs = target - now;
+    if (diffMs < 0) return 'Past due';
+    const days = Math.floor(diffMs / 86400000);
+    const hours = Math.floor((diffMs % 86400000) / 3600000);
+    if (days > 0) return `in ${days}d ${hours}h`;
+    const mins = Math.floor((diffMs % 3600000) / 60000);
+    if (hours > 0) return `in ${hours}h ${mins}m`;
+    return `in ${mins}m`;
+  } catch { return ''; }
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+});
+
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toast-container');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.textContent = message;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.animation = 'fadeOut 0.3s ease forwards';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
 
 // ===== LOGIN =====
 function doLogin() {
@@ -1014,7 +1016,6 @@ function doLogin() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app').style.display = 'block';
     document.getElementById('role-display').textContent = role;
-    // Show/hide add button based on role
     const addBtn = document.getElementById('add-post-btn');
     if (role === 'Viewer') addBtn.style.display = 'none';
     loadData();
@@ -1030,8 +1031,7 @@ function doLogin() {
 document.getElementById('password-input').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 
 function doLogout() {
-  state.role = null;
-  state.posts = [];
+  state.role = null; state.posts = [];
   document.getElementById('app').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('password-input').value = '';
@@ -1058,7 +1058,8 @@ async function fetchFromGitHub() {
 async function saveToGitHub(posts) {
   setSaveStatus('saving');
   try {
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify({ posts, meta: { lastUpdated: new Date().toISOString(), version: '1.0.0' } }, null, 2))));
+    const payload = { posts, meta: { lastUpdated: new Date().toISOString(), version: '2.0.0' } };
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
     const body = {
       message: `Update posts — ${new Date().toLocaleString()}`,
       content,
@@ -1071,13 +1072,9 @@ async function saveToGitHub(posts) {
     });
     if (!res.ok) {
       const err = await res.json();
-      // Conflict — refetch SHA and retry
       if (res.status === 409 || res.status === 422) {
         const fresh = await fetchFromGitHub();
-        if (fresh) {
-          state.posts = fresh.posts || state.posts;
-          return await saveToGitHub(posts);
-        }
+        if (fresh) { state.posts = fresh.posts || state.posts; return await saveToGitHub(posts); }
       }
       throw new Error(err.message);
     }
@@ -1097,8 +1094,8 @@ function setSaveStatus(status) {
   const dot = document.getElementById('save-dot');
   const text = document.getElementById('save-text');
   if (status === 'saving') { dot.className = 'save-dot saving'; text.textContent = 'Saving...'; }
-  else if (status === 'saved') { dot.className = 'save-dot'; text.textContent = 'Synced'; }
-  else if (status === 'error') { dot.className = 'save-dot'; dot.style.background = 'var(--red)'; text.textContent = 'Save failed'; }
+  else if (status === 'saved') { dot.className = 'save-dot'; dot.style.background = ''; text.textContent = 'Synced'; }
+  else { dot.className = 'save-dot'; dot.style.background = 'var(--red)'; text.textContent = 'Save failed'; }
 }
 
 // ===== DATA LOAD =====
@@ -1107,26 +1104,24 @@ async function loadData() {
   const data = await fetchFromGitHub();
   if (data && data.posts && data.posts.length > 0) {
     state.posts = data.posts;
-    showToast('✅ Posts loaded from GitHub', 'success');
+    showToast(`✅ ${data.posts.length} posts loaded`, 'success');
   } else {
-    // Use sample data and save it
     state.posts = JSON.parse(JSON.stringify(SAMPLE_POSTS));
-    showToast('📋 Loading sample data...', 'info');
+    showToast('📋 Using sample data...', 'info');
     await saveToGitHub(state.posts);
-    showToast('✅ Sample data saved to GitHub', 'success');
   }
   render();
 }
 
 async function syncData() {
-  showToast('🔄 Syncing with GitHub...', 'info');
+  showToast('🔄 Syncing...', 'info');
   const data = await fetchFromGitHub();
   if (data && data.posts) {
     state.posts = data.posts;
     render();
     showToast('✅ Synced successfully', 'success');
   } else {
-    showToast('⚠️ Could not sync — check connection', 'error');
+    showToast('⚠️ Could not sync', 'error');
   }
 }
 
@@ -1138,64 +1133,65 @@ function setFilter(filter, btn) {
   render();
 }
 
-function getFilteredPosts(status) {
+function getFiltered(status) {
   return state.posts.filter(p => p.status === status && (state.filter === 'All' || p.brand === state.filter));
 }
 
-function getFilteredRejectedPosts() {
-  return state.posts.filter(p => p.status === 'rejected' && (state.filter === 'All' || p.brand === state.filter));
-}
-
 // ===== TABS =====
-function switchTab(tab, btn) {
+function switchTab(tab) {
   state.activeTab = tab;
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('tab-' + tab).classList.add('active');
+  const btn = document.querySelector(`.tab-btn[data-tab="${tab}"]`);
+  if (btn) btn.classList.add('active');
+  const content = document.getElementById('tab-' + tab);
+  if (content) content.classList.add('active');
 }
 
 // ===== RENDER =====
 function render() {
   updateStats();
   renderPending();
+  renderApproved();
   renderScheduled();
   renderPosted();
 }
 
 function updateStats() {
   const pending = state.posts.filter(p => p.status === 'pending').length;
+  const approved = state.posts.filter(p => p.status === 'approved').length;
   const scheduled = state.posts.filter(p => p.status === 'scheduled').length;
   const posted = state.posts.filter(p => p.status === 'posted').length;
-  const total = state.posts.length;
 
   document.getElementById('stat-pending').textContent = pending;
+  document.getElementById('stat-approved').textContent = approved;
   document.getElementById('stat-scheduled').textContent = scheduled;
   document.getElementById('stat-posted').textContent = posted;
-  document.getElementById('stat-total').textContent = total;
 
-  // Tab badges (pending includes rejected so you know to review them)
-  const fp = getFilteredPosts('pending').length + getFilteredRejectedPosts().length;
-  const fs = getFilteredPosts('scheduled').length;
-  const fpo = getFilteredPosts('posted').length;
-  setBadge('tab-badge-pending', fp);
-  setBadge('tab-badge-scheduled', fs);
-  setBadge('tab-badge-posted', fpo);
+  const fp = getFiltered('pending').length + getFiltered('rejected').length;
+  const fa = getFiltered('approved').length;
+  const fs = getFiltered('scheduled').length;
+  const fpo = getFiltered('posted').length;
+  setBadge('tab-badge-pending', fp, '');
+  setBadge('tab-badge-approved', fa, 'green');
+  setBadge('tab-badge-scheduled', fs, 'blue');
+  setBadge('tab-badge-posted', fpo, '');
 }
 
-function setBadge(id, count) {
+function setBadge(id, count, colorClass) {
   const el = document.getElementById(id);
   el.textContent = count;
-  el.className = 'count-badge' + (count === 0 ? ' zero' : '');
+  el.className = 'count-badge' + (count === 0 ? ' zero' : (colorClass ? ' ' + colorClass : ''));
 }
 
+// ===== PENDING TAB =====
 function renderPending() {
   const grid = document.getElementById('pending-grid');
-  const posts = getFilteredPosts('pending');
-  const rejected = getFilteredRejectedPosts();
+  const posts = getFiltered('pending');
+  const rejected = getFiltered('rejected');
 
   if (posts.length === 0 && rejected.length === 0) {
-    grid.innerHTML = '<div class="empty-state"><div class="empty-icon">📬</div><div>No pending posts' + (state.filter !== 'All' ? ' for ' + state.filter : '') + '</div></div>';
+    grid.innerHTML = `<div class="empty-state"><div class="empty-icon">📬</div><div>No pending posts${state.filter !== 'All' ? ' for ' + state.filter : ''}</div></div>`;
     return;
   }
 
@@ -1278,68 +1274,145 @@ function renderPendingCard(post) {
   `;
 }
 
-function renderScheduled() {
-  const list = document.getElementById('scheduled-list');
-  const posts = getFilteredPosts('scheduled');
+function renderRejectedCard(post) {
+  const canRestore = state.role === 'Admin' || state.role === 'Approver';
+  const canDelete = state.role === 'Admin';
+  const reason = post.rejectedReason || post.rejectionReason || 'No reason provided';
+  const rejectedWhen = post.rejectedAt ? formatDate(post.rejectedAt) : '';
+  const thumbHtml = post.imageUrl
+    ? `<img src="${post.imageUrl}" class="post-image-preview" alt="Post image" style="max-height:140px;">`
+    : `<div class="post-image-placeholder" style="height:100px;pointer-events:none;"><div><div class="upload-icon">🖼️</div><div class="upload-text">No image</div></div></div>`;
+  return `
+    <div class="rejected-card" id="card-${post.id}">
+      ${thumbHtml}
+      <div class="post-body">
+        <div class="post-meta" style="margin-bottom:8px;">
+          <span class="brand-tag ${post.brand}">${post.brand}</span>
+          <span style="font-size:11px;color:var(--text-muted);">🗓️ ${formatDate(post.proposedDate)}</span>
+        </div>
+        <div class="rejected-reason-box">
+          <div class="rejected-label">❌ Rejection Reason${rejectedWhen ? ` — ${rejectedWhen}` : ''}</div>
+          ${escapeHtml(reason)}
+        </div>
+        <div class="caption-text" style="max-height:56px;overflow:hidden;opacity:0.6;font-size:12px;">${escapeHtml(post.caption)}</div>
+        <div class="post-actions" style="margin-top:10px;">
+          ${canRestore ? `<button class="btn btn-restore" onclick="restoreToPending('${post.id}')">🔄 Restore to Pending</button>` : '<span style="font-size:12px;color:var(--text-muted);">👁️ View only</span>'}
+          ${canDelete ? `<button class="btn btn-delete" style="flex:0;" onclick="deletePost('${post.id}')">🗑️</button>` : ''}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ===== APPROVED TAB =====
+function renderApproved() {
+  const list = document.getElementById('approved-list');
+  const posts = getFiltered('approved');
   if (posts.length === 0) {
-    list.innerHTML = '<div class="empty-state"><div class="empty-icon">📅</div><div>No scheduled posts' + (state.filter !== 'All' ? ' for ' + state.filter : '') + '</div></div>';
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">✅</div><div>No approved posts${state.filter !== 'All' ? ' for ' + state.filter : ''}<br><small style="font-size:11px;margin-top:4px;display:block;">Approve posts from the 📬 Pending tab</small></div></div>`;
     return;
   }
+  const canAct = state.role === 'Admin' || state.role === 'Approver';
+  const canDelete = state.role === 'Admin';
   list.innerHTML = posts.map(p => {
-    const canAct = state.role === 'Admin' || state.role === 'Approver';
     const thumbHtml = p.imageUrl
       ? `<img src="${p.imageUrl}" class="list-card-image" alt="Post image">`
       : `<div class="list-card-image-placeholder">No<br>Image</div>`;
+    const defaultDt = p.scheduledAt || getDefaultScheduleDatetime();
+    const schedulerHtml = canAct ? `
+      <div class="schedule-picker-row">
+        <input type="datetime-local" class="schedule-dt-input" id="schedule-dt-${p.id}" value="${defaultDt}" min="${new Date().toISOString().slice(0,16)}">
+        <button class="btn btn-schedule" style="flex:0;padding:6px 12px;font-size:12px;" onclick="schedulePost('${p.id}')">📅 Schedule</button>
+        <button class="btn btn-post-now" style="flex:0;padding:6px 12px;font-size:12px;" onclick="postNow('${p.id}')">📤 Post Now</button>
+      </div>
+    ` : '';
     return `
-      <div class="list-card brand-${p.brand}">
+      <div class="list-card brand-${p.brand}" id="card-${p.id}">
         ${thumbHtml}
         <div class="list-card-info">
-          <div class="list-card-caption">${escapeHtml(p.caption)}</div>
           <div class="list-card-meta">
             <span class="brand-tag ${p.brand}">${p.brand}</span>
             ${p.platforms.map(pl => `<span class="platform-badge ${pl}">${pl}</span>`).join('')}
-            <span class="list-card-date">📅 ${formatDate(p.proposedDate)}</span>
-            ${p.approvedBy ? `<span class="list-card-date">✅ by ${p.approvedBy}</span>` : ''}
+            ${p.approvedBy ? `<span class="list-card-date">✅ Approved by ${p.approvedBy}</span>` : ''}
           </div>
+          <div class="list-card-caption">${escapeHtml(p.caption)}</div>
+          ${schedulerHtml}
+        </div>
+        ${canDelete ? `<div class="list-card-actions"><button class="btn btn-delete" style="font-size:11px;padding:6px 10px;flex:none;" onclick="deletePost('${p.id}')">🗑️</button></div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+// ===== SCHEDULED TAB =====
+function renderScheduled() {
+  const list = document.getElementById('scheduled-list');
+  const posts = getFiltered('scheduled');
+  if (posts.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">📅</div><div>No scheduled posts${state.filter !== 'All' ? ' for ' + state.filter : ''}<br><small style="font-size:11px;margin-top:4px;display:block;">Pick a date from the ✅ Approved tab</small></div></div>`;
+    return;
+  }
+  const canAct = state.role === 'Admin' || state.role === 'Approver';
+  const canDelete = state.role === 'Admin';
+  list.innerHTML = posts.map(p => {
+    const thumbHtml = p.imageUrl
+      ? `<img src="${p.imageUrl}" class="list-card-image" alt="Post image">`
+      : `<div class="list-card-image-placeholder">No<br>Image</div>`;
+    const countdown = getCountdown(p.scheduledAt || p.proposedDate);
+    return `
+      <div class="list-card brand-${p.brand}" id="card-${p.id}">
+        ${thumbHtml}
+        <div class="list-card-info">
+          <div class="list-card-meta">
+            <span class="brand-tag ${p.brand}">${p.brand}</span>
+            <span class="platform-badge FB">📘 Facebook</span>
+            ${p.platforms.filter(pl => pl !== 'FB').map(pl => `<span class="platform-badge ${pl}">${pl}</span>`).join('')}
+            <span class="list-card-date">📅 ${formatDatetime(p.scheduledAt || p.proposedDate)}</span>
+            ${countdown ? `<span class="countdown-badge">${countdown}</span>` : ''}
+          </div>
+          <div class="list-card-caption">${escapeHtml(p.caption)}</div>
         </div>
         <div class="list-card-actions">
-          ${canAct ? `<button class="btn btn-mark-posted" style="font-size: 11px; padding: 6px 10px;" onclick="openPostedModal('${p.id}')">Mark Posted ✅</button>` : ''}
-          ${state.role === 'Admin' ? `<button class="btn btn-delete" style="font-size: 11px; padding: 6px 10px;" onclick="deletePost('${p.id}')">🗑️</button>` : ''}
+          ${canAct ? `<button class="btn btn-cancel" style="font-size:11px;padding:6px 10px;" onclick="cancelScheduled('${p.id}')">↩️ Cancel</button>` : ''}
+          ${canAct ? `<button class="btn" style="font-size:11px;padding:6px 10px;background:rgba(63,185,80,0.15);color:var(--success);border:1px solid rgba(63,185,80,0.3);" onclick="openPostedModal('${p.id}')">✅ Mark Posted</button>` : ''}
+          ${canDelete ? `<button class="btn btn-delete" style="font-size:11px;padding:6px 10px;flex:none;" onclick="deletePost('${p.id}')">🗑️</button>` : ''}
         </div>
       </div>
     `;
   }).join('');
 }
 
+// ===== POSTED TAB =====
 function renderPosted() {
   const list = document.getElementById('posted-list');
-  const posts = getFilteredPosts('posted');
+  const posts = getFiltered('posted');
   if (posts.length === 0) {
-    list.innerHTML = '<div class="empty-state"><div class="empty-icon">✅</div><div>No posted content yet' + (state.filter !== 'All' ? ' for ' + state.filter : '') + '</div></div>';
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">📤</div><div>No posted content yet${state.filter !== 'All' ? ' for ' + state.filter : ''}</div></div>`;
     return;
   }
+  const canDelete = state.role === 'Admin';
   list.innerHTML = posts.map(p => {
     const thumbHtml = p.imageUrl
       ? `<img src="${p.imageUrl}" class="list-card-image" alt="Post image">`
       : `<div class="list-card-image-placeholder">No<br>Image</div>`;
+    const isManual = p.notes && p.notes.includes('[manual post]');
     return `
-    <div class="list-card brand-${p.brand}">
-      ${thumbHtml}
-      <div class="list-card-info">
-        <div class="list-card-caption">${escapeHtml(p.caption)}</div>
-        <div class="list-card-meta">
-          <span class="brand-tag ${p.brand}">${p.brand}</span>
-          ${p.platforms.map(pl => `<span class="platform-badge ${pl}">${pl}</span>`).join('')}
-          <span class="list-card-date">📅 ${formatDate(p.publishedAt || p.proposedDate)}</span>
-          ${p.publishedUrl ? `<a href="${p.publishedUrl}" target="_blank" class="posted-url">🔗 View Post</a>` : ''}
+      <div class="list-card brand-${p.brand}" id="card-${p.id}">
+        ${thumbHtml}
+        <div class="list-card-info">
+          <div class="list-card-meta">
+            <span class="brand-tag ${p.brand}">${p.brand}</span>
+            <span class="platform-badge FB">📘 Facebook</span>
+            ${p.platforms.filter(pl => pl !== 'FB').map(pl => `<span class="platform-badge ${pl}">${pl}</span>`).join('')}
+            <span class="list-card-date">📅 ${formatDate(p.publishedAt || p.proposedDate)}</span>
+            ${isManual ? `<span style="font-size:10px;color:var(--text-muted);background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1px 6px;">manual</span>` : ''}
+          </div>
+          <div class="list-card-caption">${escapeHtml(p.caption)}</div>
+          ${p.publishedUrl ? `<div style="margin-top:4px;"><a href="${p.publishedUrl}" target="_blank" class="posted-url">🔗 View on Facebook</a></div>` : ''}
         </div>
+        ${canDelete ? `<div class="list-card-actions"><button class="btn btn-delete" style="font-size:11px;padding:6px 10px;flex:none;" onclick="deletePost('${p.id}')">🗑️</button></div>` : ''}
       </div>
-      ${state.role === 'Admin' ? `
-        <div class="list-card-actions">
-          <button class="btn btn-delete" style="font-size: 11px; padding: 6px 10px;" onclick="deletePost('${p.id}')">🗑️</button>
-        </div>` : ''}
-    </div>
-  `;
+    `;
   }).join('');
 }
 
@@ -1348,22 +1421,18 @@ function updateCaption(postId, value) {
   const post = state.posts.find(p => p.id === postId);
   if (post) { post.caption = value; post.updatedAt = new Date().toISOString(); }
 }
-
 function updateBrand(postId, value) {
   const post = state.posts.find(p => p.id === postId);
   if (post) {
-    post.brand = value;
-    post.updatedAt = new Date().toISOString();
+    post.brand = value; post.updatedAt = new Date().toISOString();
     const card = document.getElementById('card-' + postId);
-    if (card) { card.className = `post-card brand-${value}`; }
+    if (card) card.className = `post-card brand-${value}`;
   }
 }
-
 function updateDate(postId, value) {
   const post = state.posts.find(p => p.id === postId);
   if (post) { post.proposedDate = value; post.updatedAt = new Date().toISOString(); }
 }
-
 function togglePlatform(postId, platform, checked) {
   const post = state.posts.find(p => p.id === postId);
   if (!post) return;
@@ -1375,28 +1444,27 @@ function togglePlatform(postId, platform, checked) {
 async function savePostEdit(postId) {
   const post = state.posts.find(p => p.id === postId);
   if (!post) return;
-  // Get current caption from textarea
   const ta = document.getElementById('caption-' + postId);
   if (ta) post.caption = ta.value;
   const ok = await saveToGitHub(state.posts);
   if (ok) showToast('💾 Post saved', 'success');
 }
 
+// Approve → moves to "approved" status (not scheduled)
 async function approvePost(postId) {
   const post = state.posts.find(p => p.id === postId);
   if (!post) return;
-  // Grab current caption
   const ta = document.getElementById('caption-' + postId);
   if (ta) post.caption = ta.value;
-  post.status = 'scheduled';
+  post.status = 'approved';
   post.approvedBy = state.role;
   post.approvedAt = new Date().toISOString();
   post.updatedAt = new Date().toISOString();
   const ok = await saveToGitHub(state.posts);
   if (ok) {
-    showToast('✅ Post approved and scheduled!', 'success');
+    showToast('✅ Post approved! Set a schedule in the Approved tab.', 'success');
     render();
-    switchTab('scheduled', document.querySelector('[onclick="switchTab(\'scheduled\', this)"]'));
+    switchTab('approved');
   }
 }
 
@@ -1410,84 +1478,91 @@ async function confirmReject() {
   const reason = document.getElementById('reject-reason').value.trim();
   const errorEl = document.getElementById('reject-reason-error');
   const inputEl = document.getElementById('reject-reason');
-
   if (!reason) {
     errorEl.style.display = 'block';
     inputEl.style.borderColor = 'var(--red)';
     inputEl.focus();
-    setTimeout(() => {
-      errorEl.style.display = 'none';
-      inputEl.style.borderColor = 'var(--border)';
-    }, 3000);
+    setTimeout(() => { errorEl.style.display = 'none'; inputEl.style.borderColor = 'var(--border)'; }, 3000);
     return;
   }
-
   const post = state.posts.find(p => p.id === state.pendingRejectId);
   if (!post) return;
   post.status = 'rejected';
   post.rejectedBy = state.role;
   post.rejectedAt = new Date().toISOString();
   post.rejectedReason = reason;
-  post.rejectionReason = reason; // backward compat
+  post.rejectionReason = reason;
   post.updatedAt = new Date().toISOString();
   closeModal('reject-modal');
   showToast('⏳ Rejecting...', 'info');
   const ok = await saveToGitHub(state.posts);
-  if (ok) {
-    showToast('❌ Rejected', 'error');
-    render();
-  }
-}
-
-function renderRejectedCard(post) {
-  const canRestore = state.role === 'Admin' || state.role === 'Approver';
-  const canDelete = state.role === 'Admin';
-  const reason = post.rejectedReason || post.rejectionReason || 'No reason provided';
-  const rejectedWhen = post.rejectedAt ? formatDate(post.rejectedAt) : '';
-
-  const thumbHtml = post.imageUrl
-    ? `<img src="${post.imageUrl}" class="post-image-preview" alt="Post image" style="max-height:160px;">`
-    : `<div class="post-image-placeholder" style="height:120px;pointer-events:none;"><div><div class="upload-icon">🖼️</div><div class="upload-text">No image</div></div></div>`;
-
-  return `
-    <div class="rejected-card" id="card-${post.id}">
-      ${thumbHtml}
-      <div class="post-body">
-        <div class="post-meta" style="margin-bottom:8px;">
-          <span class="brand-tag ${post.brand}">${post.brand}</span>
-          <span style="font-size:11px;color:var(--text-muted);">🗓️ ${formatDate(post.proposedDate)}</span>
-        </div>
-        <div class="rejected-reason-box">
-          <div class="rejected-label">❌ Rejection Reason${rejectedWhen ? ` — ${rejectedWhen}` : ''}</div>
-          ${escapeHtml(reason)}
-        </div>
-        <div class="caption-text" style="max-height:60px;overflow:hidden;opacity:0.6;font-size:12px;">${escapeHtml(post.caption)}</div>
-        <div class="post-actions" style="margin-top:10px;">
-          ${canRestore ? `<button class="btn btn-restore" onclick="restoreToPending('${post.id}')">&#x1F504; Restore to Pending</button>` : '<span style="font-size:12px;color:var(--text-muted);">&#x1F441;&#xFE0F; View only</span>'}
-          ${canDelete ? `<button class="btn btn-delete" style="flex:0;" onclick="deletePost('${post.id}')">&#x1F5D1;&#xFE0F;</button>` : ''}
-        </div>
-      </div>
-    </div>
-  `;
+  if (ok) { showToast('❌ Post rejected', 'error'); render(); }
 }
 
 async function restoreToPending(postId) {
   const post = state.posts.find(p => p.id === postId);
   if (!post) return;
   post.status = 'pending';
-  post.rejectedBy = null;
-  post.rejectedAt = null;
-  post.rejectedReason = null;
-  post.rejectionReason = null;
+  post.rejectedBy = null; post.rejectedAt = null;
+  post.rejectedReason = null; post.rejectionReason = null;
   post.updatedAt = new Date().toISOString();
   showToast('🔄 Restoring...', 'info');
   const ok = await saveToGitHub(state.posts);
+  if (ok) { showToast('✅ Post restored to pending!', 'success'); render(); }
+}
+
+// Approved → Scheduled: pick datetime and schedule
+async function schedulePost(postId) {
+  const input = document.getElementById('schedule-dt-' + postId);
+  const datetime = input ? input.value : '';
+  if (!datetime) { showToast('⚠️ Please pick a date and time', 'error'); return; }
+  const post = state.posts.find(p => p.id === postId);
+  if (!post) return;
+  post.status = 'scheduled';
+  post.scheduledAt = datetime;
+  post.proposedDate = datetime.split('T')[0];
+  post.updatedAt = new Date().toISOString();
+  const ok = await saveToGitHub(state.posts);
   if (ok) {
-    showToast('✅ Post restored to pending!', 'success');
+    showToast(`📅 Scheduled for ${formatDatetime(datetime)}`, 'success');
     render();
+    switchTab('scheduled');
   }
 }
 
+// Approved → Posted (Post Now — manual)
+async function postNow(postId) {
+  const post = state.posts.find(p => p.id === postId);
+  if (!post) return;
+  post.status = 'posted';
+  post.publishedAt = new Date().toISOString();
+  post.publishedUrl = null;
+  post.notes = (post.notes ? post.notes + ' ' : '') + '[manual post]';
+  post.updatedAt = new Date().toISOString();
+  const ok = await saveToGitHub(state.posts);
+  if (ok) {
+    showToast('📤 Marked as posted (manual)!', 'success');
+    render();
+    switchTab('posted');
+  }
+}
+
+// Scheduled → Approved (Cancel)
+async function cancelScheduled(postId) {
+  const post = state.posts.find(p => p.id === postId);
+  if (!post) return;
+  post.status = 'approved';
+  post.scheduledAt = null;
+  post.updatedAt = new Date().toISOString();
+  const ok = await saveToGitHub(state.posts);
+  if (ok) {
+    showToast('↩️ Moved back to Approved', 'info');
+    render();
+    switchTab('approved');
+  }
+}
+
+// Scheduled → Posted (Mark Posted with URL)
 function openPostedModal(postId) {
   state.pendingPostedId = postId;
   document.getElementById('posted-url-input').value = '';
@@ -1506,6 +1581,7 @@ async function confirmMarkPosted() {
   if (ok) {
     showToast('🎉 Post marked as published!', 'success');
     render();
+    switchTab('posted');
   }
 }
 
@@ -1513,17 +1589,11 @@ async function deletePost(postId) {
   if (!confirm('Delete this post? This cannot be undone.')) return;
   state.posts = state.posts.filter(p => p.id !== postId);
   const ok = await saveToGitHub(state.posts);
-  if (ok) {
-    showToast('🗑️ Post deleted', 'info');
-    render();
-  }
+  if (ok) { showToast('🗑️ Post deleted', 'info'); render(); }
 }
 
+// ===== ADD NEW POST =====
 function showAddPostModal() {
-  // Set default date to tomorrow
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  document.getElementById('new-post-date').value = tomorrow.toISOString().split('T')[0];
   document.getElementById('new-post-caption').value = '';
   document.getElementById('add-post-modal').classList.add('open');
 }
@@ -1531,34 +1601,25 @@ function showAddPostModal() {
 async function createNewPost() {
   const brand = document.getElementById('new-post-brand').value;
   const caption = document.getElementById('new-post-caption').value.trim();
-  const date = document.getElementById('new-post-date').value;
   const platforms = [];
   if (document.getElementById('np-fb').checked) platforms.push('FB');
   if (document.getElementById('np-ig').checked) platforms.push('IG');
   if (document.getElementById('np-tiktok').checked) platforms.push('TikTok');
-
   if (!caption) { showToast('⚠️ Caption is required', 'error'); return; }
-
   const newPost = {
     id: 'post_' + Date.now(),
-    status: 'pending',
-    brand, caption, platforms,
-    proposedDate: date,
+    status: 'pending', brand, caption, platforms,
+    proposedDate: new Date(Date.now() + 86400000).toISOString().split('T')[0],
     imageUrl: null,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    approvedBy: null, approvedAt: null,
+    createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
+    approvedBy: null, approvedAt: null, scheduledAt: null,
     rejectedBy: null, rejectedAt: null, rejectionReason: null,
-    publishedAt: null, publishedUrl: null,
-    notes: 'Created via dashboard'
+    publishedAt: null, publishedUrl: null, notes: 'Created via dashboard'
   };
   state.posts.unshift(newPost);
   closeModal('add-post-modal');
   const ok = await saveToGitHub(state.posts);
-  if (ok) {
-    showToast('✅ New draft created!', 'success');
-    render();
-  }
+  if (ok) { showToast('✅ New draft created!', 'success'); render(); }
 }
 
 function handleImageUpload(postId, input) {
@@ -1575,43 +1636,6 @@ function handleImageUpload(postId, input) {
     }
   };
   reader.readAsDataURL(file);
-}
-
-// ===== UTILS =====
-function escapeHtml(str) {
-  if (!str) return '';
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
-function formatDate(dateStr) {
-  if (!dateStr) return 'TBD';
-  try {
-    const d = new Date(dateStr);
-    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-  } catch { return dateStr; }
-}
-
-function closeModal(id) {
-  document.getElementById(id).classList.remove('open');
-}
-
-// Close modal on overlay click
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) overlay.classList.remove('open');
-  });
-});
-
-function showToast(message, type = 'info') {
-  const container = document.getElementById('toast-container');
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-  toast.textContent = message;
-  container.appendChild(toast);
-  setTimeout(() => {
-    toast.style.animation = 'fadeOut 0.3s ease forwards';
-    setTimeout(() => toast.remove(), 300);
-  }, 3000);
 }
 </script>
 </body>
