@@ -20,7 +20,7 @@
       "rejectionReason": "add some pictures of wolf decking, or treks labeled appropriately",
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post — TLC spring campaign",
+      "notes": "Sample draft post \u2014 TLC spring campaign",
       "rejectedReason": null,
       "source": "Reworked per Joe feedback - added Wolf/Trex branding",
       "postedUrl": null
@@ -55,7 +55,7 @@
       "id": "post_005",
       "status": "pending",
       "brand": "Surfbox",
-      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you — fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
+      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you \u2014 fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
       "platforms": [
         "FB",
         "IG"
@@ -71,7 +71,7 @@
       "rejectionReason": null,
       "publishedAt": "2026-04-10T11:00:00Z",
       "publishedUrl": "https://www.facebook.com/surfboxstorage",
-      "notes": "Posted on schedule — great engagement",
+      "notes": "Posted on schedule \u2014 great engagement",
       "postedUrl": null
     },
     {
@@ -273,7 +273,7 @@
     },
     {
       "id": "keli-under-contract-001",
-      "status": "approved",
+      "status": "posted",
       "brand": "Keli",
       "caption": "UNDER CONTRACT!\n\nAnother one finding its new family. This is the part I love most - matching the right people with the right home. Closing day is right around the corner.\n\nThinking about buying or selling? Let me walk you through it.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #UnderContract #KWPremier #RealEstate #NJRealtor #HomeSales #Crosswicks #BurlingtonCounty #JustSold",
       "platforms": [
@@ -287,8 +287,12 @@
       "approvedBy": "Admin",
       "approvedAt": "2026-04-20T20:26:07.955Z",
       "rejectedReason": null,
-      "postedUrl": null,
-      "source": "Keli photos - under contract sign with Boston Terrier"
+      "postedUrl": "https://www.facebook.com/122165830262701646",
+      "source": "Keli photos - under contract sign with Boston Terrier",
+      "postedAt": "2026-04-20T16:30:00",
+      "postedPlatforms": [
+        "Facebook"
+      ]
     },
     {
       "id": "keli-walking-001",
