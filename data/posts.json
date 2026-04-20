@@ -20,7 +20,7 @@
       "rejectionReason": "add some pictures of wolf decking, or treks labeled appropriately",
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post \u2014 TLC spring campaign",
+      "notes": "Sample draft post — TLC spring campaign",
       "rejectedReason": null,
       "source": "Reworked per Joe feedback - added Wolf/Trex branding",
       "postedUrl": null
@@ -55,7 +55,7 @@
       "id": "post_005",
       "status": "pending",
       "brand": "Surfbox",
-      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you \u2014 fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
+      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you — fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
       "platforms": [
         "FB",
         "IG"
@@ -71,7 +71,7 @@
       "rejectionReason": null,
       "publishedAt": "2026-04-10T11:00:00Z",
       "publishedUrl": "https://www.facebook.com/surfboxstorage",
-      "notes": "Posted on schedule \u2014 great engagement",
+      "notes": "Posted on schedule — great engagement",
       "postedUrl": null
     },
     {
@@ -99,19 +99,18 @@
     },
     {
       "id": "tlc-reeb-001",
-      "status": "pending",
+      "status": "approved",
       "brand": "TLC",
       "caption": "Your front door called. It wants an upgrade.\n\nIntroducing Reeb Finish Express at Tuckerton Lumber - gorgeous pre-finished Therma-Tru fiberglass entry doors delivered in DAYS, not weeks.\n\nTotal Eclipse (black) or Alaskan Storm (white)\n10-year warranty\nPre-finished BOTH sides - no painting, no waiting\nMultiple styles with coordinated glass and hardware\n\nSummers coming. Your beach house deserves a front door that turns heads.\n\nTuckerton and Surf City | Since 1932\nwww.tlcnj.com\n\n#TuckertonLumber #FrontDoorGoals #CurbAppeal #LBI #JerseyShore #ReebFinishExpress #BeachHouse #HomeUpgrade #ShopLocal",
       "platforms": [
-        "FB",
-        "IG"
+        "FB"
       ],
       "proposedDate": "2026-04-18",
       "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/tlc-reeb-001.png",
       "createdAt": "2026-04-16T15:34:27.210696",
-      "updatedAt": "2026-04-16T20:07:40.794Z",
-      "approvedBy": null,
-      "approvedAt": null,
+      "updatedAt": "2026-04-20T21:01:24.935Z",
+      "approvedBy": "Admin",
+      "approvedAt": "2026-04-20T21:01:24.935Z",
       "rejectedReason": null,
       "postedUrl": null,
       "source": "Denise Moon email - Reeb Finish Express brochure"
@@ -122,13 +121,12 @@
       "brand": "Surfbox",
       "caption": "Inside the Surfbox warehouse - where your storage solution starts.\n\nOur containers are built tough, clean, and ready to roll. Whether its a beach house renovation, a big move, or contractor supplies - we deliver it, you fill it, we pick it up.\n\nSimple. Secure. Surfbox.\n\nCall: (855) SURFBOX | (855) 787-3269\nwww.surfboxstorage.com\n\n#Surfbox #PortableStorage #BehindTheScenes #LBI #JerseyShore #StorageSolutions #OceanCounty",
       "platforms": [
-        "FB",
-        "IG"
+        "FB"
       ],
       "proposedDate": "2026-04-21",
       "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/surfbox-warehouse.jpg",
       "createdAt": "2026-04-16T16:02:39.047290",
-      "updatedAt": "2026-04-16T16:02:39.047290",
+      "updatedAt": "2026-04-20T21:00:14.291Z",
       "approvedBy": null,
       "approvedAt": null,
       "rejectedReason": null,
@@ -334,7 +332,7 @@
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-20T20:26:07.955Z",
+    "lastUpdated": "2026-04-20T21:01:24.935Z",
     "version": "2.0.0"
   }
 }
