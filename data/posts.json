@@ -20,14 +20,14 @@
       "rejectionReason": "add some pictures of wolf decking, or treks labeled appropriately",
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post — TLC spring campaign",
+      "notes": "Sample draft post \u2014 TLC spring campaign",
       "rejectedReason": null,
       "source": "Reworked per Joe feedback - added Wolf/Trex branding",
       "postedUrl": null
     },
     {
       "id": "post_004",
-      "status": "scheduled",
+      "status": "posted",
       "brand": "TLC",
       "caption": "The perfect color starts with Benjamin Moore.\n\nTuckerton Lumber is your authorized Benjamin Moore dealer - over 3,500 colors, expert color matching, and the quality paint pros trust. From Regal Select to Aura, we carry the full line.\n\nStop by Tuckerton or Surf City and let us help you find your color.\n\nTuckerton Lumber - Benjamin Moore headquarters since 1932.\nwww.tlcnj.com\n\n#TuckertonLumber #BenjaminMoore #Paint #ColorMatch #LBI #JerseyShore #HomeImprovement #ShopLocal",
       "platforms": [
@@ -47,13 +47,14 @@
       "notes": "Approved for Thursday post",
       "rejectedReason": null,
       "source": "Reworked per Joe feedback - Benjamin Moore labeled cans",
-      "postedUrl": null
+      "postedUrl": "https://www.facebook.com/tuckertonlumber/posts/1474945317976119",
+      "postedAt": "2026-04-21T12:58:00"
     },
     {
       "id": "post_005",
       "status": "pending",
       "brand": "Surfbox",
-      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you — fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
+      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you \u2014 fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
       "platforms": [
         "FB",
         "IG"
@@ -69,7 +70,7 @@
       "rejectionReason": null,
       "publishedAt": "2026-04-10T11:00:00Z",
       "publishedUrl": "https://www.facebook.com/surfboxstorage",
-      "notes": "Posted on schedule — great engagement",
+      "notes": "Posted on schedule \u2014 great engagement",
       "postedUrl": null
     },
     {
