@@ -20,7 +20,7 @@
       "rejectionReason": "add some pictures of wolf decking, or treks labeled appropriately",
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post â TLC spring campaign",
+      "notes": "Sample draft post \u00e2\u0080\u0094 TLC spring campaign",
       "rejectedReason": null,
       "source": "Reworked per Joe feedback - added Wolf/Trex branding",
       "postedUrl": null
@@ -54,7 +54,7 @@
       "id": "post_005",
       "status": "rejected",
       "brand": "Surfbox",
-      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you â fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
+      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you \u00e2\u0080\u0094 fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
       "platforms": [
         "FB",
         "IG"
@@ -62,7 +62,7 @@
       "proposedDate": "2026-04-10",
       "imageUrl": null,
       "createdAt": "2026-04-08T08:00:00Z",
-      "updatedAt": "2026-04-21T17:24:30.221Z",
+      "updatedAt": "2026-04-21T20:30:05Z",
       "approvedBy": null,
       "approvedAt": null,
       "rejectedBy": "Admin",
@@ -70,9 +70,10 @@
       "rejectionReason": "needs a picture",
       "publishedAt": "2026-04-10T11:00:00Z",
       "publishedUrl": "https://www.facebook.com/surfboxstorage",
-      "notes": "Posted on schedule â great engagement",
+      "notes": "Posted on schedule \u00e2\u0080\u0094 great engagement",
       "postedUrl": null,
-      "rejectedReason": "needs a picture"
+      "rejectedReason": "needs a picture",
+      "reworked": true
     },
     {
       "id": "post_006",
@@ -86,7 +87,7 @@
       "proposedDate": "2026-04-08",
       "imageUrl": null,
       "createdAt": "2026-04-06T08:00:00Z",
-      "updatedAt": "2026-04-21T17:24:42.749Z",
+      "updatedAt": "2026-04-21T20:30:05Z",
       "approvedBy": null,
       "approvedAt": null,
       "rejectedBy": "Admin",
@@ -96,7 +97,8 @@
       "publishedUrl": "https://www.facebook.com/kelikelyrealtor",
       "notes": "Good reach on this one",
       "postedUrl": null,
-      "rejectedReason": "needs a picture"
+      "rejectedReason": "needs a picture",
+      "reworked": true
     },
     {
       "id": "tlc-reeb-001",
@@ -342,10 +344,71 @@
       "rejectedReason": null,
       "postedUrl": null,
       "source": "Keli photos - last visit before closing April 30"
+    },
+    {
+      "id": "tlc-testimonial-001",
+      "status": "pending",
+      "brand": "TLC",
+      "caption": "This is what 90 years of trust looks like.\n\nNothing means more to us than hearing from the people we serve. This customer says it better than we ever could.\n\nWhether it's a deck, a door, a full renovation, or just a can of Benjamin Moore -- Tuckerton Lumber has been showing up for this community since 1932.\n\nThank you for trusting us with your project.\n\nTuckerton | Surf City | Since 1932\nwww.tlcnj.com\n\n#TuckertonLumber #CustomerLove #Testimonial #LBI #JerseyShore #ShopLocal #FamilyBusiness #HomeImprovement",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
+      "proposedDate": "2026-04-23",
+      "imageUrl": null,
+      "videoAttachment": "Video.mov",
+      "createdAt": "2026-04-21T20:30:05Z",
+      "updatedAt": "2026-04-21T20:30:05Z",
+      "approvedBy": null,
+      "approvedAt": null,
+      "rejectedReason": null,
+      "postedUrl": null,
+      "source": "inbox-003 -- FW: Customer testimonial (video)",
+      "notes": "Customer testimonial video -- attach Video.mov before publishing"
+    },
+    {
+      "id": "surfbox-spring-rework-001",
+      "status": "pending",
+      "brand": "Surfbox",
+      "caption": "Spring cleaning season is officially here -- and your garage doesn't have to suffer.\n\nSurfbox brings the storage to YOU. Our portable containers are delivered right to your driveway. Fill it at your own pace, then we haul it away -- or store it at our facility until you're ready.\n\nNo trips to a storage unit. No renting a truck. Just call, we deliver, you fill it, we pick it up.\n\nSimple. Affordable. Surfbox.\n\nCall: (855) SURFBOX | (855) 787-3269\nwww.surfboxstorage.com\n\n#Surfbox #SpringCleaning #PortableStorage #LBI #JerseyShore #OceanCounty #GarageGoals #StorageMadeSimple",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
+      "proposedDate": "2026-04-24",
+      "imageUrl": null,
+      "createdAt": "2026-04-21T20:30:05Z",
+      "updatedAt": "2026-04-21T20:30:05Z",
+      "approvedBy": null,
+      "approvedAt": null,
+      "rejectedReason": null,
+      "postedUrl": null,
+      "source": "Reworked from post_005",
+      "notes": "NEEDS IMAGE -- please attach a Surfbox spring/garage photo before approving"
+    },
+    {
+      "id": "keli-lbi-rework-001",
+      "status": "pending",
+      "brand": "Keli",
+      "caption": "LBI real estate is moving -- and spring is the best time to make yours.\n\nInventory on Long Beach Island is tight, buyer demand is strong, and well-priced homes are going fast. If you've been thinking about selling your beach house, the window is open right now.\n\nI'll walk you through current comps, what buyers are actually looking for this season, and what your home could realistically sell for today -- no pressure, just real numbers.\n\nReady to talk? Let's connect.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #LBIRealEstate #LongBeachIsland #SpringMarket #JerseyShoreHomes #KWPremier #SellYourHome #NJRealtor #BeachHouseForSale",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
+      "proposedDate": "2026-04-25",
+      "imageUrl": null,
+      "createdAt": "2026-04-21T20:30:05Z",
+      "updatedAt": "2026-04-21T20:30:05Z",
+      "approvedBy": null,
+      "approvedAt": null,
+      "rejectedReason": null,
+      "postedUrl": null,
+      "source": "Reworked from post_006",
+      "notes": "NEEDS IMAGE -- please attach an LBI beach/home photo before approving"
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-21T17:34:38.600Z",
+    "lastUpdated": "2026-04-21T20:30:05Z",
     "version": "2.0.0"
   }
 }
