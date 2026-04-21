@@ -182,7 +182,7 @@
     },
     {
       "id": "surfbox-loading-001",
-      "status": "pending",
+      "status": "approved",
       "brand": "Surfbox",
       "caption": "This is how we do it. Hydraulic lift, precision placement, zero hassle.\n\nOur custom flatbed trucks deliver your Surfbox container right where you need it - driveway, job site, backyard. We handle the heavy lifting so you dont have to.\n\nCall: (855) SURFBOX | (855) 787-3269\nwww.surfboxstorage.com\n\n#Surfbox #PortableStorage #DeliveryDay #HeavyLifting #LBI #JerseyShore #Construction #OceanCounty",
       "platforms": [
@@ -192,9 +192,9 @@
       "proposedDate": "2026-04-24",
       "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/surfbox-loading.jpg",
       "createdAt": "2026-04-16T16:05:08.626834",
-      "updatedAt": "2026-04-16T16:05:08.626834",
-      "approvedBy": null,
-      "approvedAt": null,
+      "updatedAt": "2026-04-21T17:27:15.331Z",
+      "approvedBy": "Admin",
+      "approvedAt": "2026-04-21T17:27:15.331Z",
       "rejectedReason": null,
       "postedUrl": null,
       "source": "Real photo - Surfbox loading operation"
@@ -343,7 +343,7 @@
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-21T17:24:42.749Z",
+    "lastUpdated": "2026-04-21T17:27:15.331Z",
     "version": "2.0.0"
   }
 }
