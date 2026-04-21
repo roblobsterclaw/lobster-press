@@ -423,8 +423,10 @@
   .btn-save:hover { background: rgba(232,86,42,0.25); border-color: var(--accent); }
   .btn-schedule { background: rgba(33,150,243,0.15); color: var(--blue); border: 1px solid rgba(33,150,243,0.3); }
   .btn-schedule:hover { background: rgba(33,150,243,0.25); border-color: var(--blue); }
-  .btn-post-now { background: rgba(63,185,80,0.15); color: var(--success); border: 1px solid rgba(63,185,80,0.3); }
-  .btn-post-now:hover { background: rgba(63,185,80,0.25); border-color: var(--success); }
+  .btn-post-now { background: var(--accent); color: white; border: 1px solid var(--accent); font-weight: 700; }
+  .btn-post-now:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+  .btn-back-to-pending { background: rgba(139,148,158,0.12); color: var(--text-muted); border: 1px solid var(--border); font-size: 12px; flex: 0; padding: 6px 10px; }
+  .btn-back-to-pending:hover { background: rgba(139,148,158,0.2); color: var(--text); border-color: var(--text-muted); }
   .btn-cancel { background: rgba(240,180,41,0.15); color: var(--yellow); border: 1px solid rgba(240,180,41,0.3); }
   .btn-cancel:hover { background: rgba(240,180,41,0.25); border-color: var(--yellow); }
   .btn-delete { background: rgba(248,81,73,0.1); color: var(--red); border: 1px solid rgba(248,81,73,0.2); font-size: 12px; flex: 0; padding: 8px 12px; }
@@ -742,7 +744,7 @@
       <button class="sync-btn" style="margin-left:0;" onclick="syncData()">
         <span>🔄</span> Sync
       </button>
-      <button class="save-publish-btn" id="save-publish-btn" onclick="saveAndPublish()">💾 Save &amp; Publish</button>
+      <button class="save-publish-btn" id="save-publish-btn" onclick="saveAndPublish()" style="display:none;">💾 Save &amp; Publish</button>
     </div>
   </div>
 
@@ -1364,10 +1366,11 @@ function renderApproved() {
       : `<div class="list-card-image-placeholder">No<br>Image</div>`;
     const defaultDt = p.scheduledAt || getDefaultScheduleDatetime();
     const schedulerHtml = canAct ? `
-      <div class="schedule-picker-row">
-        <input type="datetime-local" class="schedule-dt-input" id="schedule-dt-${p.id}" value="${defaultDt}" min="${new Date().toISOString().slice(0,16)}">
-        <button class="btn btn-schedule" style="flex:0;padding:6px 12px;font-size:12px;" onclick="schedulePost('${p.id}')">📅 Schedule</button>
-        <button class="btn btn-post-now" style="flex:0;padding:6px 12px;font-size:12px;" onclick="postNow('${p.id}')">📤 Post Now</button>
+      <div class="schedule-picker-row" style="flex-wrap:wrap;gap:8px;">
+        <button class="btn btn-post-now" style="flex:0;padding:8px 16px;font-size:13px;" onclick="postNow('${p.id}')">📤 Post Now</button>
+        <input type="datetime-local" class="schedule-dt-input" id="schedule-dt-${p.id}" value="${defaultDt}" min="${new Date().toISOString().slice(0,16)}" style="min-width:160px;">
+        <button class="btn btn-schedule" style="flex:0;padding:8px 12px;font-size:12px;" onclick="schedulePost('${p.id}')">📅 Schedule</button>
+        <button class="btn btn-back-to-pending" onclick="backToPending('${p.id}')">↩️ Back</button>
       </div>
     ` : '';
     return `
@@ -1386,6 +1389,23 @@ function renderApproved() {
       </div>
     `;
   }).join('');
+}
+
+// ===== BACK TO PENDING =====
+async function backToPending(postId) {
+  const post = state.posts.find(p => p.id === postId);
+  if (!post) return;
+  post.status = 'pending';
+  post.approvedBy = null;
+  post.approvedAt = null;
+  post.updatedAt = new Date().toISOString();
+  showToast('⏳ Moving back to Pending...', 'info');
+  const ok = await saveToGitHub(state.posts);
+  if (ok) {
+    showToast('↩️ Moved back to Pending', 'success');
+    render();
+    switchTab('pending');
+  }
 }
 
 // ===== SCHEDULED TAB =====
@@ -1576,17 +1596,32 @@ async function schedulePost(postId) {
   }
 }
 
-// Approved → post_now (in memory only — user hits Save & Publish to actually publish)
-function postNow(postId) {
+// Approved → publish immediately to Facebook
+async function postNow(postId) {
   const post = state.posts.find(p => p.id === postId);
   if (!post) return;
-  post.status = 'post_now';
-  post.postNowAt = new Date().toISOString();
-  post.updatedAt = new Date().toISOString();
-  state.hasUnsavedChanges = true;
-  showToast('📤 Ready to publish — hit 💾 Save & Publish', 'info');
-  render();
-  switchTab('scheduled');
+  const page = getPageForBrand(post.brand);
+  const brandName = page ? page.name : post.brand;
+  if (!confirm(`Post to ${brandName}'s Facebook now?`)) return;
+  showToast('📤 Publishing to Facebook...', 'info');
+  const result = await publishToFacebook(post);
+  if (result.success) {
+    post.status = 'posted';
+    post.publishedAt = new Date().toISOString();
+    post.publishedUrl = result.url || null;
+    post.postedAt = post.publishedAt;
+    post.postedUrl = post.publishedUrl;
+    post.updatedAt = new Date().toISOString();
+    const saved = await saveToGitHub(state.posts);
+    if (saved) {
+      const linkText = result.url ? ` — ${result.url}` : '';
+      showToast(`✅ Posted to Facebook!${linkText}`, 'success');
+      render();
+      switchTab('posted');
+    }
+  } else {
+    showToast(`❌ Post failed: ${result.error}`, 'error');
+  }
 }
 
 // Scheduled → Approved (Cancel)
