@@ -76,7 +76,7 @@
     },
     {
       "id": "post_006",
-      "status": "pending",
+      "status": "rejected",
       "brand": "Keli",
       "caption": "Thinking about selling your LBI home this spring? The market is moving fast and inventory is tight. Let's talk about what your home is worth today. #KellyLynchRealtor #LBI #RealEstate",
       "platforms": [
@@ -86,16 +86,17 @@
       "proposedDate": "2026-04-08",
       "imageUrl": null,
       "createdAt": "2026-04-06T08:00:00Z",
-      "updatedAt": "2026-04-08T10:00:00Z",
+      "updatedAt": "2026-04-21T17:24:42.749Z",
       "approvedBy": null,
       "approvedAt": null,
-      "rejectedBy": null,
-      "rejectedAt": null,
-      "rejectionReason": null,
+      "rejectedBy": "Admin",
+      "rejectedAt": "2026-04-21T17:24:42.749Z",
+      "rejectionReason": "needs a picture",
       "publishedAt": "2026-04-08T10:00:00Z",
       "publishedUrl": "https://www.facebook.com/kelikelyrealtor",
       "notes": "Good reach on this one",
-      "postedUrl": null
+      "postedUrl": null,
+      "rejectedReason": "needs a picture"
     },
     {
       "id": "tlc-reeb-001",
@@ -342,7 +343,7 @@
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-21T17:24:30.222Z",
+    "lastUpdated": "2026-04-21T17:24:42.749Z",
     "version": "2.0.0"
   }
 }
