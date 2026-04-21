@@ -675,6 +675,65 @@
   .save-publish-btn:disabled { opacity: 0.65; cursor: not-allowed; animation: none; box-shadow: none; }
   .spb-unsaved { opacity: 0.8; font-size: 11px; font-weight: 400; }
 
+  /* ===== INBOX CARDS ===== */
+  .inbox-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .inbox-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .inbox-card:hover { border-color: #484F58; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+  .inbox-card.status-new { border-left: 3px solid var(--success); }
+  .inbox-card.status-used { border-left: 3px solid var(--text-muted); opacity: 0.7; }
+  .inbox-card.status-skipped { border-left: 3px solid var(--border); opacity: 0.5; }
+  .inbox-icon { font-size: 28px; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+  .inbox-info { flex: 1; min-width: 0; }
+  .inbox-subject { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; word-break: break-word; }
+  .inbox-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+  .inbox-date { font-size: 11px; color: var(--text-muted); }
+  .inbox-sender { font-size: 11px; color: var(--text-muted); }
+  .inbox-body { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; font-style: italic; }
+  .inbox-attachments { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .attach-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(139,148,158,0.1);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .attach-badge.image { background: rgba(33,150,243,0.1); border-color: rgba(33,150,243,0.3); color: var(--blue); }
+  .attach-badge.video { background: rgba(232,86,42,0.1); border-color: rgba(232,86,42,0.3); color: var(--accent); }
+  .attach-badge.pdf { background: rgba(240,180,41,0.1); border-color: rgba(240,180,41,0.3); color: var(--yellow); }
+  .inbox-status-badge {
+    border-radius: 20px;
+    padding: 2px 9px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .inbox-status-badge.new { background: rgba(63,185,80,0.15); color: var(--success); border: 1px solid rgba(63,185,80,0.3); }
+  .inbox-status-badge.used { background: rgba(139,148,158,0.1); color: var(--text-muted); border: 1px solid var(--border); }
+  .inbox-status-badge.skipped { background: rgba(139,148,158,0.08); color: var(--text-muted); border: 1px solid var(--border); }
+  .inbox-actions { display: flex; flex-direction: column; gap: 6px; align-items: stretch; flex-shrink: 0; min-width: 110px; }
+  .btn-create-post { background: rgba(232,86,42,0.15); color: var(--accent); border: 1px solid rgba(232,86,42,0.3); font-size: 12px; padding: 7px 10px; }
+  .btn-create-post:hover { background: rgba(232,86,42,0.25); border-color: var(--accent); }
+  .btn-skip { background: rgba(139,148,158,0.1); color: var(--text-muted); border: 1px solid var(--border); font-size: 12px; padding: 7px 10px; }
+  .btn-skip:hover { background: rgba(139,148,158,0.18); color: var(--text); border-color: var(--text-muted); }
+  .count-badge.inbox-new { background: var(--success); }
+
   /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {
     .header { padding: 0 16px; }
@@ -774,7 +833,10 @@
     <!-- Tabbed Sections -->
     <div class="section">
       <div class="section-tabs">
-        <button class="tab-btn active" data-tab="pending" onclick="switchTab('pending')">
+        <button class="tab-btn active" data-tab="inbox" onclick="switchTab('inbox')">
+          📥 Inbox <span class="count-badge inbox-new" id="tab-badge-inbox">0</span>
+        </button>
+        <button class="tab-btn" data-tab="pending" onclick="switchTab('pending')">
           📬 Pending <span class="count-badge" id="tab-badge-pending">0</span>
         </button>
         <button class="tab-btn" data-tab="approved" onclick="switchTab('approved')">
@@ -788,8 +850,19 @@
         </button>
       </div>
 
+      <!-- ===== INBOX TAB ===== -->
+      <div class="tab-content active" id="tab-inbox">
+        <div class="section-header" style="border-top: none; border-bottom: 1px solid var(--border);">
+          <span style="color: var(--text-muted); font-size: 12px;">Content received from the team — review and create posts</span>
+          <span id="inbox-new-count" style="font-size: 12px; color: var(--success); font-weight: 600;"></span>
+        </div>
+        <div style="padding: 16px;">
+          <div class="inbox-grid" id="inbox-grid"></div>
+        </div>
+      </div>
+
       <!-- ===== PENDING TAB ===== -->
-      <div class="tab-content active" id="tab-pending">
+      <div class="tab-content" id="tab-pending">
         <div class="section-header" style="border-top: none; border-bottom: 1px solid var(--border);">
           <span style="color: var(--text-muted); font-size: 12px;">Review drafts — approve or reject</span>
           <button class="add-post-btn" id="add-post-btn" onclick="showAddPostModal()">+ New Draft</button>
@@ -909,6 +982,7 @@ const META_PAGES = [
 ];
 const GITHUB_REPO = 'roblobsterclaw/lobster-press';
 const DATA_PATH = 'data/posts.json';
+const INBOX_DATA_PATH = 'data/inbox.json';
 const PASSWORDS = {
   'soccer12': 'Admin'
 };
@@ -921,8 +995,10 @@ let state = {
   fileSha: null,
   pendingRejectId: null,
   pendingPostedId: null,
-  activeTab: 'pending',
-  hasUnsavedChanges: false
+  activeTab: 'inbox',
+  hasUnsavedChanges: false,
+  inboxItems: [],
+  inboxFileSha: null
 };
 
 // ===== SAMPLE DATA (fallback only) =====
@@ -1143,6 +1219,56 @@ function setSaveStatus(status) {
   else { dot.className = 'save-dot'; dot.style.background = 'var(--red)'; text.textContent = 'Save failed'; }
 }
 
+// ===== INBOX GITHUB API =====
+async function fetchInboxFromGitHub() {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${INBOX_DATA_PATH}`, {
+      headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (res.status === 404) return null;
+    if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
+    const data = await res.json();
+    state.inboxFileSha = data.sha;
+    const content = atob(data.content.replace(/\n/g, ''));
+    return JSON.parse(content);
+  } catch (e) {
+    console.error('Inbox fetch error:', e);
+    return null;
+  }
+}
+
+async function saveInboxToGitHub(items) {
+  try {
+    const payload = { items };
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+    const body = {
+      message: `Update inbox — ${new Date().toLocaleString()}`,
+      content,
+      ...(state.inboxFileSha ? { sha: state.inboxFileSha } : {})
+    };
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${INBOX_DATA_PATH}`, {
+      method: 'PUT',
+      headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      if (res.status === 409 || res.status === 422) {
+        const fresh = await fetchInboxFromGitHub();
+        if (fresh) { state.inboxItems = fresh.items || state.inboxItems; return await saveInboxToGitHub(items); }
+      }
+      throw new Error(err.message);
+    }
+    const result = await res.json();
+    if (result.content) state.inboxFileSha = result.content.sha;
+    return true;
+  } catch (e) {
+    console.error('Inbox save error:', e);
+    showToast('⚠️ Inbox save failed: ' + e.message, 'error');
+    return false;
+  }
+}
+
 // ===== DATA LOAD =====
 async function loadData() {
   showToast('🔄 Loading posts...', 'info');
@@ -1155,14 +1281,22 @@ async function loadData() {
     showToast('📋 Using sample data...', 'info');
     await saveToGitHub(state.posts);
   }
+
+  // Load inbox
+  const inboxData = await fetchInboxFromGitHub();
+  if (inboxData && inboxData.items) {
+    state.inboxItems = inboxData.items;
+  }
+
   render();
 }
 
 async function syncData() {
   showToast('🔄 Syncing...', 'info');
-  const data = await fetchFromGitHub();
-  if (data && data.posts) {
-    state.posts = data.posts;
+  const [data, inboxData] = await Promise.all([fetchFromGitHub(), fetchInboxFromGitHub()]);
+  if (data && data.posts) state.posts = data.posts;
+  if (inboxData && inboxData.items) state.inboxItems = inboxData.items;
+  if (data || inboxData) {
     render();
     showToast('✅ Synced successfully', 'success');
   } else {
@@ -1196,6 +1330,7 @@ function switchTab(tab) {
 // ===== RENDER =====
 function render() {
   updateStats();
+  renderInbox();
   renderPending();
   renderApproved();
   renderScheduled();
@@ -1214,6 +1349,16 @@ function updateStats() {
   document.getElementById('stat-scheduled').textContent = scheduled;
   document.getElementById('stat-posted').textContent = posted;
 
+  // Inbox badge
+  const inboxNew = state.inboxItems.filter(i => i.status === 'new').length;
+  const inboxBadge = document.getElementById('tab-badge-inbox');
+  if (inboxBadge) {
+    inboxBadge.textContent = inboxNew;
+    inboxBadge.className = 'count-badge' + (inboxNew === 0 ? ' zero' : ' inbox-new');
+  }
+  const inboxCountEl = document.getElementById('inbox-new-count');
+  if (inboxCountEl) inboxCountEl.textContent = inboxNew > 0 ? `${inboxNew} new item${inboxNew !== 1 ? 's' : ''}` : '';
+
   const fp = getFiltered('pending').length + getFiltered('rejected').length;
   const fa = getFiltered('approved').length;
   const fs = getFiltered('scheduled').length + state.posts.filter(p => p.status === 'post_now' && (state.filter === 'All' || p.brand === state.filter)).length;
@@ -1228,6 +1373,122 @@ function setBadge(id, count, colorClass) {
   const el = document.getElementById(id);
   el.textContent = count;
   el.className = 'count-badge' + (count === 0 ? ' zero' : (colorClass ? ' ' + colorClass : ''));
+}
+
+// ===== INBOX TAB =====
+function renderInbox() {
+  const grid = document.getElementById('inbox-grid');
+  if (!grid) return;
+  const items = state.inboxItems;
+  if (!items || items.length === 0) {
+    grid.innerHTML = `<div class="empty-state"><div class="empty-icon">📥</div><div>No items in inbox</div></div>`;
+    return;
+  }
+  // Sort: new first, then used/skipped
+  const sorted = [...items].sort((a, b) => {
+    if (a.status === 'new' && b.status !== 'new') return -1;
+    if (a.status !== 'new' && b.status === 'new') return 1;
+    return new Date(b.receivedAt) - new Date(a.receivedAt);
+  });
+  grid.innerHTML = sorted.map(item => renderInboxCard(item)).join('');
+}
+
+function formatInboxDate(dtStr) {
+  if (!dtStr) return 'Unknown';
+  try {
+    const d = new Date(dtStr);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) +
+      ' · ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  } catch { return dtStr; }
+}
+
+function renderInboxCard(item) {
+  const isNew = item.status === 'new';
+  const isUsed = item.status === 'used';
+
+  // Status badge
+  let statusBadge = '';
+  if (item.status === 'new') statusBadge = `<span class="inbox-status-badge new">🆕 New</span>`;
+  else if (item.status === 'used') statusBadge = `<span class="inbox-status-badge used">✅ Used</span>`;
+  else statusBadge = `<span class="inbox-status-badge skipped">⏭️ Skipped</span>`;
+
+  // Icon
+  const icon = item.status === 'new' ? '📧' : (item.status === 'used' ? '📭' : '🗂️');
+
+  // Attachments
+  let attachHtml = '';
+  if (item.attachments && item.attachments.length > 0) {
+    attachHtml = item.attachments.map(a => {
+      if (a.type === 'image') return `<span class="attach-badge image">📸 Image <small>${a.size || ''}</small></span>`;
+      if (a.type === 'video') return `<span class="attach-badge video">🎬 Video <small>${a.size || ''}</small></span>`;
+      if (a.type === 'pdf') return `<span class="attach-badge pdf">📄 PDF <small>${a.size || ''}</small></span>`;
+      return `<span class="attach-badge">${a.name}</span>`;
+    }).join('');
+  } else {
+    attachHtml = `<span style="font-size:11px;color:var(--text-muted);">No attachments</span>`;
+  }
+
+  const bodyHtml = item.emailBody ? `<div class="inbox-body">${escapeHtml(item.emailBody)}</div>` : '';
+
+  const usedLinkHtml = isUsed && item.usedInPost
+    ? `<div style="font-size:11px;color:var(--success);margin-top:4px;">📝 Used in post: ${escapeHtml(item.usedInPost)}</div>` : '';
+
+  const actionBtns = `
+    <button class="btn btn-create-post" onclick="createPostFromInbox('${item.id}')" ${!isNew ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : ''}>
+      Create Post →
+    </button>
+    <button class="btn btn-skip" onclick="skipInboxItem('${item.id}')" ${item.status === 'skipped' ? 'disabled style="opacity:0.4;cursor:not-allowed;"' : ''}>
+      ⏭️ Skip
+    </button>
+  `;
+
+  return `
+    <div class="inbox-card status-${item.status}" id="inbox-card-${item.id}">
+      <div class="inbox-icon">${icon}</div>
+      <div class="inbox-info">
+        <div class="inbox-subject">${escapeHtml(item.subject)}</div>
+        <div class="inbox-meta">
+          ${statusBadge}
+          <span class="inbox-date">📅 ${formatInboxDate(item.receivedAt)}</span>
+          <span class="inbox-sender">✉️ ${escapeHtml(item.sender)}</span>
+        </div>
+        ${bodyHtml}
+        <div class="inbox-attachments">
+          <span style="font-size:11px;color:var(--text-muted);margin-right:2px;">📎</span>
+          ${attachHtml}
+        </div>
+        ${usedLinkHtml}
+      </div>
+      <div class="inbox-actions">${actionBtns}</div>
+    </div>
+  `;
+}
+
+async function createPostFromInbox(itemId) {
+  const item = state.inboxItems.find(i => i.id === itemId);
+  if (!item) return;
+  item.status = 'used';
+  item.usedInPost = null; // Rob creates the actual post separately
+  const ok = await saveInboxToGitHub(state.inboxItems);
+  if (ok) {
+    showToast('✅ Marked as used — create the post in 📬 Pending', 'success');
+    renderInbox();
+    updateStats();
+    // Switch to pending tab so they can create the post
+    setTimeout(() => switchTab('pending'), 800);
+  }
+}
+
+async function skipInboxItem(itemId) {
+  const item = state.inboxItems.find(i => i.id === itemId);
+  if (!item) return;
+  item.status = 'skipped';
+  const ok = await saveInboxToGitHub(state.inboxItems);
+  if (ok) {
+    showToast('⏭️ Item skipped', 'info');
+    renderInbox();
+    updateStats();
+  }
 }
 
 // ===== PENDING TAB =====
