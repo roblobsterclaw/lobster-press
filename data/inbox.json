@@ -1,0 +1,81 @@
+{
+  "items": [
+    {
+      "id": "inbox-001",
+      "receivedAt": "2026-04-21T18:44:31Z",
+      "subject": "FW: Video",
+      "sender": "socialmedia@tlcnj.com",
+      "status": "new",
+      "attachments": [],
+      "emailBody": "Video content (no attachment - may need resend)",
+      "usedInPost": null
+    },
+    {
+      "id": "inbox-002",
+      "receivedAt": "2026-04-21T17:04:15Z",
+      "subject": "FW: PIC & AI",
+      "sender": "socialmedia@tlcnj.com",
+      "status": "new",
+      "attachments": [{"name": "0_SdyruYy88rHQEw0G.png", "type": "image", "size": "1.6 MB"}],
+      "emailBody": "",
+      "usedInPost": null
+    },
+    {
+      "id": "inbox-003",
+      "receivedAt": "2026-04-16T20:13:53Z",
+      "subject": "FW: Customer testimonial",
+      "sender": "socialmedia@tlcnj.com",
+      "status": "new",
+      "attachments": [{"name": "Video.mov", "type": "video", "size": "4.8 MB"}],
+      "emailBody": "Customer testimonial video",
+      "usedInPost": null
+    },
+    {
+      "id": "inbox-004",
+      "receivedAt": "2026-04-16T20:12:56Z",
+      "subject": "FW: Checkout tear down",
+      "sender": "socialmedia@tlcnj.com",
+      "status": "new",
+      "attachments": [
+        {"name": "image001.jpg", "type": "image", "size": "5.3 MB"},
+        {"name": "image002.jpg", "type": "image", "size": "4.9 MB"},
+        {"name": "image003.jpg", "type": "image", "size": "5.8 MB"}
+      ],
+      "emailBody": "Checkout counter tear down photos",
+      "usedInPost": null
+    },
+    {
+      "id": "inbox-005",
+      "receivedAt": "2026-04-16T20:10:20Z",
+      "subject": "FW: AI cont.....",
+      "sender": "socialmedia@tlcnj.com",
+      "status": "new",
+      "attachments": [],
+      "emailBody": "AI continuation - no attachments",
+      "usedInPost": null
+    },
+    {
+      "id": "inbox-006",
+      "receivedAt": "2026-04-16T20:09:56Z",
+      "subject": "FW: AI",
+      "sender": "socialmedia@tlcnj.com",
+      "status": "new",
+      "attachments": [{"name": "0_SdyruYy88rHQEw0G.png", "type": "image", "size": "1.6 MB"}],
+      "emailBody": "",
+      "usedInPost": null
+    },
+    {
+      "id": "inbox-007",
+      "receivedAt": "2026-04-16T19:26:48Z",
+      "subject": "FW: Reeb Finish Express",
+      "sender": "socialmedia@tlcnj.com",
+      "status": "used",
+      "attachments": [
+        {"name": "Image.jpeg", "type": "image", "size": "0.1 MB"},
+        {"name": "Reeb Finish Express.pdf", "type": "pdf", "size": "1.0 MB"}
+      ],
+      "emailBody": "Reeb Finish Express door brochure",
+      "usedInPost": "tlc-reeb-001"
+    }
+  ]
+}
