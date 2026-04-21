@@ -203,7 +203,7 @@
   /* ===== STATS ROW ===== */
   .stats-row {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 12px;
     margin-bottom: 0;
   }
@@ -818,7 +818,7 @@
     .filter-bar { padding: 10px 16px; }
     .main { padding: 16px; gap: 16px; }
     .posts-grid { grid-template-columns: 1fr; }
-    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .stats-row { grid-template-columns: repeat(3, 1fr); }
     .list-card-actions { min-width: 100px; }
   }
   @media (max-width: 480px) {
@@ -889,6 +889,10 @@
 
     <!-- Stats Row -->
     <div class="stats-row">
+      <div class="stat-card" onclick="switchTab('inprogress')">
+        <div class="stat-num" id="stat-inprogress" style="color:#FB923C;">0</div>
+        <div class="stat-label">🔨 In Progress</div>
+      </div>
       <div class="stat-card" onclick="switchTab('pending')">
         <div class="stat-num" id="stat-pending">0</div>
         <div class="stat-label">📬 Pending</div>
@@ -913,6 +917,9 @@
         <button class="tab-btn active" data-tab="inbox" onclick="switchTab('inbox')">
           📥 Inbox <span class="count-badge inbox-new" id="tab-badge-inbox">0</span>
         </button>
+        <button class="tab-btn" data-tab="inprogress" onclick="switchTab('inprogress')">
+          🔨 In Progress <span class="count-badge" id="tab-badge-inprogress">0</span>
+        </button>
         <button class="tab-btn" data-tab="pending" onclick="switchTab('pending')">
           📬 Pending <span class="count-badge" id="tab-badge-pending">0</span>
         </button>
@@ -935,6 +942,16 @@
         </div>
         <div style="padding: 16px;">
           <div class="inbox-grid" id="inbox-grid"></div>
+        </div>
+      </div>
+
+      <!-- ===== IN PROGRESS TAB ===== -->
+      <div class="tab-content" id="tab-inprogress">
+        <div class="section-header" style="border-top: none; border-bottom: 1px solid var(--border);">
+          <span style="color: var(--text-muted); font-size: 12px;">Posts Rob is actively working on — creating new or reworking rejections</span>
+        </div>
+        <div style="padding: 16px;">
+          <div id="inprogress-grid"></div>
         </div>
       </div>
 
@@ -1408,6 +1425,7 @@ function switchTab(tab) {
 function render() {
   updateStats();
   renderInbox();
+  renderInProgress();
   renderPending();
   renderApproved();
   renderScheduled();
@@ -1416,11 +1434,16 @@ function render() {
 }
 
 function updateStats() {
-  const pending = state.posts.filter(p => p.status === 'pending' || p.status === 'creating').length;
+  const inProgressCount = state.posts.filter(p =>
+    p.status === 'creating' || (p.status === 'rejected' && !p.reworked)
+  ).length;
+  const pending = state.posts.filter(p => p.status === 'pending').length;
   const approved = state.posts.filter(p => p.status === 'approved').length;
   const scheduled = state.posts.filter(p => p.status === 'scheduled' || p.status === 'post_now').length;
   const posted = state.posts.filter(p => p.status === 'posted').length;
 
+  const ipEl = document.getElementById('stat-inprogress');
+  if (ipEl) ipEl.textContent = inProgressCount;
   document.getElementById('stat-pending').textContent = pending;
   document.getElementById('stat-approved').textContent = approved;
   document.getElementById('stat-scheduled').textContent = scheduled;
@@ -1436,8 +1459,16 @@ function updateStats() {
   const inboxCountEl = document.getElementById('inbox-new-count');
   if (inboxCountEl) inboxCountEl.textContent = inboxNew > 0 ? `${inboxNew} new item${inboxNew !== 1 ? 's' : ''}` : '';
 
-  const creating = state.posts.filter(p => p.status === 'creating' && (state.filter === 'All' || p.brand === state.filter)).length;
-  const fp = getFiltered('pending').length + getFiltered('rejected').length + creating;
+  // In Progress tab badge (creating + unreworked rejected)
+  const fip = state.posts.filter(p =>
+    (p.status === 'creating' || (p.status === 'rejected' && !p.reworked)) &&
+    (state.filter === 'All' || p.brand === state.filter)
+  ).length;
+  setBadge('tab-badge-inprogress', fip, '');
+
+  // Pending tab badge (only true pending + reworked-rejected archive)
+  const fp = getFiltered('pending').length +
+    state.posts.filter(p => p.status === 'rejected' && p.reworked === true && (state.filter === 'All' || p.brand === state.filter)).length;
   const fa = getFiltered('approved').length;
   const fs = getFiltered('scheduled').length + state.posts.filter(p => p.status === 'post_now' && (state.filter === 'All' || p.brand === state.filter)).length;
   const fpo = getFiltered('posted').length;
@@ -1581,9 +1612,9 @@ async function createPostFromInbox(itemId) {
   ]);
 
   if (inboxOk && postsOk) {
-    showToast('🔨 In Progress! Tracked in Pending tab.', 'success');
+    showToast('🔨 In Progress! Tracked in In Progress tab.', 'success');
     render();
-    switchTab('pending');
+    switchTab('inprogress');
   }
 }
 
@@ -1599,63 +1630,73 @@ async function skipInboxItem(itemId) {
   }
 }
 
-// ===== PENDING TAB =====
-function renderPending() {
-  const grid = document.getElementById('pending-grid');
+// ===== IN PROGRESS TAB =====
+function renderInProgress() {
+  const grid = document.getElementById('inprogress-grid');
+  if (!grid) return;
 
-  const inProgress = state.posts.filter(p => p.status === 'creating' && (state.filter === 'All' || p.brand === state.filter));
+  const creating = state.posts.filter(p => p.status === 'creating' && (state.filter === 'All' || p.brand === state.filter));
   const beingReworked = state.posts.filter(p => p.status === 'rejected' && !p.reworked && (state.filter === 'All' || p.brand === state.filter));
-  const readyForReview = getFiltered('pending');
-  const rejectedArchive = state.posts.filter(p => p.status === 'rejected' && p.reworked === true && (state.filter === 'All' || p.brand === state.filter));
 
-  if (inProgress.length === 0 && beingReworked.length === 0 && readyForReview.length === 0 && beingReworked.length === 0) {
-    grid.innerHTML = `<div class="empty-state"><div class="empty-icon">📬</div><div>No pending posts${state.filter !== 'All' ? ' for ' + state.filter : ''}</div></div>`;
+  if (creating.length === 0 && beingReworked.length === 0) {
+    grid.innerHTML = `<div class="empty-state"><div class="empty-icon">🔨</div><div>Nothing in progress right now${state.filter !== 'All' ? ' for ' + state.filter : ''}<br><small style="font-size:11px;margin-top:4px;display:block;">Use “Create Post” from the 📥 Inbox tab to start working</small></div></div>`;
     return;
   }
 
   let html = '';
 
-  // ── Section 1: IN PROGRESS ──
-  if (inProgress.length > 0) {
-    html += `<div class="pending-sub-section">
-      <div class="pending-sub-header in-progress">🔨 IN PROGRESS (${inProgress.length})</div>
-      ${inProgress.map(p => renderInProgressCard(p)).join('')}
-    </div>`;
+  // ── Section A: CREATING FROM INBOX ──
+  html += `<div class="pending-sub-section">
+    <div class="pending-sub-header in-progress">🔨 Creating from Inbox (${creating.length})</div>`;
+  if (creating.length > 0) {
+    html += creating.map(p => renderInProgressCard(p)).join('');
+  } else {
+    html += `<div style="color:var(--text-muted);font-size:13px;padding:10px 4px;">No posts being created from inbox right now.</div>`;
   }
+  html += `</div>`;
 
-  // ── Section 2: BEING REWORKED ──
+  // ── Section B: REWORKING REJECTIONS ──
+  html += `<div class="pending-sub-section" style="margin-top:8px;">
+    <div class="pending-sub-header being-reworked">🔄 Reworking Rejections (${beingReworked.length})</div>`;
   if (beingReworked.length > 0) {
+    html += beingReworked.map(p => renderBeingReworkedCard(p)).join('');
+  } else {
+    html += `<div style="color:var(--text-muted);font-size:13px;padding:10px 4px;">No rejections being reworked right now.</div>`;
+  }
+  html += `</div>`;
+
+  grid.innerHTML = html;
+}
+
+// ===== PENDING TAB =====
+function renderPending() {
+  const grid = document.getElementById('pending-grid');
+
+  const readyForReview = getFiltered('pending');
+  const rejectedArchive = state.posts.filter(p => p.status === 'rejected' && p.reworked === true && (state.filter === 'All' || p.brand === state.filter));
+
+  if (readyForReview.length === 0 && rejectedArchive.length === 0) {
+    grid.innerHTML = `<div class="empty-state"><div class="empty-icon">📬</div><div>No pending posts${state.filter !== 'All' ? ' for ' + state.filter : ''}<br><small style="font-size:11px;margin-top:4px;display:block;">Posts being created or reworked are in the 🔨 In Progress tab</small></div></div>`;
+    return;
+  }
+
+  let html = '';
+
+  // ── READY FOR REVIEW ──
+  if (readyForReview.length > 0) {
     html += `<div class="pending-sub-section">
-      <div class="pending-sub-header being-reworked">🔄 BEING REWORKED (${beingReworked.length})</div>
-      ${beingReworked.map(p => renderBeingReworkedCard(p)).join('')}
+      <div class="posts-grid">${readyForReview.map(p => renderPendingCard(p)).join('')}</div>
     </div>`;
+  } else {
+    html += `<div class="pending-sub-section"><div style="color:var(--text-muted);font-size:13px;padding:12px 4px;">No drafts ready for review yet.</div></div>`;
   }
 
-  // ── Section 3: READY FOR REVIEW ──
-  const showReadyHeader = inProgress.length > 0 || beingReworked.length > 0;
-  if (readyForReview.length > 0 || showReadyHeader) {
-    html += `<div class="pending-sub-section">`;
-    if (showReadyHeader) {
-      html += `<div class="pending-sub-header ready">📬 READY FOR REVIEW (${readyForReview.length})</div>`;
-    }
-    if (readyForReview.length > 0) {
-      html += `<div class="posts-grid">${readyForReview.map(p => renderPendingCard(p)).join('')}</div>`;
-    } else if (showReadyHeader) {
-      html += `<div style="color:var(--text-muted);font-size:13px;padding:12px 4px;">No drafts ready for review yet.</div>`;
-    }
-    html += `</div>`;
-  }
-
-  // ── Section 4: REJECTED (reworked archive) ──
+  // ── REJECTED ARCHIVE (reworked=true) ──
   if (rejectedArchive.length > 0) {
     html += `<div class="pending-sub-section">
       <div class="pending-sub-header rejected-hdr">❌ REJECTED — REWORKED (${rejectedArchive.length})</div>
       <div class="posts-grid">${rejectedArchive.map(p => renderRejectedCard(p)).join('')}</div>
     </div>`;
-  }
-
-  if (!html) {
-    html = `<div class="empty-state"><div class="empty-icon">📬</div><div>No pending posts${state.filter !== 'All' ? ' for ' + state.filter : ''}</div></div>`;
   }
 
   grid.innerHTML = html;
