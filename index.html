@@ -1690,7 +1690,7 @@ async function publishToFacebook(post) {
     let endpoint, params;
     if (hasPublicImage) {
       endpoint = `https://graph.facebook.com/v25.0/${page.id}/photos`;
-      params = new URLSearchParams({ url: post.imageUrl, message: post.caption || '', access_token: page.token });
+      params = new URLSearchParams({ url: post.imageUrl, message: post.caption || '', published: 'true', access_token: page.token });
     } else {
       endpoint = `https://graph.facebook.com/v25.0/${page.id}/feed`;
       params = new URLSearchParams({ message: post.caption || '', access_token: page.token });
