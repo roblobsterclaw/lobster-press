@@ -675,6 +675,83 @@
   .save-publish-btn:disabled { opacity: 0.65; cursor: not-allowed; animation: none; box-shadow: none; }
   .spb-unsaved { opacity: 0.8; font-size: 11px; font-weight: 400; }
 
+  /* ===== PENDING SUB-SECTIONS ===== */
+  .pending-sub-section { margin-bottom: 20px; }
+  .pending-sub-section:last-child { margin-bottom: 0; }
+  .pending-sub-header {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px; border-radius: 6px; margin-bottom: 12px;
+    font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px;
+  }
+  .pending-sub-header.in-progress { background: rgba(251,146,60,0.12); border: 1px solid rgba(251,146,60,0.35); color: #FB923C; }
+  .pending-sub-header.being-reworked { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.3); color: #FBBF24; }
+  .pending-sub-header.ready { background: rgba(139,148,158,0.08); border: 1px solid var(--border); color: var(--text-muted); }
+  .pending-sub-header.rejected-hdr { background: rgba(248,81,73,0.08); border: 1px solid rgba(248,81,73,0.25); color: var(--red); }
+
+  /* ===== IN PROGRESS CARDS ===== */
+  .in-progress-card {
+    background: rgba(251,146,60,0.04);
+    border: 1px solid rgba(251,146,60,0.25);
+    border-left: 3px solid #FB923C;
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    display: flex; align-items: flex-start; gap: 12px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    margin-bottom: 10px;
+  }
+  .in-progress-card:hover { border-color: rgba(251,146,60,0.55); box-shadow: 0 4px 12px rgba(251,146,60,0.08); }
+  .in-progress-card:last-child { margin-bottom: 0; }
+  .ip-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .ip-info { flex: 1; min-width: 0; }
+  .ip-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #FB923C; margin-bottom: 3px; }
+  .ip-subject { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; word-break: break-word; }
+  .ip-meta { font-size: 11px; color: var(--text-muted); margin-bottom: 10px; }
+  .ip-caption-area {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid rgba(251,146,60,0.2);
+    color: var(--text);
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 13px;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 60px;
+    outline: none;
+    font-family: inherit;
+    margin-bottom: 8px;
+    transition: border-color 0.2s;
+  }
+  .ip-caption-area:focus { border-color: #FB923C; }
+  .ip-brand-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+  .ip-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; min-width: 110px; }
+  .btn-submit-review { background: rgba(251,146,60,0.15); color: #FB923C; border: 1px solid rgba(251,146,60,0.35); font-size: 12px; padding: 7px 10px; }
+  .btn-submit-review:hover { background: rgba(251,146,60,0.25); border-color: #FB923C; }
+
+  /* ===== BEING REWORKED CARDS ===== */
+  .reworking-card {
+    background: rgba(251,191,36,0.04);
+    border: 1px solid rgba(251,191,36,0.22);
+    border-left: 3px solid #FBBF24;
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    display: flex; align-items: flex-start; gap: 12px;
+    transition: border-color 0.2s;
+    margin-bottom: 10px;
+  }
+  .reworking-card:hover { border-color: rgba(251,191,36,0.45); }
+  .reworking-card:last-child { margin-bottom: 0; }
+  .rw-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+  .rw-info { flex: 1; min-width: 0; }
+  .rw-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #FBBF24; margin-bottom: 3px; }
+  .rw-caption { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; line-height: 1.5; word-break: break-word; }
+  .rw-reason-box { background: rgba(248,81,73,0.08); border: 1px solid rgba(248,81,73,0.2); border-radius: 4px; padding: 6px 10px; font-size: 12px; color: var(--red); margin-bottom: 6px; line-height: 1.5; }
+  .rw-reason-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+  .rw-meta { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+  .rw-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; min-width: 110px; }
+  .btn-mark-reworked { background: rgba(251,191,36,0.12); color: #FBBF24; border: 1px solid rgba(251,191,36,0.3); font-size: 12px; padding: 7px 10px; }
+  .btn-mark-reworked:hover { background: rgba(251,191,36,0.22); border-color: #FBBF24; }
+
   /* ===== INBOX CARDS ===== */
   .inbox-grid {
     display: flex;
@@ -868,7 +945,7 @@
           <button class="add-post-btn" id="add-post-btn" onclick="showAddPostModal()">+ New Draft</button>
         </div>
         <div style="padding: 16px;">
-          <div class="posts-grid" id="pending-grid"></div>
+          <div id="pending-grid"></div>
         </div>
       </div>
 
@@ -1339,7 +1416,7 @@ function render() {
 }
 
 function updateStats() {
-  const pending = state.posts.filter(p => p.status === 'pending').length;
+  const pending = state.posts.filter(p => p.status === 'pending' || p.status === 'creating').length;
   const approved = state.posts.filter(p => p.status === 'approved').length;
   const scheduled = state.posts.filter(p => p.status === 'scheduled' || p.status === 'post_now').length;
   const posted = state.posts.filter(p => p.status === 'posted').length;
@@ -1359,7 +1436,8 @@ function updateStats() {
   const inboxCountEl = document.getElementById('inbox-new-count');
   if (inboxCountEl) inboxCountEl.textContent = inboxNew > 0 ? `${inboxNew} new item${inboxNew !== 1 ? 's' : ''}` : '';
 
-  const fp = getFiltered('pending').length + getFiltered('rejected').length;
+  const creating = state.posts.filter(p => p.status === 'creating' && (state.filter === 'All' || p.brand === state.filter)).length;
+  const fp = getFiltered('pending').length + getFiltered('rejected').length + creating;
   const fa = getFiltered('approved').length;
   const fs = getFiltered('scheduled').length + state.posts.filter(p => p.status === 'post_now' && (state.filter === 'All' || p.brand === state.filter)).length;
   const fpo = getFiltered('posted').length;
@@ -1467,15 +1545,45 @@ function renderInboxCard(item) {
 async function createPostFromInbox(itemId) {
   const item = state.inboxItems.find(i => i.id === itemId);
   if (!item) return;
+
+  // Create a placeholder post with status "creating"
+  const newPost = {
+    id: 'post_' + Date.now(),
+    status: 'creating',
+    brand: 'TLC',
+    caption: '',
+    platforms: ['FB', 'IG'],
+    proposedDate: new Date(Date.now() + 86400000).toISOString().split('T')[0],
+    imageUrl: null,
+    inboxItemId: itemId,
+    inboxSubject: item.subject,
+    inboxDate: item.receivedAt,
+    inboxSender: item.sender,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    approvedBy: null, approvedAt: null, scheduledAt: null,
+    rejectedBy: null, rejectedAt: null, rejectionReason: null,
+    publishedAt: null, publishedUrl: null,
+    notes: 'From inbox: ' + item.subject
+  };
+
+  state.posts.unshift(newPost);
+
+  // Mark inbox item as used and link to the creating post
   item.status = 'used';
-  item.usedInPost = null; // Rob creates the actual post separately
-  const ok = await saveInboxToGitHub(state.inboxItems);
-  if (ok) {
-    showToast('✅ Marked as used — create the post in 📬 Pending', 'success');
-    renderInbox();
-    updateStats();
-    // Switch to pending tab so they can create the post
-    setTimeout(() => switchTab('pending'), 800);
+  item.usedInPost = newPost.id;
+
+  // Save both inbox and posts
+  showToast('⏳ Creating in-progress post...', 'info');
+  const [inboxOk, postsOk] = await Promise.all([
+    saveInboxToGitHub(state.inboxItems),
+    saveToGitHub(state.posts)
+  ]);
+
+  if (inboxOk && postsOk) {
+    showToast('🔨 In Progress! Tracked in Pending tab.', 'success');
+    render();
+    switchTab('pending');
   }
 }
 
@@ -1494,27 +1602,174 @@ async function skipInboxItem(itemId) {
 // ===== PENDING TAB =====
 function renderPending() {
   const grid = document.getElementById('pending-grid');
-  const posts = getFiltered('pending');
-  const rejected = getFiltered('rejected');
 
-  if (posts.length === 0 && rejected.length === 0) {
+  const inProgress = state.posts.filter(p => p.status === 'creating' && (state.filter === 'All' || p.brand === state.filter));
+  const beingReworked = state.posts.filter(p => p.status === 'rejected' && !p.reworked && (state.filter === 'All' || p.brand === state.filter));
+  const readyForReview = getFiltered('pending');
+  const rejectedArchive = state.posts.filter(p => p.status === 'rejected' && p.reworked === true && (state.filter === 'All' || p.brand === state.filter));
+
+  if (inProgress.length === 0 && beingReworked.length === 0 && readyForReview.length === 0 && beingReworked.length === 0) {
     grid.innerHTML = `<div class="empty-state"><div class="empty-icon">📬</div><div>No pending posts${state.filter !== 'All' ? ' for ' + state.filter : ''}</div></div>`;
     return;
   }
 
-  let html = posts.map(p => renderPendingCard(p)).join('');
+  let html = '';
 
-  if (rejected.length > 0) {
-    html += `<div class="rejected-section-divider">
-      <div class="rejected-section-label">
-        <span>❌</span>
-        <span>REJECTED (${rejected.length}) — needs changes before resubmitting</span>
-      </div>
+  // ── Section 1: IN PROGRESS ──
+  if (inProgress.length > 0) {
+    html += `<div class="pending-sub-section">
+      <div class="pending-sub-header in-progress">🔨 IN PROGRESS (${inProgress.length})</div>
+      ${inProgress.map(p => renderInProgressCard(p)).join('')}
     </div>`;
-    html += rejected.map(p => renderRejectedCard(p)).join('');
+  }
+
+  // ── Section 2: BEING REWORKED ──
+  if (beingReworked.length > 0) {
+    html += `<div class="pending-sub-section">
+      <div class="pending-sub-header being-reworked">🔄 BEING REWORKED (${beingReworked.length})</div>
+      ${beingReworked.map(p => renderBeingReworkedCard(p)).join('')}
+    </div>`;
+  }
+
+  // ── Section 3: READY FOR REVIEW ──
+  const showReadyHeader = inProgress.length > 0 || beingReworked.length > 0;
+  if (readyForReview.length > 0 || showReadyHeader) {
+    html += `<div class="pending-sub-section">`;
+    if (showReadyHeader) {
+      html += `<div class="pending-sub-header ready">📬 READY FOR REVIEW (${readyForReview.length})</div>`;
+    }
+    if (readyForReview.length > 0) {
+      html += `<div class="posts-grid">${readyForReview.map(p => renderPendingCard(p)).join('')}</div>`;
+    } else if (showReadyHeader) {
+      html += `<div style="color:var(--text-muted);font-size:13px;padding:12px 4px;">No drafts ready for review yet.</div>`;
+    }
+    html += `</div>`;
+  }
+
+  // ── Section 4: REJECTED (reworked archive) ──
+  if (rejectedArchive.length > 0) {
+    html += `<div class="pending-sub-section">
+      <div class="pending-sub-header rejected-hdr">❌ REJECTED — REWORKED (${rejectedArchive.length})</div>
+      <div class="posts-grid">${rejectedArchive.map(p => renderRejectedCard(p)).join('')}</div>
+    </div>`;
+  }
+
+  if (!html) {
+    html = `<div class="empty-state"><div class="empty-icon">📬</div><div>No pending posts${state.filter !== 'All' ? ' for ' + state.filter : ''}</div></div>`;
   }
 
   grid.innerHTML = html;
+}
+
+function renderInProgressCard(post) {
+  const canEdit = state.role === 'Admin' || state.role === 'Approver';
+  const canDelete = state.role === 'Admin';
+  const brandOptions = ['TLC','Surfbox','Keli'].map(b =>
+    `<option value="${b}" ${post.brand === b ? 'selected' : ''}>${b === 'TLC' ? '🌳 TLC' : b === 'Surfbox' ? '📦 Surfbox' : '🏠 Keli'}</option>`
+  ).join('');
+  const platformsHtml = ['FB','IG','TikTok'].map(p => `
+    <label class="platform-check" style="font-size:12px;">
+      <input type="checkbox" data-post="${post.id}" data-platform="${p}"
+        ${post.platforms.includes(p) ? 'checked' : ''}
+        ${canEdit ? '' : 'disabled'}
+        onchange="togglePlatform('${post.id}', '${p}', this.checked)">
+      ${p}
+    </label>`).join('');
+  const metaStr = [post.inboxDate ? '📅 ' + formatDate(post.inboxDate) : null, post.inboxSender ? '✉️ ' + escapeHtml(post.inboxSender) : null].filter(Boolean).join(' · ');
+  const submitDisabledMsg = canEdit ? '' : 'disabled';
+  return `
+    <div class="in-progress-card" id="card-${post.id}">
+      <div class="ip-icon">🔨</div>
+      <div class="ip-info">
+        <div class="ip-label">Rob is creating a post from:</div>
+        <div class="ip-subject">${escapeHtml(post.inboxSubject || '(no subject)')}</div>
+        ${metaStr ? `<div class="ip-meta">${metaStr}</div>` : ''}
+        <div class="ip-brand-row">
+          <select class="brand-select" onchange="updateBrand('${post.id}', this.value)" ${canEdit ? '' : 'disabled'}>${brandOptions}</select>
+          <input type="date" class="date-input" value="${post.proposedDate || ''}" onchange="updateDate('${post.id}', this.value)" ${canEdit ? '' : 'disabled'}>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;">${platformsHtml}</div>
+        </div>
+        <textarea class="ip-caption-area" id="caption-${post.id}"
+          placeholder="Write the caption here... (required before submitting)"
+          onchange="updateCaption('${post.id}', this.value)"
+          ${canEdit ? '' : 'readonly'}>${escapeHtml(post.caption)}</textarea>
+      </div>
+      <div class="ip-actions">
+        <button class="btn btn-submit-review" onclick="submitForReview('${post.id}')" ${submitDisabledMsg}>Submit for Review →</button>
+        ${canDelete ? `<button class="btn btn-delete" style="font-size:11px;padding:7px 10px;" onclick="cancelInProgress('${post.id}')">✕ Cancel</button>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+function renderBeingReworkedCard(post) {
+  const canAct = state.role === 'Admin' || state.role === 'Approver';
+  const canDelete = state.role === 'Admin';
+  const reason = post.rejectedReason || post.rejectionReason || 'No reason provided';
+  const rejectedWhen = post.rejectedAt ? formatDate(post.rejectedAt) : '';
+  const captionPreview = post.caption ? (post.caption.length > 100 ? post.caption.slice(0, 100) + '…' : post.caption) : '(no caption)';
+  const brandHtml = `<span class="brand-tag ${post.brand}">${post.brand}</span>`;
+  return `
+    <div class="reworking-card" id="card-${post.id}">
+      <div class="rw-icon">🔄</div>
+      <div class="rw-info">
+        <div class="rw-label">Rob is reworking this...</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px;">${brandHtml}<span class="list-card-date">🗓️ ${formatDate(post.proposedDate)}</span></div>
+        <div class="rw-caption">${escapeHtml(captionPreview)}</div>
+        <div class="rw-reason-box">
+          <div class="rw-reason-label">❌ Rejection reason${rejectedWhen ? ' — ' + rejectedWhen : ''}</div>
+          ${escapeHtml(reason)}
+        </div>
+        <div class="rw-meta">New version will appear in 📬 Ready for Review when submitted</div>
+      </div>
+      <div class="rw-actions">
+        ${canAct ? `<button class="btn btn-mark-reworked" onclick="markReworked('${post.id}')">✅ Done Reworking</button>` : ''}
+        ${canAct ? `<button class="btn btn-restore" style="font-size:11px;padding:7px 10px;" onclick="restoreToPending('${post.id}')">↩️ Restore</button>` : ''}
+        ${canDelete ? `<button class="btn btn-delete" style="font-size:11px;padding:7px 10px;" onclick="deletePost('${post.id}')">🗑️</button>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+async function submitForReview(postId) {
+  const post = state.posts.find(p => p.id === postId);
+  if (!post) return;
+  const ta = document.getElementById('caption-' + postId);
+  if (ta) post.caption = ta.value.trim();
+  if (!post.caption) {
+    showToast('⚠️ Add a caption before submitting for review', 'error');
+    return;
+  }
+  post.status = 'pending';
+  post.updatedAt = new Date().toISOString();
+  const ok = await saveToGitHub(state.posts);
+  if (ok) {
+    showToast('📬 Submitted for review!', 'success');
+    render();
+  }
+}
+
+async function cancelInProgress(postId) {
+  if (!confirm('Cancel this in-progress post? The inbox item will stay marked as used.')) return;
+  state.posts = state.posts.filter(p => p.id !== postId);
+  const ok = await saveToGitHub(state.posts);
+  if (ok) {
+    showToast('✕ In-progress post cancelled', 'info');
+    render();
+  }
+}
+
+async function markReworked(postId) {
+  const post = state.posts.find(p => p.id === postId);
+  if (!post) return;
+  post.reworked = true;
+  post.reworkedAt = new Date().toISOString();
+  post.updatedAt = new Date().toISOString();
+  const ok = await saveToGitHub(state.posts);
+  if (ok) {
+    showToast('✅ Marked as reworked — new version should appear in Ready for Review', 'success');
+    render();
+  }
 }
 
 function renderPendingCard(post) {
