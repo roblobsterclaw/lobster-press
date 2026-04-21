@@ -20,7 +20,7 @@
       "rejectionReason": "add some pictures of wolf decking, or treks labeled appropriately",
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post \u2014 TLC spring campaign",
+      "notes": "Sample draft post — TLC spring campaign",
       "rejectedReason": null,
       "source": "Reworked per Joe feedback - added Wolf/Trex branding",
       "postedUrl": null
@@ -52,9 +52,9 @@
     },
     {
       "id": "post_005",
-      "status": "pending",
+      "status": "rejected",
       "brand": "Surfbox",
-      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you \u2014 fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
+      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you — fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
       "platforms": [
         "FB",
         "IG"
@@ -62,16 +62,17 @@
       "proposedDate": "2026-04-10",
       "imageUrl": null,
       "createdAt": "2026-04-08T08:00:00Z",
-      "updatedAt": "2026-04-10T11:00:00Z",
+      "updatedAt": "2026-04-21T17:24:30.221Z",
       "approvedBy": null,
       "approvedAt": null,
-      "rejectedBy": null,
-      "rejectedAt": null,
-      "rejectionReason": null,
+      "rejectedBy": "Admin",
+      "rejectedAt": "2026-04-21T17:24:30.221Z",
+      "rejectionReason": "needs a picture",
       "publishedAt": "2026-04-10T11:00:00Z",
       "publishedUrl": "https://www.facebook.com/surfboxstorage",
-      "notes": "Posted on schedule \u2014 great engagement",
-      "postedUrl": null
+      "notes": "Posted on schedule — great engagement",
+      "postedUrl": null,
+      "rejectedReason": "needs a picture"
     },
     {
       "id": "post_006",
@@ -341,7 +342,7 @@
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-21T16:57:04.691Z",
-    "version": "1.0.0"
+    "lastUpdated": "2026-04-21T17:24:30.222Z",
+    "version": "2.0.0"
   }
 }
