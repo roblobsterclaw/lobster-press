@@ -47,7 +47,7 @@
       "receivedAt": "2026-04-16T20:12:56Z",
       "subject": "FW: Checkout tear down",
       "sender": "socialmedia@tlcnj.com",
-      "status": "new",
+      "status": "used",
       "attachments": [
         {
           "name": "image001.jpg",
@@ -66,7 +66,7 @@
         }
       ],
       "emailBody": "Checkout counter tear down photos",
-      "usedInPost": null
+      "usedInPost": "post_1776975280999"
     },
     {
       "id": "inbox-005",
