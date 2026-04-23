@@ -20,7 +20,7 @@
       "rejectionReason": "add some pictures of wolf decking, or treks labeled appropriately",
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post \u00e2\u0080\u0094 TLC spring campaign",
+      "notes": "Sample draft post â TLC spring campaign",
       "rejectedReason": null,
       "source": "Reworked per Joe feedback - added Wolf/Trex branding",
       "postedUrl": null
@@ -54,7 +54,7 @@
       "id": "post_005",
       "status": "rejected",
       "brand": "Surfbox",
-      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you \u00e2\u0080\u0094 fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
+      "caption": "Spring cleaning season is the perfect time to reclaim your garage. Our portable storage units come right to you â fill at your own pace, we store it or keep it on-site. #Surfbox #SpringCleaning #LBI",
       "platforms": [
         "FB",
         "IG"
@@ -70,32 +70,7 @@
       "rejectionReason": "needs a picture",
       "publishedAt": "2026-04-10T11:00:00Z",
       "publishedUrl": "https://www.facebook.com/surfboxstorage",
-      "notes": "Posted on schedule \u00e2\u0080\u0094 great engagement",
-      "postedUrl": null,
-      "rejectedReason": "needs a picture",
-      "reworked": true
-    },
-    {
-      "id": "post_006",
-      "status": "rejected",
-      "brand": "Keli",
-      "caption": "Thinking about selling your LBI home this spring? The market is moving fast and inventory is tight. Let's talk about what your home is worth today. #KellyLynchRealtor #LBI #RealEstate",
-      "platforms": [
-        "FB",
-        "IG"
-      ],
-      "proposedDate": "2026-04-08",
-      "imageUrl": null,
-      "createdAt": "2026-04-06T08:00:00Z",
-      "updatedAt": "2026-04-21T20:30:05Z",
-      "approvedBy": null,
-      "approvedAt": null,
-      "rejectedBy": "Admin",
-      "rejectedAt": "2026-04-21T17:24:42.749Z",
-      "rejectionReason": "needs a picture",
-      "publishedAt": "2026-04-08T10:00:00Z",
-      "publishedUrl": "https://www.facebook.com/kelikelyrealtor",
-      "notes": "Good reach on this one",
+      "notes": "Posted on schedule â great engagement",
       "postedUrl": null,
       "rejectedReason": "needs a picture",
       "reworked": true
@@ -408,7 +383,7 @@
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-21T20:30:05Z",
+    "lastUpdated": "2026-04-23T20:14:18.059Z",
     "version": "2.0.0"
   }
 }
