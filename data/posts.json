@@ -47,7 +47,7 @@
       "rejectionReason": "add some pictures of wolf decking, or treks labeled appropriately",
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post Ã¢ÂÂ TLC spring campaign",
+      "notes": "Sample draft post \u00c3\u00a2\u00c2\u0080\u00c2\u0094 TLC spring campaign",
       "rejectedReason": null,
       "source": "Reworked per Joe feedback - added Wolf/Trex branding",
       "postedUrl": null
@@ -383,11 +383,33 @@
       "notes": "NEEDS IMAGE -- please attach an LBI beach/home photo before approving",
       "rejectedBy": "Admin",
       "rejectedAt": "2026-04-23T20:43:31.569Z",
-      "rejectionReason": "tag line doesnt make sense and no picture"
+      "rejectionReason": "tag line doesnt make sense and no picture",
+      "reworked": true,
+      "reworkedAt": "2026-04-23T21:00:00Z"
+    },
+    {
+      "id": "keli-lbi-rework-002",
+      "status": "pending",
+      "brand": "Keli",
+      "caption": "Spring on LBI is a seller's market \u2014 and the clock is ticking.\n\nInventory is tight. Buyer demand is strong. Well-priced beach homes on Long Beach Island are moving fast, and we're heading into the hottest buying stretch of the year.\n\nThinking about selling your beach house? This is your window.\n\nI'll walk you through current comps, what buyers are looking for right now, and what your home could realistically sell for \u2014 no pressure, just real numbers.\n\nLet's connect before the best buyers are already under contract somewhere else.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #LBIRealEstate #LongBeachIsland #SpringMarket #JerseyShoreHomes #KWPremier #SellYourHome #NJRealtor #BeachHouseForSale",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
+      "proposedDate": "2026-04-25",
+      "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/keli-lbi-aerial.jpg",
+      "createdAt": "2026-04-23T21:00:00Z",
+      "updatedAt": "2026-04-23T21:00:00Z",
+      "approvedBy": null,
+      "approvedAt": null,
+      "rejectedReason": null,
+      "postedUrl": null,
+      "source": "Reworked from keli-lbi-rework-001",
+      "notes": "Fixed tagline \u2014 clear seller CTA. IMAGE NEEDED: please attach an LBI aerial or beach home photo before approving."
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-23T21:00:33.676Z",
+    "lastUpdated": "2026-04-23T21:00:00Z",
     "version": "2.0.0"
   }
 }
