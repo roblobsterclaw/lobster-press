@@ -1,6 +1,33 @@
 {
   "posts": [
     {
+      "id": "post_1776975280999",
+      "status": "creating",
+      "brand": "TLC",
+      "caption": "",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
+      "proposedDate": "2026-04-24",
+      "imageUrl": null,
+      "inboxItemId": "inbox-004",
+      "inboxSubject": "FW: Checkout tear down",
+      "inboxDate": "2026-04-16T20:12:56Z",
+      "inboxSender": "socialmedia@tlcnj.com",
+      "createdAt": "2026-04-23T20:14:40.999Z",
+      "updatedAt": "2026-04-23T20:14:40.999Z",
+      "approvedBy": null,
+      "approvedAt": null,
+      "scheduledAt": null,
+      "rejectedBy": null,
+      "rejectedAt": null,
+      "rejectionReason": null,
+      "publishedAt": null,
+      "publishedUrl": null,
+      "notes": "From inbox: FW: Checkout tear down"
+    },
+    {
       "id": "post_001",
       "status": "pending",
       "brand": "TLC",
@@ -358,7 +385,7 @@
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-23T20:14:24.653Z",
+    "lastUpdated": "2026-04-23T20:14:41.873Z",
     "version": "2.0.0"
   }
 }
