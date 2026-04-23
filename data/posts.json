@@ -47,7 +47,7 @@
       "rejectionReason": "add some pictures of wolf decking, or treks labeled appropriately",
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post â TLC spring campaign",
+      "notes": "Sample draft post Ã¢ÂÂ TLC spring campaign",
       "rejectedReason": null,
       "source": "Reworked per Joe feedback - added Wolf/Trex branding",
       "postedUrl": null
@@ -365,7 +365,7 @@
     },
     {
       "id": "keli-lbi-rework-001",
-      "status": "pending",
+      "status": "rejected",
       "brand": "Keli",
       "caption": "LBI real estate is moving -- and spring is the best time to make yours.\n\nInventory on Long Beach Island is tight, buyer demand is strong, and well-priced homes are going fast. If you've been thinking about selling your beach house, the window is open right now.\n\nI'll walk you through current comps, what buyers are actually looking for this season, and what your home could realistically sell for today -- no pressure, just real numbers.\n\nReady to talk? Let's connect.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #LBIRealEstate #LongBeachIsland #SpringMarket #JerseyShoreHomes #KWPremier #SellYourHome #NJRealtor #BeachHouseForSale",
       "platforms": [
@@ -375,17 +375,20 @@
       "proposedDate": "2026-04-25",
       "imageUrl": null,
       "createdAt": "2026-04-21T20:30:05Z",
-      "updatedAt": "2026-04-21T20:30:05Z",
+      "updatedAt": "2026-04-23T20:43:31.569Z",
       "approvedBy": null,
       "approvedAt": null,
-      "rejectedReason": null,
+      "rejectedReason": "tag line doesnt make sense and no picture",
       "postedUrl": null,
       "source": "Reworked from post_006",
-      "notes": "NEEDS IMAGE -- please attach an LBI beach/home photo before approving"
+      "notes": "NEEDS IMAGE -- please attach an LBI beach/home photo before approving",
+      "rejectedBy": "Admin",
+      "rejectedAt": "2026-04-23T20:43:31.569Z",
+      "rejectionReason": "tag line doesnt make sense and no picture"
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-23T20:14:41.873Z",
+    "lastUpdated": "2026-04-23T20:43:31.569Z",
     "version": "2.0.0"
   }
 }
