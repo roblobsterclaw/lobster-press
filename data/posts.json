@@ -28,16 +28,16 @@
     },
     {
       "id": "post_001",
-      "status": "approved",
+      "status": "scheduled",
       "brand": "TLC",
       "caption": "Deck season is HERE. Composite decking from Wolf and Trex - low maintenance, no splinters, no staining, and built to last 25+ years.\n\nWe carry a full line of composite and PVC decking at both locations. Stop in and see the samples - your bare feet will thank you.\n\nTuckerton Lumber - your deck headquarters since 1932.\nwww.tlcnj.com\n\n#TuckertonLumber #CompositeDeck #WolfDecking #Trex #DeckSeason #LBI #JerseyShore #OutdoorLiving #ShopLocal",
       "platforms": [
         "FB"
       ],
-      "proposedDate": "2026-04-18",
+      "proposedDate": "2026-04-30",
       "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/tlc-composite-deck.png",
       "createdAt": "2026-04-15T10:00:00Z",
-      "updatedAt": "2026-04-27T22:32:39.264Z",
+      "updatedAt": "2026-04-27T22:33:00.653Z",
       "approvedBy": "Admin",
       "approvedAt": "2026-04-27T22:32:39.264Z",
       "rejectedBy": "Admin",
@@ -48,7 +48,8 @@
       "notes": "Sample draft post Ã¢ÂÂ TLC spring campaign",
       "rejectedReason": null,
       "source": "Reworked per Joe feedback - added Wolf/Trex branding",
-      "postedUrl": null
+      "postedUrl": null,
+      "scheduledAt": "2026-04-30T10:00"
     },
     {
       "id": "post_004",
@@ -465,7 +466,7 @@
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-27T22:32:39.264Z",
+    "lastUpdated": "2026-04-27T22:33:00.653Z",
     "version": "2.0.0"
   }
 }
