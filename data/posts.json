@@ -329,7 +329,7 @@
     },
     {
       "id": "tlc-testimonial-001",
-      "status": "approved",
+      "status": "posted",
       "brand": "TLC",
       "caption": "This is what 90 years of trust looks like.\n\nNothing means more to us than hearing from the people we serve. This customer says it better than we ever could.\n\nWhether it's a deck, a door, a full renovation, or just a can of Benjamin Moore -- Tuckerton Lumber has been showing up for this community since 1932.\n\nThank you for trusting us with your project.\n\nTuckerton | Surf City | Since 1932\nwww.tlcnj.com\n\n#TuckertonLumber #CustomerLove #Testimonial #LBI #JerseyShore #ShopLocal #FamilyBusiness #HomeImprovement",
       "platforms": [
@@ -339,16 +339,18 @@
       "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/tlc-testimonial-thumb.jpg",
       "videoAttachment": "Video.mov",
       "createdAt": "2026-04-21T20:30:05Z",
-      "updatedAt": "2026-04-27T20:08:00Z",
+      "updatedAt": "2026-04-27T20:09:00Z",
       "approvedBy": "Admin",
       "approvedAt": "2026-04-27T20:08:00Z",
       "rejectedReason": null,
-      "postedUrl": null,
+      "postedUrl": "https://www.facebook.com/951792044488177",
       "source": "inbox-003 -- FW: Customer testimonial (video)",
       "notes": "Customer testimonial video -- attach Video.mov before publishing",
       "scheduledAt": null,
-      "postedAt": null,
-      "postedPlatforms": []
+      "postedAt": "2026-04-27T16:08:00",
+      "postedPlatforms": [
+        "Facebook"
+      ]
     },
     {
       "id": "surfbox-spring-rework-001",
@@ -464,7 +466,7 @@
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-27T20:08:00Z",
+    "lastUpdated": "2026-04-27T20:09:00Z",
     "version": "2.0.0"
   }
 }
