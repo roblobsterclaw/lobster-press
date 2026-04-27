@@ -119,25 +119,24 @@
     },
     {
       "id": "surfbox-team-001",
-      "status": "pending",
+      "status": "rejected",
       "brand": "Surfbox",
       "caption": "Another day at the office. The Surfbox crew takes their breaks seriously - Adirondack chairs, sunshine, and the best seats in the house.\n\nWe work hard, we have fun, and we deliver. Thats the Surfbox way.\n\nNeed portable storage? We make it easy.\nCall: (855) SURFBOX | (855) 787-3269\nwww.surfboxstorage.com\n\n#Surfbox #TeamSurfbox #LBI #JerseyShore #SmallBusiness #WorkHardPlayHard #PortableStorage #OceanCounty",
       "platforms": [
-        "FB",
-        "IG"
+        "FB"
       ],
       "proposedDate": "2026-04-22",
       "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/surfbox-team.jpg",
       "createdAt": "2026-04-16T16:03:47.202395",
-      "updatedAt": "2026-04-16T20:21:59.549Z",
+      "updatedAt": "2026-04-27T16:40:14.582Z",
       "approvedBy": null,
       "approvedAt": null,
-      "rejectedReason": null,
+      "rejectedReason": "Post should mention that the Adirondack chairs come from Tuckerton Lumber Company.",
       "postedUrl": null,
       "source": "Real photo - Surfbox team on container",
       "rejectedBy": "Admin",
-      "rejectedAt": "2026-04-16T20:21:59.549Z",
-      "rejectionReason": "use this post just change picture out with other similiar pic i just sent "
+      "rejectedAt": "2026-04-27T16:40:14.582Z",
+      "rejectionReason": "Post should mention that the Adirondack chairs come from Tuckerton Lumber Company."
     },
     {
       "id": "surfbox-yard-001",
@@ -410,7 +409,7 @@
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-27T16:28:58.739Z",
+    "lastUpdated": "2026-04-27T16:40:14.582Z",
     "version": "2.0.0"
   }
 }
