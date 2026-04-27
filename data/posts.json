@@ -285,7 +285,7 @@
     },
     {
       "id": "keli-walking-001",
-      "status": "scheduled",
+      "status": "approved",
       "brand": "Keli",
       "caption": "Evening walks with a purpose. Flyers in hand, pup by my side, getting to know every street in the neighborhood.\n\nThis is what local means. I dont just sell houses here - I live here, I walk here, I know every block.\n\nLooking for a realtor who actually knows your neighborhood? Lets talk.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #LocalRealtor #KWPremier #NJRealEstate #PoundingThePavement #CommunityFirst #Crosswicks #BurlingtonCounty",
       "platforms": [
@@ -294,13 +294,13 @@
       "proposedDate": "2026-04-28",
       "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/keli-walking.jpg",
       "createdAt": "2026-04-16T19:17:44.071629",
-      "updatedAt": "2026-04-27T14:35:00Z",
+      "updatedAt": "2026-04-27T14:36:00Z",
       "approvedBy": "Admin",
-      "approvedAt": "2026-04-27T13:36:55.963Z",
+      "approvedAt": "2026-04-27T14:36:00Z",
       "rejectedReason": null,
       "postedUrl": null,
       "source": "Keli photos - walking neighborhood with dog and flyers",
-      "scheduledAt": "2026-04-27T11:00"
+      "scheduledAt": null
     },
     {
       "id": "keli-listing-001",
@@ -323,7 +323,7 @@
     },
     {
       "id": "tlc-testimonial-001",
-      "status": "scheduled",
+      "status": "approved",
       "brand": "TLC",
       "caption": "This is what 90 years of trust looks like.\n\nNothing means more to us than hearing from the people we serve. This customer says it better than we ever could.\n\nWhether it's a deck, a door, a full renovation, or just a can of Benjamin Moore -- Tuckerton Lumber has been showing up for this community since 1932.\n\nThank you for trusting us with your project.\n\nTuckerton | Surf City | Since 1932\nwww.tlcnj.com\n\n#TuckertonLumber #CustomerLove #Testimonial #LBI #JerseyShore #ShopLocal #FamilyBusiness #HomeImprovement",
       "platforms": [
@@ -333,14 +333,14 @@
       "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/tlc-testimonial-thumb.jpg",
       "videoAttachment": "Video.mov",
       "createdAt": "2026-04-21T20:30:05Z",
-      "updatedAt": "2026-04-27T14:35:00Z",
+      "updatedAt": "2026-04-27T14:36:00Z",
       "approvedBy": "Admin",
-      "approvedAt": "2026-04-23T21:00:33.676Z",
+      "approvedAt": "2026-04-27T14:36:00Z",
       "rejectedReason": null,
       "postedUrl": null,
       "source": "inbox-003 -- FW: Customer testimonial (video)",
       "notes": "Customer testimonial video -- attach Video.mov before publishing",
-      "scheduledAt": "2026-04-27T11:00"
+      "scheduledAt": null
     },
     {
       "id": "surfbox-spring-rework-001",
@@ -410,7 +410,7 @@
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-27T14:35:00Z",
+    "lastUpdated": "2026-04-27T14:36:00Z",
     "version": "2.0.0"
   }
 }
