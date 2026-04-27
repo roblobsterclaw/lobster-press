@@ -46,7 +46,7 @@
       "rejectionReason": "add some pictures of wolf decking, or treks labeled appropriately",
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post Ã¢ÂÂ TLC spring campaign",
+      "notes": "Sample draft post \u00c3\u00a2\u00c2\u0080\u00c2\u0094 TLC spring campaign",
       "rejectedReason": null,
       "source": "Reworked per Joe feedback - added Wolf/Trex branding",
       "postedUrl": null
@@ -294,13 +294,13 @@
       "proposedDate": "2026-04-28",
       "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/keli-walking.jpg",
       "createdAt": "2026-04-16T19:17:44.071629",
-      "updatedAt": "2026-04-27T13:52:06.684Z",
+      "updatedAt": "2026-04-27T14:35:00Z",
       "approvedBy": "Admin",
       "approvedAt": "2026-04-27T13:36:55.963Z",
       "rejectedReason": null,
       "postedUrl": null,
       "source": "Keli photos - walking neighborhood with dog and flyers",
-      "scheduledAt": "2026-04-28T10:00"
+      "scheduledAt": "2026-04-27T11:00"
     },
     {
       "id": "keli-listing-001",
@@ -333,14 +333,14 @@
       "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/tlc-testimonial-thumb.jpg",
       "videoAttachment": "Video.mov",
       "createdAt": "2026-04-21T20:30:05Z",
-      "updatedAt": "2026-04-23T21:00:52.352Z",
+      "updatedAt": "2026-04-27T14:35:00Z",
       "approvedBy": "Admin",
       "approvedAt": "2026-04-23T21:00:33.676Z",
       "rejectedReason": null,
       "postedUrl": null,
       "source": "inbox-003 -- FW: Customer testimonial (video)",
       "notes": "Customer testimonial video -- attach Video.mov before publishing",
-      "scheduledAt": "2026-04-24T10:00"
+      "scheduledAt": "2026-04-27T11:00"
     },
     {
       "id": "surfbox-spring-rework-001",
@@ -390,7 +390,7 @@
       "id": "keli-lbi-rework-002",
       "status": "pending",
       "brand": "Keli",
-      "caption": "Thinking about selling your LBI beach house? Now is the time.\n\nInventory on Long Beach Island is tight, buyer demand is strong, and well-priced homes are moving fast. Sellers who list this spring are seeing real results.\n\nI'll give you an honest look at current comps, what buyers are actually searching for this season, and what your home could realistically sell for today — no pressure, just straight talk.\n\nCurious what your beach house is worth right now? Let's find out.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #LBIRealEstate #LongBeachIsland #SpringMarket #JerseyShoreHomes #KWPremier #SellYourHome #NJRealtor #BeachHouseForSale",
+      "caption": "Thinking about selling your LBI beach house? Now is the time.\n\nInventory on Long Beach Island is tight, buyer demand is strong, and well-priced homes are moving fast. Sellers who list this spring are seeing real results.\n\nI'll give you an honest look at current comps, what buyers are actually searching for this season, and what your home could realistically sell for today \u2014 no pressure, just straight talk.\n\nCurious what your beach house is worth right now? Let's find out.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #LBIRealEstate #LongBeachIsland #SpringMarket #JerseyShoreHomes #KWPremier #SellYourHome #NJRealtor #BeachHouseForSale",
       "platforms": [
         "FB",
         "IG"
@@ -404,13 +404,13 @@
       "rejectedReason": null,
       "postedUrl": null,
       "source": "Reworked from keli-lbi-rework-001",
-      "notes": "Reworked: fixed opening tagline (was ambiguous), kept market copy. Using keli-leaving-listing.jpg as placeholder — swap for a dedicated LBI beach home photo before posting.",
+      "notes": "Reworked: fixed opening tagline (was ambiguous), kept market copy. Using keli-leaving-listing.jpg as placeholder \u2014 swap for a dedicated LBI beach home photo before posting.",
       "rejectedBy": null,
       "rejectedAt": null
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-27T13:52:06.684Z",
+    "lastUpdated": "2026-04-27T14:35:00Z",
     "version": "2.0.0"
   }
 }
