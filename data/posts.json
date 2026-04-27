@@ -2,9 +2,9 @@
   "posts": [
     {
       "id": "post_1776975280999",
-      "status": "creating",
+      "status": "pending",
       "brand": "TLC",
-      "caption": "",
+      "caption": "Renovation season starts at the register. Our Tuckerton team is tearing down and rebuilding the checkout area \u2014 because after 90+ years, even we need an upgrade.\n\nNew layout. Better flow. Same hometown service.\n\nTuckerton Lumber \u2014 always improving.\nwww.tlcnj.com\n\n#TuckertonLumber #StoreRenovation #ShopLocal #LBI #JerseyShore #AlwaysImproving",
       "platforms": [
         "FB"
       ],
@@ -15,7 +15,7 @@
       "inboxDate": "2026-04-16T20:12:56Z",
       "inboxSender": "socialmedia@tlcnj.com",
       "createdAt": "2026-04-23T20:14:40.999Z",
-      "updatedAt": "2026-04-27T13:36:18.464Z",
+      "updatedAt": "2026-04-27T16:39:00Z",
       "approvedBy": null,
       "approvedAt": null,
       "scheduledAt": null,
@@ -24,7 +24,7 @@
       "rejectionReason": null,
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "From inbox: FW: Checkout tear down"
+      "notes": "Auto-created from inbox: FW: Checkout tear down. Was stuck in 'creating' \u2014 fixed April 27."
     },
     {
       "id": "post_001",
@@ -46,7 +46,7 @@
       "rejectionReason": "add some pictures of wolf decking, or treks labeled appropriately",
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post Ã¢ÂÂ TLC spring campaign",
+      "notes": "Sample draft post \u00c3\u00a2\u00c2\u0080\u00c2\u0094 TLC spring campaign",
       "rejectedReason": null,
       "source": "Reworked per Joe feedback - added Wolf/Trex branding",
       "postedUrl": null
@@ -373,7 +373,7 @@
       "proposedDate": "2026-04-25",
       "imageUrl": null,
       "createdAt": "2026-04-21T20:30:05Z",
-      "updatedAt": "2026-04-23T21:30:30.000Z",
+      "updatedAt": "2026-04-27T16:39:00Z",
       "approvedBy": null,
       "approvedAt": null,
       "rejectedReason": "tag line doesnt make sense and no picture",
@@ -389,7 +389,7 @@
       "id": "keli-lbi-rework-002",
       "status": "pending",
       "brand": "Keli",
-      "caption": "Thinking about selling your LBI beach house? Now is the time.\n\nInventory on Long Beach Island is tight, buyer demand is strong, and well-priced homes are moving fast. Sellers who list this spring are seeing real results.\n\nI'll give you an honest look at current comps, what buyers are actually searching for this season, and what your home could realistically sell for today — no pressure, just straight talk.\n\nCurious what your beach house is worth right now? Let's find out.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #LBIRealEstate #LongBeachIsland #SpringMarket #JerseyShoreHomes #KWPremier #SellYourHome #NJRealtor #BeachHouseForSale",
+      "caption": "Thinking about selling your LBI beach house? Now is the time.\n\nInventory on Long Beach Island is tight, buyer demand is strong, and well-priced homes are moving fast. Sellers who list this spring are seeing real results.\n\nI'll give you an honest look at current comps, what buyers are actually searching for this season, and what your home could realistically sell for today \u2014 no pressure, just straight talk.\n\nCurious what your beach house is worth right now? Let's find out.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #LBIRealEstate #LongBeachIsland #SpringMarket #JerseyShoreHomes #KWPremier #SellYourHome #NJRealtor #BeachHouseForSale",
       "platforms": [
         "FB",
         "IG"
@@ -403,13 +403,36 @@
       "rejectedReason": null,
       "postedUrl": null,
       "source": "Reworked from keli-lbi-rework-001",
-      "notes": "Reworked: fixed opening tagline (was ambiguous), kept market copy. Using keli-leaving-listing.jpg as placeholder — swap for a dedicated LBI beach home photo before posting.",
+      "notes": "Reworked: fixed opening tagline (was ambiguous), kept market copy. Using keli-leaving-listing.jpg as placeholder \u2014 swap for a dedicated LBI beach home photo before posting.",
       "rejectedBy": null,
       "rejectedAt": null
+    },
+    {
+      "id": "keli-lbi-rework-002",
+      "status": "pending",
+      "brand": "Keli",
+      "caption": "Spring on LBI means one thing \u2014 real estate is moving.\n\nWhether you're buying your dream beach house or selling at peak season, I know every street, every block, every neighborhood on this island.\n\nLocal knowledge. Personal service. Results.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #LBI #BeachRealEstate #KWPremier #NJRealtor #SpringMarket #JerseyShore #LongBeachIsland",
+      "platforms": [
+        "FB",
+        "IG"
+      ],
+      "proposedDate": "2026-04-28",
+      "imageUrl": null,
+      "createdAt": "2026-04-27T16:39:00Z",
+      "updatedAt": "2026-04-27T16:39:00Z",
+      "approvedBy": null,
+      "approvedAt": null,
+      "rejectedBy": null,
+      "rejectedAt": null,
+      "rejectionReason": null,
+      "publishedAt": null,
+      "publishedUrl": null,
+      "notes": "Reworked from keli-lbi-rework-001 \u2014 fixed tagline per Joe's feedback, needs image",
+      "source": "Reworked \u2014 original rejected: 'tag line doesnt make sense and no picture'"
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-27T16:40:14.582Z",
+    "lastUpdated": "2026-04-27T16:39:00Z",
     "version": "2.0.0"
   }
 }
