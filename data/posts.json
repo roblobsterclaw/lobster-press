@@ -6,8 +6,7 @@
       "brand": "TLC",
       "caption": "",
       "platforms": [
-        "FB",
-        "IG"
+        "FB"
       ],
       "proposedDate": "2026-04-24",
       "imageUrl": null,
@@ -16,7 +15,7 @@
       "inboxDate": "2026-04-16T20:12:56Z",
       "inboxSender": "socialmedia@tlcnj.com",
       "createdAt": "2026-04-23T20:14:40.999Z",
-      "updatedAt": "2026-04-23T20:14:40.999Z",
+      "updatedAt": "2026-04-27T13:36:18.464Z",
       "approvedBy": null,
       "approvedAt": null,
       "scheduledAt": null,
@@ -47,7 +46,7 @@
       "rejectionReason": "add some pictures of wolf decking, or treks labeled appropriately",
       "publishedAt": null,
       "publishedUrl": null,
-      "notes": "Sample draft post \u00c3\u00a2\u00c2\u0080\u00c2\u0094 TLC spring campaign",
+      "notes": "Sample draft post Ã¢ÂÂ TLC spring campaign",
       "rejectedReason": null,
       "source": "Reworked per Joe feedback - added Wolf/Trex branding",
       "postedUrl": null
@@ -286,19 +285,18 @@
     },
     {
       "id": "keli-walking-001",
-      "status": "pending",
+      "status": "approved",
       "brand": "Keli",
       "caption": "Evening walks with a purpose. Flyers in hand, pup by my side, getting to know every street in the neighborhood.\n\nThis is what local means. I dont just sell houses here - I live here, I walk here, I know every block.\n\nLooking for a realtor who actually knows your neighborhood? Lets talk.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #LocalRealtor #KWPremier #NJRealEstate #PoundingThePavement #CommunityFirst #Crosswicks #BurlingtonCounty",
       "platforms": [
-        "FB",
-        "IG"
+        "FB"
       ],
       "proposedDate": "2026-04-20",
       "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/keli-walking.jpg",
       "createdAt": "2026-04-16T19:17:44.071629",
-      "updatedAt": "2026-04-16T19:17:44.071629",
-      "approvedBy": null,
-      "approvedAt": null,
+      "updatedAt": "2026-04-27T13:36:55.963Z",
+      "approvedBy": "Admin",
+      "approvedAt": "2026-04-27T13:36:55.963Z",
       "rejectedReason": null,
       "postedUrl": null,
       "source": "Keli photos - walking neighborhood with dog and flyers"
@@ -391,7 +389,7 @@
       "id": "keli-lbi-rework-002",
       "status": "pending",
       "brand": "Keli",
-      "caption": "Thinking about selling your LBI beach house? Now is the time.\n\nInventory on Long Beach Island is tight, buyer demand is strong, and well-priced homes are moving fast. Sellers who list this spring are seeing real results.\n\nI'll give you an honest look at current comps, what buyers are actually searching for this season, and what your home could realistically sell for today \u2014 no pressure, just straight talk.\n\nCurious what your beach house is worth right now? Let's find out.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #LBIRealEstate #LongBeachIsland #SpringMarket #JerseyShoreHomes #KWPremier #SellYourHome #NJRealtor #BeachHouseForSale",
+      "caption": "Thinking about selling your LBI beach house? Now is the time.\n\nInventory on Long Beach Island is tight, buyer demand is strong, and well-priced homes are moving fast. Sellers who list this spring are seeing real results.\n\nI'll give you an honest look at current comps, what buyers are actually searching for this season, and what your home could realistically sell for today — no pressure, just straight talk.\n\nCurious what your beach house is worth right now? Let's find out.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #LBIRealEstate #LongBeachIsland #SpringMarket #JerseyShoreHomes #KWPremier #SellYourHome #NJRealtor #BeachHouseForSale",
       "platforms": [
         "FB",
         "IG"
@@ -405,13 +403,13 @@
       "rejectedReason": null,
       "postedUrl": null,
       "source": "Reworked from keli-lbi-rework-001",
-      "notes": "Reworked: fixed opening tagline (was ambiguous), kept market copy. Using keli-leaving-listing.jpg as placeholder \u2014 swap for a dedicated LBI beach home photo before posting.",
+      "notes": "Reworked: fixed opening tagline (was ambiguous), kept market copy. Using keli-leaving-listing.jpg as placeholder — swap for a dedicated LBI beach home photo before posting.",
       "rejectedBy": null,
       "rejectedAt": null
     }
   ],
   "meta": {
-    "lastUpdated": "2026-04-23T21:30:30.000Z",
+    "lastUpdated": "2026-04-27T13:36:55.964Z",
     "version": "2.0.0"
   }
 }
