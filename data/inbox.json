@@ -8,14 +8,15 @@
       "status": "new",
       "attachments": [],
       "emailBody": "Video content (no attachment - may need resend)",
-      "usedInPost": null
+      "usedInPost": null,
+      "notes": "Blocked: email references IMG_2150.mov, but the video attachment is not present in the workspace/GitHub inbox export."
     },
     {
       "id": "inbox-002",
       "receivedAt": "2026-04-21T17:04:15Z",
       "subject": "FW: PIC & AI",
       "sender": "socialmedia@tlcnj.com",
-      "status": "new",
+      "status": "used",
       "attachments": [
         {
           "name": "0_SdyruYy88rHQEw0G.png",
@@ -24,7 +25,7 @@
         }
       ],
       "emailBody": "",
-      "usedInPost": null
+      "usedInPost": "tlc-smart-lock-001"
     },
     {
       "id": "inbox-003",
@@ -73,17 +74,17 @@
       "receivedAt": "2026-04-16T20:10:20Z",
       "subject": "FW: AI cont.....",
       "sender": "socialmedia@tlcnj.com",
-      "status": "new",
+      "status": "used",
       "attachments": [],
       "emailBody": "AI continuation - no attachments",
-      "usedInPost": null
+      "usedInPost": "tlc-weber-genesis-001"
     },
     {
       "id": "inbox-006",
       "receivedAt": "2026-04-16T20:09:56Z",
       "subject": "FW: AI",
       "sender": "socialmedia@tlcnj.com",
-      "status": "new",
+      "status": "used",
       "attachments": [
         {
           "name": "0_SdyruYy88rHQEw0G.png",
@@ -92,7 +93,7 @@
         }
       ],
       "emailBody": "",
-      "usedInPost": null
+      "usedInPost": "tlc-smart-lock-001"
     },
     {
       "id": "inbox-007",
