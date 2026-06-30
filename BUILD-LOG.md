@@ -9,6 +9,39 @@ This log records the targeted rebuild work. It is appended to over time — newe
 
 ---
 
+## 2026-06-30 — Root-cause the "missing posts" + add drift guardrails
+
+The owner reported posts missing from the live dashboard. **Root cause: silent status
+drift, not data loss.** The generator wrote `status:"pending"`; the original dashboard's
+New tab filtered on `"new"`. `"pending"` matched no tab, so **13 posts were invisible on
+the live site** (all real, all intact in `data/posts.json`). Confirmed by counting:
+8 posted, 13 pending (hidden), 2 rejected = 23 total.
+
+Made this class of bug impossible going forward:
+
+1. **Dashboard never hides a post.** Replaced the per-tab `includes()` filter with a single
+   `tabForStatus()` that resolves every post to exactly one tab and **falls back to New for
+   any unknown/legacy status** — nothing can silently disappear again. Verified: all 23
+   posts map to a tab (13 New, 8 Posted, 2 Rejected).
+2. **One canonical status vocabulary + normalizer.** `scripts/validate.py` defines the
+   canonical statuses and legacy aliases (`pending→new`, `creating→new`, `published→posted`).
+   `--fix` normalizes in place; ran it → 13 posts moved `pending→new`, data now canonical.
+3. **CI fails on drift.** `.github/workflows/validate.yml` runs `validate.py` (canonical
+   status, unique ids, required fields, known brand) **and** the backend smoke test on every
+   push/PR. A duplicate id or unknown status now fails the build instead of hiding a post.
+
+Also fixed a **real backend path bug** found while wiring this: scripts run with
+`working-directory: scripts` in CI, so the bare relative `data/posts.json` would have
+resolved to `scripts/data/posts.json` and silently loaded an empty file. `config.py` now
+anchors `POSTS_PATH`/`INBOX_PATH` to the repo root regardless of cwd.
+
+**Complete inventory at this point** (also given to the owner): TLC 7 (4 sent / 3 pending),
+Surfbox 10 (2 sent / 7 pending / 1 rejected), Keli 6 (2 sent / 3 pending / 1 rejected).
+Inbox fully reconciled except `inbox-001` (FW: Video) — blocked, the referenced video
+attachment was never in the export.
+
+---
+
 ## 2026-06-30 — Backend built into the repo (intake + publisher)
 
 Built the email-intake and Facebook-publisher tier directly into this repo, running

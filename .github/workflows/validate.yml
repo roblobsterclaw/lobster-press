@@ -1,0 +1,23 @@
+name: Lobster Press — Checks
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      # Pure-stdlib checks — no pip install needed.
+      - name: Validate data/posts.json (statuses, ids, fields, brands)
+        working-directory: scripts
+        run: python validate.py
+      - name: Backend smoke test
+        run: python scripts/smoke_test.py

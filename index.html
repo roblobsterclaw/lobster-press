@@ -584,9 +584,18 @@ const TAB_STATUSES = {
   posted: ["posted"],
   rejected: ["rejected"]
 };
+// Never-hide guarantee: every post resolves to exactly one tab. An unknown or
+// legacy status (the bug that once hid 13 "pending" posts) falls through to
+// New instead of silently disappearing.
+function tabForStatus(status) {
+  for (const [tab, list] of Object.entries(TAB_STATUSES)) {
+    if (list.includes(status)) return tab;
+  }
+  return "new";
+}
 function workflowCounts() {
   const posts = state.posts.filter(post => state.brandFilter === "All" || post.brand === state.brandFilter);
-  const inTab = (tabId) => posts.filter(post => TAB_STATUSES[tabId].includes(post.status)).length;
+  const inTab = (tabId) => posts.filter(post => tabForStatus(post.status) === tabId).length;
   return {
     new: inTab("new"),
     scheduled: inTab("scheduled"),
@@ -595,8 +604,7 @@ function workflowCounts() {
   };
 }
 function filteredPosts(tabId = state.activeTab) {
-  const allowed = TAB_STATUSES[tabId] || [tabId];
-  return state.posts.filter(post => allowed.includes(post.status) && (state.brandFilter === "All" || post.brand === state.brandFilter));
+  return state.posts.filter(post => tabForStatus(post.status) === tabId && (state.brandFilter === "All" || post.brand === state.brandFilter));
 }
 function render() {
   renderTabs();
