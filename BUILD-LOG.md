@@ -9,6 +9,83 @@ This log records the targeted rebuild work. It is appended to over time — newe
 
 ---
 
+## 2026-06-30 — Backend built into the repo (intake + publisher)
+
+Built the email-intake and Facebook-publisher tier directly into this repo, running
+free on GitHub Actions cron and reading/writing `data/posts.json` — the same file the
+dashboard uses. New layout under `scripts/`:
+
+```
+scripts/
+  config.py        env/secrets loading + require() (fails loudly, no silent no-ops)
+  notify.py        logging + Telegram alerts; guard() wraps stages — no silent failures
+  store.py         atomic posts.json / inbox.json read·write·dedupe
+  brand.py         weighted-keyword classifier (mirrors the dashboard)
+  generate.py      3 caption options via a FREE OpenAI-compatible model; refuses
+                   Claude/Opus/paid GPT; deterministic template fallback
+  gmail_scan.py    Gmail intake — gmail.modify scope + LobsterPress/Processed label + dedupe
+  publisher.py     publishes due posts (Post Now + past-schedule) across platforms
+  platforms/
+    base.py        PlatformAdapter contract + PublishResult
+    facebook.py    Facebook Graph API adapter (LIVE)
+    instagram.py   stub — lights up when IG creds are set
+    tiktok.py      stub — lights up when TikTok creds are set
+    __init__.py    registry: FB/IG/TT -> adapter (add a channel in one line)
+  smoke_test.py    network-free test (23 checks, all green)
+.github/workflows/
+  intake.yml       cron */30 — scan email, create drafts, commit data/
+  publisher.yml    cron */15 — publish due posts, commit data/
+requirements.txt
+```
+
+**Spec issues this closes (the backend half):**
+- **Gmail read-only → gmail.modify.** `gmail_scan.py` requests the `gmail.modify`
+  scope, creates the `LobsterPress/Processed` label if missing, and applies it to every
+  processed message — so the `-label:` query actually excludes handled mail. Dedupe is
+  double-guarded by the Gmail message id recorded on each inbox item.
+- **Extensible publisher.** One adapter per channel behind a shared `PlatformAdapter`
+  contract; the queue/approval logic never changes. Facebook ships now; Instagram and
+  TikTok are stubs that activate the moment their credentials exist. The publisher
+  iterates `post.platforms`, records `postedPlatforms`/`postedUrl`, and on a hard error
+  marks the post `failed` (shown in the dashboard) **and** alerts via Telegram.
+- **Free models only.** `generate.py` talks to any OpenAI-compatible free endpoint and
+  **refuses** banned model ids (`claude`, `opus`, `sonnet`, `haiku`, `gpt-4`, …). With no
+  endpoint configured it falls back to templates — never a silent blank draft.
+- **No silent failures.** Every stage runs inside `notify.guard()`; all errors log AND
+  ping Telegram.
+
+**Verification:** `python scripts/smoke_test.py` → 23/23 pass (brand, store round-trip,
+template generation, free-model guardrail, due-post detection, adapter registry, publisher
+partial-success path). All modules byte-compile. Network paths (Gmail/Graph/LLM) are guarded
+behind credential checks and weren't exercised here (no secrets in this sandbox).
+
+**Secrets / vars to set in the repo (Settings → Secrets and variables → Actions):**
+
+| Secret | Purpose |
+| --- | --- |
+| `GMAIL_CREDENTIALS_JSON` | Gmail OAuth client JSON |
+| `GMAIL_TOKEN_JSON` | Authorized Gmail token JSON (must contain a refresh_token) |
+| `LLM_API_KEY` | Free LLM provider key (Groq / OpenRouter free tier) |
+| `FB_PAGE_ID`, `FB_PAGE_ACCESS_TOKEN` | Facebook Page publishing |
+| `IG_USER_ID`, `IG_ACCESS_TOKEN` | Instagram (when ready) |
+| `TIKTOK_ACCESS_TOKEN` | TikTok (when ready) |
+| `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` | Alerting |
+
+| Variable | Example |
+| --- | --- |
+| `INTAKE_SENDER` | `socialmedia@tlcnj.com` |
+| `LLM_BASE_URL` | `https://api.groq.com/openai/v1` |
+| `LLM_MODEL` | `llama-3.3-70b-versatile` |
+
+Test before going live: run the **Publisher** workflow via *Run workflow* with **dry_run = true**.
+
+> Note on missing TLC posts (flagged 2026-06-30): the repo's full git history was searched —
+> no TLC posts were ever dropped here (only a Surfbox and a Keli reject). The additional TLC
+> posts the owner remembers live on the Mac mini / Google Drive, neither reachable from the
+> sandboxed session (Drive needs re-authorization). Pending hand-off of those files.
+
+---
+
 ## 2026-06-29 — Targeted rebuild
 
 Scope note: the live repository (`roblobsterclaw/lobster-press`) is the **static dashboard +
