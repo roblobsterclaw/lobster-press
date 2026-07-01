@@ -413,16 +413,21 @@
 <div id="toast" class="toast hidden"></div>
 
 <script>
+// NOTE: client-side gate only. Acceptable for this threat model (a private
+// approval queue with no sensitive data; the real guardrail is the GitHub
+// write token kept in localStorage). Do not treat this as real auth.
 const PASSWORD = "soccer12";
 const GITHUB_REPO = "roblobsterclaw/lobster-press";
 const DATA_PATH = "data/posts.json";
 const GITHUB_TOKEN_KEY = "lobsterPressGithubToken";
 const AUTH_KEY = "lobsterPressAuthed";
+// Spec workflow tabs: New -> Scheduled -> Posted, plus Rejected (never disappears).
+// The "approved" status is the ready-to-schedule step and lives inside Scheduled.
 const tabs = [
-  { id: "pending", label: "Pending" },
-  { id: "approved", label: "Approved" },
+  { id: "new", label: "New" },
   { id: "scheduled", label: "Scheduled" },
-  { id: "posted", label: "Posted" }
+  { id: "posted", label: "Posted" },
+  { id: "rejected", label: "Rejected" }
 ];
 const brandMeta = {
   TLC: { label: "TLC", cls: "tlc", hashtags: ["#TuckertonLumber", "#LBI", "#LocalBusiness"] },
@@ -432,7 +437,7 @@ const brandMeta = {
 const state = {
   posts: [],
   sha: null,
-  activeTab: "pending",
+  activeTab: "new",
   brandFilter: "All",
   loadedAt: null,
   saveBusy: false
@@ -571,23 +576,35 @@ async function savePosts() {
 function countFor(tabId) {
   return filteredPosts(tabId).length;
 }
+// Status -> tab mapping. Legacy "pending" data is treated as "new"; the
+// "approved" / "post_now" / "failed" pipeline states live under Scheduled.
+const TAB_STATUSES = {
+  new: ["new", "pending"],
+  scheduled: ["approved", "scheduled", "post_now", "failed"],
+  posted: ["posted"],
+  rejected: ["rejected"]
+};
+// Never-hide guarantee: every post resolves to exactly one tab. An unknown or
+// legacy status (the bug that once hid 13 "pending" posts) falls through to
+// New instead of silently disappearing.
+function tabForStatus(status) {
+  for (const [tab, list] of Object.entries(TAB_STATUSES)) {
+    if (list.includes(status)) return tab;
+  }
+  return "new";
+}
 function workflowCounts() {
   const posts = state.posts.filter(post => state.brandFilter === "All" || post.brand === state.brandFilter);
+  const inTab = (tabId) => posts.filter(post => tabForStatus(post.status) === tabId).length;
   return {
-    pending: posts.filter(post => post.status === "new" || post.status === "rejected").length,
-    approved: posts.filter(post => post.status === "approved").length,
-    scheduled: posts.filter(post => ["scheduled", "post_now", "failed"].includes(post.status)).length,
-    posted: posts.filter(post => post.status === "posted").length
+    new: inTab("new"),
+    scheduled: inTab("scheduled"),
+    posted: inTab("posted"),
+    rejected: inTab("rejected")
   };
 }
 function filteredPosts(tabId = state.activeTab) {
-  const allowed = {
-    pending: ["new", "rejected"],
-    approved: ["approved"],
-    scheduled: ["scheduled", "post_now", "failed"],
-    posted: ["posted"]
-  }[tabId] || [tabId];
-  return state.posts.filter(post => allowed.includes(post.status) && (state.brandFilter === "All" || post.brand === state.brandFilter));
+  return state.posts.filter(post => tabForStatus(post.status) === tabId && (state.brandFilter === "All" || post.brand === state.brandFilter));
 }
 function render() {
   renderTabs();
@@ -596,9 +613,9 @@ function render() {
     ? "GitHub writes enabled"
     : '<span class="token-warning">Read-only until GitHub token is added in Settings</span>';
   const counts = workflowCounts();
-  $("statusLine").innerHTML = `<div><strong>${state.posts.length}</strong> total items${state.loadedAt ? " · loaded " + state.loadedAt.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) : ""}</div><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="badge">${counts.pending} pending</span><span class="badge">${counts.approved} approved</span><span class="badge">${counts.scheduled} scheduled</span><span class="badge">${counts.posted} posted</span></div>`;
+  $("statusLine").innerHTML = `<div><strong>${state.posts.length}</strong> total items${state.loadedAt ? " · loaded " + state.loadedAt.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) : ""}</div><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="badge">${counts.new} new</span><span class="badge">${counts.scheduled} scheduled</span><span class="badge">${counts.posted} posted</span><span class="badge">${counts.rejected} rejected</span></div>`;
   const posts = filteredPosts();
-  const hero = `<div class="hero"><div class="hero-panel"><div class="hero-kicker">Lobster Press workflow</div><h2>Pending → Approved → Scheduled → Posted</h2><p>One place to review fresh drafts, approve the keeper, schedule publication, and track what actually made it to Facebook.</p></div><div class="summary-grid"><div class="summary-card"><div class="summary-value">${counts.pending}</div><div class="summary-label">Pending</div><div class="summary-note">New items + rework items waiting for Joe</div></div><div class="summary-card"><div class="summary-value">${counts.approved}</div><div class="summary-label">Approved</div><div class="summary-note">Picked a winner, ready to schedule</div></div><div class="summary-card"><div class="summary-value">${counts.scheduled}</div><div class="summary-label">Scheduled</div><div class="summary-note">Queued for the publisher cron</div></div><div class="summary-card"><div class="summary-value">${counts.posted}</div><div class="summary-label">Posted</div><div class="summary-note">Already live on Facebook</div></div></div></div>`;
+  const hero = `<div class="hero"><div class="hero-panel"><div class="hero-kicker">Lobster Press workflow</div><h2>New → Scheduled → Posted</h2><p>Review fresh drafts, approve the keeper and schedule it, and track what made it to Facebook. Rejected drafts stay parked in their own tab so feedback is never lost.</p></div><div class="summary-grid"><div class="summary-card"><div class="summary-value">${counts.new}</div><div class="summary-label">New</div><div class="summary-note">Fresh drafts waiting for Joe to review</div></div><div class="summary-card"><div class="summary-value">${counts.scheduled}</div><div class="summary-label">Scheduled</div><div class="summary-note">Approved &amp; queued for the publisher</div></div><div class="summary-card"><div class="summary-value">${counts.posted}</div><div class="summary-label">Posted</div><div class="summary-note">Already live on Facebook</div></div><div class="summary-card"><div class="summary-value">${counts.rejected}</div><div class="summary-label">Rejected</div><div class="summary-note">Parked with feedback — never deleted</div></div></div></div>`;
   $("list").innerHTML = hero + (posts.length ? posts.map(renderItem).join("") : `<div class="empty">No ${state.activeTab} items${state.brandFilter !== "All" ? " for " + esc(state.brandFilter) : ""}.</div>`);
 }
 function renderTabs() {
@@ -638,7 +655,8 @@ function renderItem(post) {
   `;
 }
 function renderByStatus(post) {
-  if (post.status === "new" || post.status === "rejected") return renderPending(post);
+  if (post.status === "new" || post.status === "pending") return renderPending(post);
+  if (post.status === "rejected") return renderRejected(post);
   if (post.status === "approved") return renderApproved(post);
   if (post.status === "scheduled" || post.status === "post_now" || post.status === "failed") return renderScheduled(post);
   if (post.status === "posted") return renderPosted(post);
@@ -651,7 +669,8 @@ function renderPending(post) {
       ${options.map(option => renderPendingOption(post, option)).join("")}
     </div>
     <div class="item-actions">
-      <button class="bad" onclick="openReject('${attr(post.id)}')">Send back</button>
+      <button class="small" onclick="autoDetectBrand('${attr(post.id)}')">Auto-detect brand</button>
+      <button class="bad" onclick="openReject('${attr(post.id)}')">Reject</button>
     </div>
   `;
 }
@@ -822,7 +841,7 @@ async function confirmApprove(postId, optionId) {
   post.updatedAt = nowIso();
   try {
     await savePosts();
-    state.activeTab = "approved";
+    state.activeTab = "scheduled";
     render();
   } catch (err) {
     toast(err.message);
@@ -851,33 +870,39 @@ async function confirmSchedule(postId, optionId) {
 }
 function openReject(postId) {
   openModal(`
-    <div class="modal-head"><strong>Send Back to Pending</strong><button class="small" onclick="closeModal()">Close</button></div>
+    <div class="modal-head"><strong>Reject Draft</strong><button class="small" onclick="closeModal()">Close</button></div>
     <div class="modal-body">
       <label>Reason
         <select id="rejectReason">
           <option value="wrong brand">Wrong brand</option>
           <option value="bad content">Bad content</option>
           <option value="duplicate">Duplicate</option>
+          <option value="needs image">Needs an image</option>
           <option value="not worth posting">Not worth posting</option>
         </select>
       </label>
+      <label>Notes for rework (optional)<textarea id="rejectNotes" placeholder="What should change before this comes back?" style="min-height:90px"></textarea></label>
+      <div class="meta">Rejected drafts stay in the Rejected tab — nothing is deleted.</div>
     </div>
     <div class="modal-foot">
       <button onclick="closeModal()">Cancel</button>
-      <button class="bad" onclick="confirmReject('${attr(postId)}')">Send Back</button>
+      <button class="bad" onclick="confirmReject('${attr(postId)}')">Reject</button>
     </div>
   `);
 }
 async function confirmReject(postId) {
   const post = state.posts.find(item => item.id === postId);
+  const notes = ($("rejectNotes").value || "").trim();
+  const reason = $("rejectReason").value;
   post.status = "rejected";
   post.rejectedAt = nowIso();
-  post.rejectedReason = $("rejectReason").value;
+  post.rejectedReason = notes ? `${reason} — ${notes}` : reason;
+  post.rejectionReason = post.rejectedReason;
   post.updatedAt = nowIso();
   closeModal();
   try {
     await savePosts();
-    state.activeTab = "pending";
+    state.activeTab = "rejected";
     render();
   } catch (err) {
     toast(err.message);
@@ -919,7 +944,7 @@ async function sendBackToPending(postId) {
   post.updatedAt = nowIso();
   try {
     await savePosts();
-    state.activeTab = "pending";
+    state.activeTab = "new";
     render();
   } catch (err) {
     toast(err.message);
@@ -931,31 +956,98 @@ async function cancelScheduled(postId) {
   post.updatedAt = nowIso();
   try {
     await savePosts();
-    state.activeTab = "approved";
+    state.activeTab = "scheduled";
     render();
   } catch (err) {
     toast(err.message);
   }
 }
+// Regenerate keeps the rejected original in place (rejected items never
+// disappear) and creates a fresh reworked draft back in New.
 async function regenerate(postId) {
+  const original = state.posts.find(item => item.id === postId);
+  if (!original) return;
+  const rework = {
+    ...original,
+    id: `${original.id}-rework-${Date.now().toString(36)}`,
+    status: "new",
+    options: generateClientOptions(original),
+    selectedOption: null,
+    editedCaption: null,
+    rejectedAt: null,
+    rejectedReason: null,
+    rejectionReason: null,
+    rejectedBy: null,
+    reworkedFrom: original.id,
+    createdAt: nowIso(),
+    updatedAt: nowIso(),
+    notes: `Reworked from ${original.id}${original.rejectedReason ? " — feedback: " + original.rejectedReason : ""}`
+  };
+  state.posts.unshift(rework);
+  try {
+    await savePosts();
+    state.activeTab = "new";
+    render();
+  } catch (err) {
+    toast(err.message);
+  }
+}
+// Weighted keyword brand classifier. Strong, unambiguous brand signals
+// (names, phone numbers, domains) score far higher than generic, shared
+// terms (lumber, storage, real estate) so a Surfbox post never tags TLC just
+// because both mention "LBI" or "Jersey Shore". Returns the best brand, or
+// null when nothing scores (caller decides the fallback).
+const BRAND_SIGNALS = {
+  Surfbox: [
+    [/\bsurfbox\b/g, 10], [/surfboxstorage/g, 10], [/855[\s).-]*surfbox/g, 8],
+    [/787[\s.-]*3269/g, 8], [/portable storage/g, 4], [/\bcontainers?\b/g, 3],
+    [/we deliver\.? you fill it/g, 6], [/\bron ?jon/g, 2]
+  ],
+  Keli: [
+    [/\bkeli\b/g, 10], [/\blynch\b/g, 6], [/kw premier/g, 8], [/kwpremier/g, 8],
+    [/609[\s.-]*273[\s.-]*5747/g, 9], [/\brealtor\b/g, 5], [/real estate/g, 4],
+    [/under contract/g, 4], [/\blisting\b/g, 3], [/closing day/g, 3],
+    [/buyers? (and|&) sellers?/g, 3], [/long beach island/g, 1]
+  ],
+  TLC: [
+    [/tuckerton lumber/g, 10], [/\btlcnj\b/g, 9], [/\btlc\b/g, 6],
+    [/benjamin moore/g, 6], [/\breeb\b/g, 5], [/\bweber\b/g, 4],
+    [/composite deck|trex|wolf decking/g, 5], [/since 1932/g, 5],
+    [/\blumber\b/g, 4], [/surf city/g, 3], [/smart lock/g, 3]
+  ]
+};
+function classifyBrand(text) {
+  const haystack = String(text || "").toLowerCase();
+  if (!haystack.trim()) return null;
+  let best = null, bestScore = 0;
+  for (const [brand, signals] of Object.entries(BRAND_SIGNALS)) {
+    let score = 0;
+    for (const [pattern, weight] of signals) {
+      const matches = haystack.match(pattern);
+      if (matches) score += matches.length * weight;
+    }
+    if (score > bestScore) { bestScore = score; best = brand; }
+  }
+  return bestScore > 0 ? best : null;
+}
+async function autoDetectBrand(postId) {
   const post = state.posts.find(item => item.id === postId);
-  post.options = generateClientOptions(post);
-  post.status = "new";
-  post.selectedOption = null;
-  post.editedCaption = null;
-  post.rejectedAt = null;
-  post.rejectedReason = null;
+  if (!post) return;
+  const guess = classifyBrand([post.emailSubject, post.caption, post.emailBody, post.source].filter(Boolean).join(" \n "));
+  if (!guess) return toast("Could not detect a brand from the content");
+  if (guess === post.brand) return toast(`Already tagged ${guess}`);
+  post.brand = guess;
   post.updatedAt = nowIso();
   try {
     await savePosts();
-    state.activeTab = "pending";
     render();
+    toast(`Brand set to ${guess}`);
   } catch (err) {
     toast(err.message);
   }
 }
 function generateClientOptions(post) {
-  const brand = post.brand || "TLC";
+  const brand = post.brand || classifyBrand([post.emailSubject, post.caption, post.emailBody, post.source].filter(Boolean).join(" ")) || "TLC";
   const tags = brandMeta[brand]?.hashtags || brandMeta.TLC.hashtags;
   const media = post.media || [];
   const imageUrl = media.find(item => item.type === "image")?.url || null;

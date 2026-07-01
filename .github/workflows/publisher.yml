@@ -1,0 +1,54 @@
+name: Lobster Press — Publisher
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # every 15 minutes
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Log what would publish without calling any platform API"
+        type: boolean
+        default: false
+
+concurrency:
+  group: lobster-data        # never run intake + publisher writes concurrently
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: Publish due posts
+        working-directory: scripts
+        env:
+          DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python publisher.py
+      - name: Commit publish results
+        run: |
+          git config user.name "lobster-press-bot"
+          git config user.email "bot@lobster-press.local"
+          if ! git diff --quiet -- data/; then
+            git add data/
+            git commit -m "Publisher: update post statuses"
+            git pull --rebase origin main
+            git push origin main
+          else
+            echo "No data changes."
+          fi

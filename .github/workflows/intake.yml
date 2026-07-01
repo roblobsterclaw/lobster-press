@@ -1,0 +1,49 @@
+name: Lobster Press — Email intake
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # every 30 minutes
+  workflow_dispatch: {}
+
+concurrency:
+  group: lobster-data        # never run intake + publisher writes concurrently
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  intake:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: Scan inbox and create drafts
+        working-directory: scripts
+        env:
+          GMAIL_CREDENTIALS_JSON: ${{ secrets.GMAIL_CREDENTIALS_JSON }}
+          GMAIL_TOKEN_JSON: ${{ secrets.GMAIL_TOKEN_JSON }}
+          INTAKE_SENDER: ${{ vars.INTAKE_SENDER }}
+          LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_MODEL: ${{ vars.LLM_MODEL }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python gmail_scan.py
+      - name: Commit any new drafts and images
+        run: |
+          git config user.name "lobster-press-bot"
+          git config user.email "bot@lobster-press.local"
+          git add data/ images/
+          if ! git diff --cached --quiet; then
+            git commit -m "Intake: new drafts from email"
+            git pull --rebase origin main
+            git push origin main
+          else
+            echo "No data changes."
+          fi
