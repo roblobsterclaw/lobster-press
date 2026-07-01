@@ -17,12 +17,17 @@ from __future__ import annotations
 
 import base64
 import json
+import mimetypes
+import os
+import re
 import time
 
 import config
 import generate
 import notify
 import store
+
+MAX_IMAGE_BYTES = 8 * 1024 * 1024  # Graph API photo upload practical ceiling
 
 
 def _service():
@@ -74,15 +79,59 @@ def _plain_body(payload: dict) -> str:
 
 
 def _attachments(payload: dict) -> list[dict]:
+    """Walk MIME parts, returning attachment metadata including the Gmail
+    attachmentId needed to fetch the actual bytes."""
     out = []
     for part in payload.get("parts", []) or []:
         fname = part.get("filename")
         if fname:
             mime = part.get("mimeType", "")
             kind = "image" if mime.startswith("image/") else "video" if mime.startswith("video/") else "file"
-            out.append({"name": fname, "type": kind})
+            out.append({
+                "name": fname,
+                "type": kind,
+                "mimeType": mime,
+                "size": part.get("body", {}).get("size", 0),
+                "attachmentId": part.get("body", {}).get("attachmentId"),
+            })
         out.extend(_attachments(part))
     return out
+
+
+def _safe_slug(text: str, max_len: int = 40) -> str:
+    slug = re.sub(r"[^a-z0-9]+", "-", (text or "").lower()).strip("-")
+    return (slug or "attachment")[:max_len]
+
+
+def _save_image_attachment(service, msg_id: str, att: dict, post_id: str) -> str | None:
+    """Download an image attachment and save it under images/. Returns the
+    repo-relative path (e.g. 'images/intake-abc123-0.jpg') or None on any
+    problem — callers must treat None as 'no image', never raise."""
+    if att["type"] != "image" or not att.get("attachmentId"):
+        return None
+    if att.get("size") and att["size"] > MAX_IMAGE_BYTES:
+        notify.log.warning("Skipping oversized attachment %s (%s bytes)", att["name"], att["size"])
+        return None
+    try:
+        blob = service.users().messages().attachments().get(
+            userId="me", messageId=msg_id, id=att["attachmentId"],
+        ).execute()
+        raw = base64.urlsafe_b64decode(blob["data"])
+    except Exception as exc:
+        notify.log.error("Failed to download attachment %s: %s", att["name"], exc)
+        return None
+
+    ext = os.path.splitext(att["name"])[1] or mimetypes.guess_extension(att.get("mimeType", "")) or ".jpg"
+    filename = f"{post_id}-{_safe_slug(os.path.splitext(att['name'])[0])}{ext}"
+    os.makedirs(config.IMAGES_DIR, exist_ok=True)
+    dest = os.path.join(config.IMAGES_DIR, filename)
+    try:
+        with open(dest, "wb") as fh:
+            fh.write(raw)
+    except OSError as exc:
+        notify.log.error("Failed to write attachment %s: %s", filename, exc)
+        return None
+    return f"images/{filename}"
 
 
 def scan() -> int:
@@ -115,8 +164,19 @@ def scan() -> int:
             received = _epoch_iso(msg.get("internalDate"))
 
             brand = generate.classify_brand(" ".join([subject, body]))
-            options = generate.generate_options(brand, subject, body)
             post_id = f"intake-{msg_id[:12]}"
+
+            # Download the first image attachment (if any) and commit it into
+            # images/ so the post has a real, publicly reachable imageUrl
+            # instead of getting stuck flagged "NEEDS IMAGE" forever.
+            image_path = None
+            for att in atts:
+                image_path = _save_image_attachment(service, msg_id, att, post_id)
+                if image_path:
+                    break
+            image_url = f"{config.PAGES_BASE_URL.rstrip('/')}/{image_path}" if image_path else None
+
+            options = generate.generate_options(brand, subject, body, image_url=image_url)
 
             posts_data["posts"].insert(0, {
                 "id": post_id,
@@ -125,7 +185,7 @@ def scan() -> int:
                 "caption": options[0]["caption"] if options else "",
                 "options": options,
                 "platforms": ["FB"],
-                "imageUrl": None,
+                "imageUrl": image_url,
                 "media": atts,
                 "emailSubject": subject,
                 "emailBody": body,
@@ -134,7 +194,10 @@ def scan() -> int:
                 "createdAt": store.now_iso(),
                 "updatedAt": store.now_iso(),
                 "source": f"Gmail intake — {subject}",
-                "notes": "NEEDS IMAGE — attach media before posting." if not atts else "",
+                "notes": "" if image_url else (
+                    "NEEDS IMAGE — no image attachment found; attach media before posting."
+                    if atts else "NEEDS IMAGE — attach media before posting."
+                ),
             })
             inbox_data["items"].insert(0, {
                 "id": f"gmail-{msg_id[:12]}",

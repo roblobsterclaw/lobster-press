@@ -9,6 +9,30 @@ This log records the targeted rebuild work. It is appended to over time — newe
 
 ---
 
+## 2026-07-01 — Intake now downloads image attachments
+
+Previously `gmail_scan.py` only recorded attachment metadata (`{name, type}`) — the actual
+image bytes were never fetched, so any post created from an image-bearing email was
+permanently stuck flagged "NEEDS IMAGE" even though the photo was sitting right there in
+the email. Fixed:
+
+- `_save_image_attachment()` downloads the attachment via the Gmail API
+  (`messages.attachments.get`), decodes it, and writes it into `images/` with a
+  collision-safe name derived from the post id + a slugified original filename.
+  Oversized (>8MB) or non-image attachments are skipped with a logged reason — never a
+  crash, never a silent drop.
+- The first successfully-downloaded image attachment becomes the post's `imageUrl`
+  (resolved to an absolute GitHub Pages URL) and is passed into `generate_options()` so
+  every caption option carries it too. `notes` only says "NEEDS IMAGE" when there truly
+  is no image to attach.
+- `config.py` now exposes `IMAGES_DIR` (repo-root-anchored, same fix as `POSTS_PATH`).
+- `intake.yml` commits `images/` alongside `data/` so downloaded photos actually land in
+  the repo (and on GitHub Pages) instead of staying local to the runner.
+- Smoke test extended to 26 checks (filename slugging, oversized/non-image/no-attachment-id
+  guards — all pure logic, no network).
+
+---
+
 ## 2026-06-30 — Root-cause the "missing posts" + add drift guardrails
 
 The owner reported posts missing from the live dashboard. **Root cause: silent status

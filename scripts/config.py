@@ -8,13 +8,14 @@ from __future__ import annotations
 
 import os
 
-# --- Data files (anchored to the repo root, not the cwd) ----------------------
+# --- Repo root + data files (anchored, not cwd-relative) -----------------------
 # Scripts run from scripts/ in CI (working-directory: scripts), so a bare
 # relative path would resolve to scripts/data/... and silently load nothing.
 # Anchor to the repo root (parent of this file's dir) unless overridden.
-_REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-POSTS_PATH = os.environ.get("POSTS_PATH") or os.path.join(_REPO_ROOT, "data", "posts.json")
-INBOX_PATH = os.environ.get("INBOX_PATH") or os.path.join(_REPO_ROOT, "data", "inbox.json")
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+POSTS_PATH = os.environ.get("POSTS_PATH") or os.path.join(REPO_ROOT, "data", "posts.json")
+INBOX_PATH = os.environ.get("INBOX_PATH") or os.path.join(REPO_ROOT, "data", "inbox.json")
+IMAGES_DIR = os.environ.get("IMAGES_DIR") or os.path.join(REPO_ROOT, "images")
 
 # --- Intake (Gmail) -----------------------------------------------------------
 INTAKE_SENDER = os.environ.get("INTAKE_SENDER", "socialmedia@tlcnj.com")

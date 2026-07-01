@@ -18,6 +18,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 import brand          # noqa: E402
 import config         # noqa: E402
 import generate       # noqa: E402
+import gmail_scan     # noqa: E402
 import publisher      # noqa: E402
 import store          # noqa: E402
 from platforms import all_adapters, get_adapter  # noqa: E402
@@ -82,7 +83,31 @@ check("registry: unknown code -> None", get_adapter("XX") is None)
 check("registry: nothing configured without env",
       all(not a.is_configured() for a in all_adapters()))
 
-# 7. Publisher dry-run path marks no live platform when FB unconfigured
+# 7. Gmail intake attachment handling (pure logic, no network)
+check("gmail_scan: safe_slug strips punctuation",
+      gmail_scan._safe_slug("IMG 2150 (final)!!.mov") == "img-2150-final-mov")
+check("gmail_scan: safe_slug never empty", gmail_scan._safe_slug("...") == "attachment")
+check("gmail_scan: attachment without attachmentId -> no image",
+      gmail_scan._save_image_attachment(
+          service=None, msg_id="m1",
+          att={"type": "image", "name": "x.jpg", "attachmentId": None},
+          post_id="p1",
+      ) is None)
+check("gmail_scan: oversized attachment -> no image",
+      gmail_scan._save_image_attachment(
+          service=None, msg_id="m1",
+          att={"type": "image", "name": "x.jpg", "attachmentId": "a1",
+               "size": gmail_scan.MAX_IMAGE_BYTES + 1},
+          post_id="p1",
+      ) is None)
+check("gmail_scan: non-image attachment -> no image",
+      gmail_scan._save_image_attachment(
+          service=None, msg_id="m1",
+          att={"type": "video", "name": "x.mov", "attachmentId": "a1"},
+          post_id="p1",
+      ) is None)
+
+# 8. Publisher dry-run path marks no live platform when FB unconfigured
 ok, live, errors = publisher.publish_post({"id": "t", "platforms": ["FB"], "caption": "hi"})
 check("publisher: unconfigured FB -> no success, no hard error",
       (not ok) and (not errors))
