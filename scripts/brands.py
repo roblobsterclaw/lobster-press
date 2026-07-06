@@ -31,9 +31,9 @@ VOICE = (
 #
 # These tags seed local discovery; the paid boost tools do the precise geo
 # targeting (you draw the actual circle/region there).
-GEO_TAGS_SURFBOX = ["#JerseyShore", "#LBI", "#OceanCounty", "#AtlanticCity",
-                    "#CapeMay", "#OceanCityNJ", "#SeasideHeights", "#Rehoboth",
-                    "#DelawareBeaches", "#SouthJersey"]
+GEO_TAGS_SURFBOX = ["#JerseyShore", "#LBI", "#OceanCounty", "#TomsRiver",
+                    "#AtlanticCity", "#OceanCityNJ", "#Wildwood", "#CapeMay",
+                    "#Rehoboth", "#BethanyBeach", "#DelawareBeaches", "#SouthJersey"]
 GEO_TAGS_CENTRAL_NJ = ["#JerseyShore", "#LBI", "#OceanCounty", "#CentralJersey",
                        "#AtlanticCity", "#Trenton", "#Princeton", "#RedBank",
                        "#MonmouthCounty"]
@@ -78,8 +78,10 @@ BRANDS = {
         "primary_cta": "Call (855) SURFBOX or book at surfboxstorage.com.",
         "contact": "(855) SURFBOX",
         "hashtags": ["#Surfbox", "#PortableStorage", "#StorageMadeSimple"] + GEO_TAGS_SURFBOX,
-        "service_area": "The coast from Rehoboth, DE to Seaside Heights, NJ, plus ~25-30 "
-                        "miles inland. Coastal-heavy, reaches furthest south.",
+        "service_area": "The whole coast — Delaware beaches (Lewes/Rehoboth/Bethany) up "
+                        "through Cape May, Wildwood, Ocean City, Atlantic City, LBI to "
+                        "Toms River/Seaside — plus inland South Jersey (Vineland, "
+                        "Hammonton, Medford, Mt Holly, Pemberton, Lakewood), ~25-30 mi in.",
     },
     "Keli": {
         "display_name": "Keli Lynch · Keller Williams",
