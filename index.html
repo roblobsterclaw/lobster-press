@@ -237,6 +237,43 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
   }
+  /* Swipeable treatment carousel (New tab) — native touch scroll, no library */
+  .carousel {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+  .carousel::-webkit-scrollbar { height: 6px; }
+  .carousel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 6px; }
+  .slide {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: rgba(255,255,255,.02);
+    overflow: hidden;
+  }
+  @media (min-width: 760px) { .slide { flex-basis: 66%; } }
+  .slide-media { background: #05080d; display: grid; place-items: center; }
+  .slide-media img, .slide-media video {
+    width: 100%;
+    max-height: 540px;
+    object-fit: contain;
+    display: block;
+    background: #05080d;
+  }
+  .carousel-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .carousel-nav .counter { color: var(--muted); font-size: 13px; min-width: 108px; text-align: center; }
   .option, .single-post {
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -664,31 +701,61 @@ function renderByStatus(post) {
 }
 function renderPending(post) {
   const options = normalizeOptions(post);
+  const nav = options.length > 1 ? `
+    <div class="carousel-nav">
+      <button class="small" onclick="carScroll('${attr(post.id)}',-1)">‹ Prev</button>
+      <span class="counter" id="cnt-${attr(post.id)}">Design 1 of ${options.length}</span>
+      <button class="small" onclick="carScroll('${attr(post.id)}',1)">Next ›</button>
+    </div>` : "";
   return `
-    <div class="options">
-      ${options.map(option => renderPendingOption(post, option)).join("")}
+    <div class="carousel" id="car-${attr(post.id)}" onscroll="updateCarCounter('${attr(post.id)}')">
+      ${options.map((option, index) => renderSlide(post, option, index, options.length)).join("")}
     </div>
+    ${nav}
     <div class="item-actions">
       <button class="small" onclick="autoDetectBrand('${attr(post.id)}')">Auto-detect brand</button>
       <button class="bad" onclick="openReject('${attr(post.id)}')">Reject</button>
     </div>
   `;
 }
-function renderPendingOption(post, option) {
+function renderSlide(post, option, index, total) {
+  const label = esc(option.tone || option.optionId || `Option ${index + 1}`);
+  const fmt = option.format ? ` · ${esc(option.format)}` : "";
   return `
-    <section class="option">
+    <section class="slide">
       <div class="option-head">
-        <div class="tone">${esc(option.optionId)} - ${esc(option.tone)}</div>
-        <span class="badge">Pending</span>
+        <div class="tone">${label}${fmt}</div>
+        <span class="badge">${index + 1}/${total}</span>
       </div>
+      <div class="slide-media">${slideMedia(option)}</div>
       <div class="caption">${esc(option.caption)}</div>
-      ${renderMedia(post, option)}
       <div class="actions">
-        <button class="good" onclick="confirmApprove('${attr(post.id)}','${attr(option.optionId)}')">Approve</button>
+        <button class="good" onclick="confirmApprove('${attr(post.id)}','${attr(option.optionId)}')">Use this</button>
         <button onclick="openSchedule('${attr(post.id)}','${attr(option.optionId)}',true)">Edit</button>
       </div>
     </section>
   `;
+}
+function slideMedia(option) {
+  if (option.videoUrl) {
+    return `<video src="${attr(option.videoUrl)}" controls preload="metadata"></video>`;
+  }
+  if (option.imageUrl) {
+    return `<a href="${attr(option.imageUrl)}" target="_blank" rel="noopener"><img src="${attr(option.imageUrl)}" alt="${esc(option.tone || "treatment")}" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'media-note',textContent:'Image failed to load'}))"></a>`;
+  }
+  return `<div class="media-note">No media attached</div>`;
+}
+function carScroll(postId, dir) {
+  const car = document.getElementById("car-" + postId);
+  if (car) car.scrollBy({ left: dir * car.clientWidth, behavior: "smooth" });
+}
+function updateCarCounter(postId) {
+  const car = document.getElementById("car-" + postId);
+  const counter = document.getElementById("cnt-" + postId);
+  if (!car || !counter) return;
+  const total = car.querySelectorAll(".slide").length;
+  const index = Math.min(total, Math.round(car.scrollLeft / car.clientWidth) + 1);
+  counter.textContent = `Design ${index} of ${total}`;
 }
 function renderApproved(post) {
   const option = selectedOption(post);

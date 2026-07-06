@@ -329,7 +329,59 @@
       "approvedAt": null,
       "rejectedReason": null,
       "postedUrl": null,
-      "source": "Keli photos - last visit before closing April 30"
+      "source": "Keli photos - last visit before closing April 30",
+      "options": [
+        {
+          "optionId": "A",
+          "treatment": "clean_feed",
+          "tone": "Clean Feed",
+          "format": "1:1",
+          "caption": "One last walkthrough before closing day. This one has been special - great home, great buyers, great neighborhood.\n\nEvery house has a story and I love being part of the next chapter.\n\nClosing April 30. New beginnings for everyone.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #ClosingDay #KWPremier #RealEstate #NJRealtor #NewBeginnings #Crosswicks #BurlingtonCounty",
+          "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/keli-listing-001_clean_feed.jpg",
+          "hashtags": [],
+          "platform": "Facebook"
+        },
+        {
+          "optionId": "B",
+          "treatment": "headline_story",
+          "tone": "Headline Story",
+          "format": "9:16",
+          "caption": "One last walkthrough before closing day. This one has been special - great home, great buyers, great neighborhood.\n\nEvery house has a story and I love being part of the next chapter.\n\nClosing April 30. New beginnings for everyone.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #ClosingDay #KWPremier #RealEstate #NJRealtor #NewBeginnings #Crosswicks #BurlingtonCounty",
+          "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/keli-listing-001_headline_story.jpg",
+          "hashtags": [],
+          "platform": "Facebook"
+        },
+        {
+          "optionId": "C",
+          "treatment": "quote_card",
+          "tone": "Quote Card",
+          "format": "4:5",
+          "caption": "One last walkthrough before closing day. This one has been special - great home, great buyers, great neighborhood.\n\nEvery house has a story and I love being part of the next chapter.\n\nClosing April 30. New beginnings for everyone.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #ClosingDay #KWPremier #RealEstate #NJRealtor #NewBeginnings #Crosswicks #BurlingtonCounty",
+          "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/keli-listing-001_quote_card.jpg",
+          "hashtags": [],
+          "platform": "Facebook"
+        },
+        {
+          "optionId": "D",
+          "treatment": "badge_callout",
+          "tone": "Badge / Callout",
+          "format": "1:1",
+          "caption": "One last walkthrough before closing day. This one has been special - great home, great buyers, great neighborhood.\n\nEvery house has a story and I love being part of the next chapter.\n\nClosing April 30. New beginnings for everyone.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #ClosingDay #KWPremier #RealEstate #NJRealtor #NewBeginnings #Crosswicks #BurlingtonCounty",
+          "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/keli-listing-001_badge_callout.jpg",
+          "hashtags": [],
+          "platform": "Facebook"
+        },
+        {
+          "optionId": "E",
+          "treatment": "fun_casual",
+          "tone": "Fun / Casual",
+          "format": "1:1",
+          "caption": "One last walkthrough before closing day. This one has been special - great home, great buyers, great neighborhood.\n\nEvery house has a story and I love being part of the next chapter.\n\nClosing April 30. New beginnings for everyone.\n\nKeli Lynch | KW Premier\n609.273.5747\n\n#KeliLynch #ClosingDay #KWPremier #RealEstate #NJRealtor #NewBeginnings #Crosswicks #BurlingtonCounty",
+          "imageUrl": "https://roblobsterclaw.github.io/lobster-press/images/keli-listing-001_fun_casual.jpg",
+          "hashtags": [],
+          "platform": "Facebook"
+        }
+      ]
     },
     {
       "id": "tlc-testimonial-001",
