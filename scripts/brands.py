@@ -92,8 +92,10 @@ BRANDS = {
         "primary_cta": "Call Keli Lynch, Keller Williams · 609.273.5747.",
         "contact": "609.273.5747",
         "hashtags": ["#KeliLynch", "#KellerWilliams", "#NJRealEstate"] + GEO_TAGS_CENTRAL_NJ,
-        "service_area": "The Central Jersey square: Trenton / Princeton / Red Bank / down "
-                        "to Atlantic City / over to Morristown.",
+        "service_area": "Same core footprint as Tuckerton: Mercer (Trenton, Princeton, "
+                        "Hopewell), Burlington (Bordentown, Mt Holly, Medford), the "
+                        "Monmouth/Ocean shore (Wall, Brick, Toms River, LBI, Manahawkin), "
+                        "and Atlantic County to Atlantic City.",
     },
 }
 
