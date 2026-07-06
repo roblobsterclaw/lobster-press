@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Local OAuth artifacts — NEVER commit these (they grant mailbox access)
+token.json
+credentials.json
+client_secret*.json
+
+# Env
+.env
+.venv/
+venv/
