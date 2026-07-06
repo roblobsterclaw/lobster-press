@@ -19,12 +19,24 @@ VOICE = (
     "screenshots and sends to a friend. No jargon, no hype-speak."
 )
 
-# Geo focus: strong in Ocean County / LBI today; GROWING south — Atlantic City
-# down through Cape May County to Rehoboth, DE. Seed local discovery tags so the
-# southern towns start surfacing this content.
-GEO_TAGS_CORE = ["#LBI", "#JerseyShore", "#OceanCounty"]
-GEO_TAGS_SOUTH = ["#SouthJersey", "#CapeMay", "#Wildwood", "#Avalon",
-                  "#StoneHarbor", "#OceanCityNJ", "#Rehoboth", "#CapeMayCounty"]
+# Market areas differ per business — do NOT blanket-tag everyone the same:
+#
+#   Surfbox:   the coast from Rehoboth, DE up to Seaside Heights, NJ, plus
+#              ~25-30 miles inland. Coastal-heavy, reaches furthest south.
+#   Tuckerton: Central Jersey coast+inland — Atlantic City up to Seaside and
+#              inland toward Trenton. NOT south of AC (competitors there; nobody
+#              drives that far for a lumber yard).
+#   Keli/KW:   the Central Jersey "square" — Trenton / Princeton / Red Bank /
+#              down to Atlantic City / over to Morristown. Same core as Tuckerton.
+#
+# These tags seed local discovery; the paid boost tools do the precise geo
+# targeting (you draw the actual circle/region there).
+GEO_TAGS_SURFBOX = ["#JerseyShore", "#LBI", "#OceanCounty", "#AtlanticCity",
+                    "#CapeMay", "#OceanCityNJ", "#SeasideHeights", "#Rehoboth",
+                    "#DelawareBeaches", "#SouthJersey"]
+GEO_TAGS_CENTRAL_NJ = ["#JerseyShore", "#LBI", "#OceanCounty", "#CentralJersey",
+                       "#AtlanticCity", "#Trenton", "#Princeton", "#RedBank",
+                       "#MonmouthCounty"]
 
 BRANDS = {
     "TLC": {
@@ -35,8 +47,9 @@ BRANDS = {
         "goal": "Drive people into the physical stores (foot traffic). No online mail-order.",
         "primary_cta": "Stop in — Tuckerton & Surf City.",
         "contact": "tlcnj.com",
-        "hashtags": ["#TuckertonLumber", "#ShopLocal", "#Since1932"] + GEO_TAGS_CORE,
-        "service_area": "LBI, Tuckerton, Manahawkin, Mystic Islands — and south.",
+        "hashtags": ["#TuckertonLumber", "#ShopLocal", "#Since1932"] + GEO_TAGS_CENTRAL_NJ,
+        "service_area": "Central Jersey: Atlantic City up to Seaside and inland toward "
+                        "Trenton. Not south of AC.",
     },
     "Surfbox": {
         "display_name": "Surfbox Storage",
@@ -46,8 +59,9 @@ BRANDS = {
         "goal": "Drive phone calls, emails, and website sign-ups.",
         "primary_cta": "Call (855) SURFBOX or book at surfboxstorage.com.",
         "contact": "(855) SURFBOX",
-        "hashtags": ["#Surfbox", "#PortableStorage", "#StorageMadeSimple"] + GEO_TAGS_CORE,
-        "service_area": "Ocean County → Cape May County → Rehoboth, DE.",
+        "hashtags": ["#Surfbox", "#PortableStorage", "#StorageMadeSimple"] + GEO_TAGS_SURFBOX,
+        "service_area": "The coast from Rehoboth, DE to Seaside Heights, NJ, plus ~25-30 "
+                        "miles inland. Coastal-heavy, reaches furthest south.",
     },
     "Keli": {
         "display_name": "Keli Lynch · Keller Williams",
@@ -57,8 +71,9 @@ BRANDS = {
         "goal": "Generate real-estate leads — calls and messages to Keli.",
         "primary_cta": "Call Keli Lynch, Keller Williams · 609.273.5747.",
         "contact": "609.273.5747",
-        "hashtags": ["#KeliLynch", "#KellerWilliams", "#NJRealEstate"] + GEO_TAGS_CORE,
-        "service_area": "Burlington County, Crosswicks, and the Jersey Shore.",
+        "hashtags": ["#KeliLynch", "#KellerWilliams", "#NJRealEstate"] + GEO_TAGS_CENTRAL_NJ,
+        "service_area": "The Central Jersey square: Trenton / Princeton / Red Bank / down "
+                        "to Atlantic City / over to Morristown.",
     },
 }
 
