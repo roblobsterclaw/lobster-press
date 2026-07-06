@@ -9,6 +9,32 @@ This log records the targeted rebuild work. It is appended to over time — newe
 
 ---
 
+## 2026-07-06 — Step 2 creative-treatment direction + brand kit + Gmail auth
+
+Prototyped a big presentation upgrade for Step 2: instead of text-only caption options,
+each piece of intake produces **5 finished, on-brand treatments** from the photo (or a
+video's cover frame) — Clean Feed (1:1), Headline Story (9:16), Quote Card (4:5),
+Badge/Callout (1:1), Fun/Casual (1:1). Built with Pillow (free, deterministic, no AI image
+cost). Validated on three real photos across all three brands.
+
+**Brand kit locked (customer-facing):**
+- Surfbox → **blue**
+- Keli / Keller Williams → **orange**
+- Tuckerton Lumber → **red** (their identity color)
+- Tuckerton is always written **"Tuckerton Lumber Company"** on customer art — never "TLC"
+  ("TLC" stays only as an internal brand code in the software).
+
+**Still to wire in (production):** promote the prototype to `scripts/render.py`; call it from
+intake; show the 5 mockups in the New tab; hook up a free vision model (Gemini) so captions
+are written from the actual photo. Known polish item: long CTA lines need auto-fit/wrap.
+
+**Gmail authorization:** added `scripts/gmail_auth.py` — a one-time local OAuth helper
+(gmail.modify scope) that produces the `GMAIL_TOKEN_JSON` secret so the intake cron can read
+`socialmedia@tlcnj.com` and apply the Processed label. This is the step that turns the
+"send email → auto pickup" automation on.
+
+---
+
 ## 2026-07-01 — Intake now downloads image attachments
 
 Previously `gmail_scan.py` only recorded attachment metadata (`{name, type}`) — the actual
