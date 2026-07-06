@@ -44,12 +44,30 @@ BRANDS = {
         "short_name": "Tuckerton Lumber",
         "color_hex": "#C41E2A",              # red — their identity color
         "color_rgb": (196, 30, 42),
-        "goal": "Drive people into the physical stores (foot traffic). No online mail-order.",
+        "goal": "TWO audiences: (1) retail/walk-in — drive foot traffic to the stores; "
+                "(2) contractors — win call-in LUMBER orders we deliver across a wide area.",
         "primary_cta": "Stop in — Tuckerton & Surf City.",
+        "audiences": {
+            "retail": {
+                "who": "Homeowners / DIY / walk-in customers.",
+                "area": "Tight local — LBI, Manahawkin, Tuckerton, Ship Bottom / Surf City. "
+                        "They won't travel far for a hardware store.",
+                "cta": "Stop in — Tuckerton & Surf City.",
+            },
+            "contractor": {
+                "who": "Contractors & builders (existing relationships well beyond LBI).",
+                "area": "Wide DELIVERY zone — Mercer (Trenton, Princeton, Bordentown) & "
+                        "Burlington (Mt Holly) through all of Ocean County to Atlantic "
+                        "City. Bounded only by driver/truck capacity.",
+                "cta": "Call your order in — we deliver lumber across the region.",
+            },
+        },
         "contact": "tlcnj.com",
-        "hashtags": ["#TuckertonLumber", "#ShopLocal", "#Since1932"] + GEO_TAGS_CENTRAL_NJ,
-        "service_area": "Central Jersey: Atlantic City up to Seaside and inland toward "
-                        "Trenton. Not south of AC.",
+        "hashtags": ["#TuckertonLumber", "#ShopLocal", "#Since1932", "#ContractorSupply",
+                     "#LumberDelivery"] + GEO_TAGS_CENTRAL_NJ,
+        "service_area": "Retail core: LBI / Manahawkin / Tuckerton. Lumber DELIVERY: Mercer "
+                        "& Burlington (Trenton–Princeton, Bordentown, Mt Holly) through "
+                        "Ocean County to Atlantic City.",
     },
     "Surfbox": {
         "display_name": "Surfbox Storage",
