@@ -18,8 +18,12 @@ INBOX_PATH = os.environ.get("INBOX_PATH") or os.path.join(REPO_ROOT, "data", "in
 IMAGES_DIR = os.environ.get("IMAGES_DIR") or os.path.join(REPO_ROOT, "images")
 
 # --- Intake (Gmail) -----------------------------------------------------------
-INTAKE_SENDER = os.environ.get("INTAKE_SENDER", "socialmedia@tlcnj.com")
-GMAIL_LABEL = os.environ.get("GMAIL_LABEL", "LobsterPress/Processed")
+# NOTE: use `or default`, not get(key, default). GitHub Actions passes empty
+# strings for unset repo variables (e.g. INTAKE_SENDER: ${{ vars.INTAKE_SENDER }}),
+# and get() only falls back when the key is ABSENT — an empty string would slip
+# through and make the query `from:` (no filter), pulling every inbox email.
+INTAKE_SENDER = os.environ.get("INTAKE_SENDER") or "socialmedia@tlcnj.com"
+GMAIL_LABEL = os.environ.get("GMAIL_LABEL") or "LobsterPress/Processed"
 # gmail.modify is required so we can APPLY the processed label (read-only can't).
 GMAIL_SCOPES = ["https://www.googleapis.com/auth/gmail.modify"]
 GMAIL_CREDENTIALS_JSON = os.environ.get("GMAIL_CREDENTIALS_JSON", "")  # OAuth client
