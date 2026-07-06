@@ -31,32 +31,51 @@ MAX_IMAGE_BYTES = 8 * 1024 * 1024  # Graph API photo upload practical ceiling
 
 
 def _service():
-    """Build an authorized Gmail API client from the env-provided token."""
+    """Build an authorized Gmail API client from the env-provided token.
+
+    We intentionally do NOT force a scope here. Forcing gmail.modify onto a
+    token that was granted a different scope makes the refresh fail with
+    'invalid_scope'. Instead we honor whatever scope the token already carries;
+    applying the Processed label is attempted best-effort (see _ensure_label /
+    scan), and dedupe always works via the recorded Gmail message id.
+    """
     from google.oauth2.credentials import Credentials
     from google.auth.transport.requests import Request
     from googleapiclient.discovery import build
 
     config.require("GMAIL_TOKEN_JSON")
     info = json.loads(config.GMAIL_TOKEN_JSON)
-    creds = Credentials.from_authorized_user_info(info, config.GMAIL_SCOPES)
-    if not creds.valid and creds.refresh_token:
+    creds = Credentials.from_authorized_user_info(info)
+    if not creds.valid:
+        if not creds.refresh_token:
+            raise config.ConfigError(
+                "Gmail token has no refresh_token — re-run scripts/gmail_auth.py."
+            )
         creds.refresh(Request())
     return build("gmail", "v1", credentials=creds, cache_discovery=False)
 
 
-def _ensure_label(service) -> str:
-    """Return the id of the processed label, creating it if needed."""
-    existing = service.users().labels().list(userId="me").execute().get("labels", [])
-    for lab in existing:
-        if lab["name"] == config.GMAIL_LABEL:
-            return lab["id"]
-    created = service.users().labels().create(
-        userId="me",
-        body={"name": config.GMAIL_LABEL,
-              "labelListVisibility": "labelShow",
-              "messageListVisibility": "show"},
-    ).execute()
-    return created["id"]
+def _ensure_label(service) -> str | None:
+    """Return the id of the processed label, creating it if needed. Returns
+    None (best-effort) if the token can't create/read labels — dedupe still
+    works via the recorded message id."""
+    try:
+        existing = service.users().labels().list(userId="me").execute().get("labels", [])
+        for lab in existing:
+            if lab["name"] == config.GMAIL_LABEL:
+                return lab["id"]
+        created = service.users().labels().create(
+            userId="me",
+            body={"name": config.GMAIL_LABEL,
+                  "labelListVisibility": "labelShow",
+                  "messageListVisibility": "show"},
+        ).execute()
+        return created["id"]
+    except Exception as exc:
+        notify.log.warning(
+            "Could not ensure label '%s' (token may lack gmail.modify); "
+            "relying on message-id dedupe instead: %s", config.GMAIL_LABEL, exc)
+        return None
 
 
 def _header(payload: dict, name: str) -> str:
@@ -140,7 +159,9 @@ def scan() -> int:
         service = _service()
         label_id = _ensure_label(service)
 
-        query = f'from:{config.INTAKE_SENDER} -label:"{config.GMAIL_LABEL}"'
+        query = f'from:{config.INTAKE_SENDER}'
+        if label_id:
+            query += f' -label:"{config.GMAIL_LABEL}"'
         listing = service.users().messages().list(userId="me", q=query, maxResults=25).execute()
         messages = listing.get("messages", [])
         if not messages:
@@ -212,9 +233,15 @@ def scan() -> int:
             })
 
             # Apply the processed label so this email is never re-ingested.
-            service.users().messages().modify(
-                userId="me", id=msg_id, body={"addLabelIds": [label_id]},
-            ).execute()
+            # Best-effort: if the token lacks gmail.modify, dedupe still works
+            # via seen_msg_ids (the recorded Gmail message id).
+            if label_id:
+                try:
+                    service.users().messages().modify(
+                        userId="me", id=msg_id, body={"addLabelIds": [label_id]},
+                    ).execute()
+                except Exception as exc:
+                    notify.log.warning("Could not label message %s: %s", msg_id, exc)
             seen_msg_ids.add(msg_id)
             created += 1
             time.sleep(0.1)  # be gentle on the API

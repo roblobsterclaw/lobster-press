@@ -1,5 +1,6 @@
 # Lobster Press backend (Python 3.11+)
 requests>=2.31
+Pillow>=10.0            # image treatment renderer (scripts/render.py)
 google-api-python-client>=2.100
 google-auth>=2.23
 google-auth-oauthlib>=1.1

@@ -9,6 +9,55 @@ This log records the targeted rebuild work. It is appended to over time — newe
 
 ---
 
+## 2026-07-06 — Production renderer + swipe carousel + Sign of the Week
+
+- **`scripts/render.py`** — production image renderer. 5 treatments (clean_feed,
+  headline_story, quote_card, badge_callout, fun_casual), all pulling color / display
+  name / CTA from `brands.py`. Fixed the CTA-overflow bug (wraps/fits now).
+  `render_selftest.py` verifies 3 brands × 5 treatments; `smoke_test.py` stays pure-stdlib.
+- **Dashboard swipe carousel** — the New tab now shows a post's treatments as a native
+  touch-swipe carousel (CSS scroll-snap, no library): one design at a time, "‹ Prev /
+  Design N of M / Next ›", "Use this" to approve that design. Falls back cleanly to a
+  single slide for posts without treatments. Verified with a headless-Chromium screenshot
+  at iPhone size (`keli-listing-001` seeded with 5 real rendered treatments).
+- **`scripts/signs.py`** — "Sign of the Week" generator for the store marquees
+  (Surf City 200 N Long Beach Blvd, Tuckerton 249 N Green St). ~10 candidate lines/store,
+  enforces the physical limit (≤60 chars, ≤2 lines), free-model when configured else a
+  curated evergreen+seasonal bank. `generate_candidates(..., context=)` powers the
+  "type a direction → 10 more" flow. Surf City leans into the island general-store angle.
+
+**Market areas locked in `brands.py`:** Surfbox = full coast (DE beaches → Toms River) +
+inland South Jersey; Tuckerton = retail tight (LBI/Manahawkin) + contractor lumber delivery
+across Mercer/Burlington/Ocean/Atlantic; Keli = same Central Jersey footprint as Tuckerton.
+
+---
+
+## 2026-07-06 — Step 2 creative-treatment direction + brand kit + Gmail auth
+
+Prototyped a big presentation upgrade for Step 2: instead of text-only caption options,
+each piece of intake produces **5 finished, on-brand treatments** from the photo (or a
+video's cover frame) — Clean Feed (1:1), Headline Story (9:16), Quote Card (4:5),
+Badge/Callout (1:1), Fun/Casual (1:1). Built with Pillow (free, deterministic, no AI image
+cost). Validated on three real photos across all three brands.
+
+**Brand kit locked (customer-facing):**
+- Surfbox → **blue**
+- Keli / Keller Williams → **orange**
+- Tuckerton Lumber → **red** (their identity color)
+- Tuckerton is always written **"Tuckerton Lumber Company"** on customer art — never "TLC"
+  ("TLC" stays only as an internal brand code in the software).
+
+**Still to wire in (production):** promote the prototype to `scripts/render.py`; call it from
+intake; show the 5 mockups in the New tab; hook up a free vision model (Gemini) so captions
+are written from the actual photo. Known polish item: long CTA lines need auto-fit/wrap.
+
+**Gmail authorization:** added `scripts/gmail_auth.py` — a one-time local OAuth helper
+(gmail.modify scope) that produces the `GMAIL_TOKEN_JSON` secret so the intake cron can read
+`socialmedia@tlcnj.com` and apply the Processed label. This is the step that turns the
+"send email → auto pickup" automation on.
+
+---
+
 ## 2026-07-01 — Intake now downloads image attachments
 
 Previously `gmail_scan.py` only recorded attachment metadata (`{name, type}`) — the actual
