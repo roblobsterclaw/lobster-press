@@ -11,14 +11,10 @@ from __future__ import annotations
 import json
 
 import brand as brandmod
+import brands as brand_charter
 import config
 from notify import log
 
-BRAND_HASHTAGS = {
-    "TLC": ["#TuckertonLumber", "#LBI", "#JerseyShore", "#ShopLocal"],
-    "Surfbox": ["#Surfbox", "#PortableStorage", "#JerseyShore", "#OceanCounty"],
-    "Keli": ["#KeliLynch", "#KWPremier", "#NJRealEstate", "#LBIRealEstate"],
-}
 TONES = ["Professional", "Punchy", "Community"]
 OPTION_IDS = ["A", "B", "C"]
 
@@ -38,7 +34,7 @@ def generate_options(brand: str, subject: str, body: str, image_url: str | None 
     if not options:
         options = _template_options(brand, subject, body)
     # normalize shape the dashboard expects
-    tags = BRAND_HASHTAGS.get(brand, BRAND_HASHTAGS["TLC"])
+    tags = brand_charter.get(brand)["hashtags"]
     for i, opt in enumerate(options):
         opt.setdefault("optionId", OPTION_IDS[i % 3])
         opt.setdefault("tone", TONES[i % 3])
@@ -50,7 +46,7 @@ def generate_options(brand: str, subject: str, body: str, image_url: str | None 
 
 
 def _template_options(brand: str, subject: str, body: str) -> list[dict]:
-    tags = " ".join(BRAND_HASHTAGS.get(brand, BRAND_HASHTAGS["TLC"]))
+    tags = " ".join(brand_charter.get(brand)["hashtags"])
     context = " ".join(x for x in (subject, body) if x).strip()[:220] or "a fresh update from the team"
     openers = {
         "TLC": [
@@ -84,11 +80,16 @@ def _llm_options(brand: str, subject: str, body: str) -> list[dict] | None:
         log.error("%s", exc)
         return None
 
+    b = brand_charter.get(brand)
     prompt = (
-        f"You write Facebook captions for {brand}, a Jersey Shore small business. "
-        f"Write 3 caption options for this content. Return ONLY JSON: "
+        f"You write social captions for {b['display_name']}, a Jersey Shore small business.\n"
+        f"VOICE (follow strictly): {brand_charter.VOICE}\n"
+        f"GOAL of every post: {b['goal']}\n"
+        f"Always end with this call to action: {b['primary_cta']}\n"
+        f"Write 3 caption options (Professional, Punchy, Community tones). "
+        f"Return ONLY JSON: "
         f'{{"options":[{{"tone":"Professional","caption":"..."}},'
-        f'{{"tone":"Punchy","caption":"..."}},{{"tone":"Community","caption":"..."}}]}}. '
+        f'{{"tone":"Punchy","caption":"..."}},{{"tone":"Community","caption":"..."}}]}}.\n'
         f"Subject: {subject}\nDetails: {body}"
     )
     try:
