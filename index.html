@@ -94,7 +94,7 @@
   .brand div { color: var(--muted); font-size: 12px; }
   .header-actions { display: flex; gap: 8px; align-items: center; }
   main {
-    width: min(1240px, 100%);
+    width: min(1600px, 96vw);
     margin: 0 auto;
     padding: 16px;
   }
@@ -257,15 +257,15 @@
     background: rgba(255,255,255,.02);
     overflow: hidden;
   }
-  @media (min-width: 760px) { .slide { flex-basis: 66%; } }
   .slide-media { background: #05080d; display: grid; place-items: center; }
   .slide-media img, .slide-media video {
     width: 100%;
-    max-height: 540px;
+    max-height: 46vh;
     object-fit: contain;
     display: block;
     background: #05080d;
   }
+  @media (min-width: 760px) { .slide { flex-basis: 48%; } }
   .carousel-nav {
     display: flex;
     align-items: center;
@@ -649,11 +649,10 @@ function render() {
   $("tokenLine").innerHTML = token()
     ? "GitHub writes enabled"
     : '<span class="token-warning">Read-only until GitHub token is added in Settings</span>';
-  const counts = workflowCounts();
-  $("statusLine").innerHTML = `<div><strong>${state.posts.length}</strong> total items${state.loadedAt ? " · loaded " + state.loadedAt.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) : ""}</div><div style="display:flex;gap:8px;flex-wrap:wrap"><span class="badge">${counts.new} new</span><span class="badge">${counts.scheduled} scheduled</span><span class="badge">${counts.posted} posted</span><span class="badge">${counts.rejected} rejected</span></div>`;
+  const tabLabel = (tabs.find(t => t.id === state.activeTab) || {}).label || state.activeTab;
   const posts = filteredPosts();
-  const hero = `<div class="hero"><div class="hero-panel"><div class="hero-kicker">Lobster Press workflow</div><h2>New → Scheduled → Posted</h2><p>Review fresh drafts, approve the keeper and schedule it, and track what made it to Facebook. Rejected drafts stay parked in their own tab so feedback is never lost.</p></div><div class="summary-grid"><div class="summary-card"><div class="summary-value">${counts.new}</div><div class="summary-label">New</div><div class="summary-note">Fresh drafts waiting for Joe to review</div></div><div class="summary-card"><div class="summary-value">${counts.scheduled}</div><div class="summary-label">Scheduled</div><div class="summary-note">Approved &amp; queued for the publisher</div></div><div class="summary-card"><div class="summary-value">${counts.posted}</div><div class="summary-label">Posted</div><div class="summary-note">Already live on Facebook</div></div><div class="summary-card"><div class="summary-value">${counts.rejected}</div><div class="summary-label">Rejected</div><div class="summary-note">Parked with feedback — never deleted</div></div></div></div>`;
-  $("list").innerHTML = hero + (posts.length ? posts.map(renderItem).join("") : `<div class="empty">No ${state.activeTab} items${state.brandFilter !== "All" ? " for " + esc(state.brandFilter) : ""}.</div>`);
+  $("statusLine").innerHTML = `<div><strong>${posts.length}</strong> ${esc(tabLabel)}${state.brandFilter !== "All" ? " · " + esc(state.brandFilter) : ""}${state.loadedAt ? " · loaded " + state.loadedAt.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) : ""}</div>`;
+  $("list").innerHTML = posts.length ? posts.map(renderItem).join("") : `<div class="empty">No ${esc(tabLabel.toLowerCase())} items${state.brandFilter !== "All" ? " for " + esc(state.brandFilter) : ""}.</div>`;
 }
 function renderTabs() {
   $("tabs").innerHTML = tabs.map(tab => `
@@ -1071,7 +1070,8 @@ const BRAND_SIGNALS = {
     [/we deliver\.? you fill it/g, 6], [/\bron ?jon/g, 2]
   ],
   Keli: [
-    [/\bkeli\b/g, 10], [/\blynch\b/g, 6], [/kw premier/g, 8], [/kwpremier/g, 8],
+    [/\bkeli\b/g, 10], [/\blynch\b/g, 6], [/keller williams/g, 9], [/\bkeller\b/g, 6],
+    [/kw premier/g, 8], [/kwpremier/g, 8],
     [/609[\s.-]*273[\s.-]*5747/g, 9], [/\brealtor\b/g, 5], [/real estate/g, 4],
     [/under contract/g, 4], [/\blisting\b/g, 3], [/closing day/g, 3],
     [/buyers? (and|&) sellers?/g, 3], [/long beach island/g, 1]
@@ -1100,7 +1100,8 @@ function classifyBrand(text) {
 async function autoDetectBrand(postId) {
   const post = state.posts.find(item => item.id === postId);
   if (!post) return;
-  const guess = classifyBrand([post.emailSubject, post.caption, post.emailBody, post.source].filter(Boolean).join(" \n "));
+  // Weight the subject 3x — forwarded emails carry tlcnj.com footers that skew the body to TLC.
+  const guess = classifyBrand([post.emailSubject, post.emailSubject, post.emailSubject, post.caption, post.emailBody, post.source].filter(Boolean).join(" \n "));
   if (!guess) return toast("Could not detect a brand from the content");
   if (guess === post.brand) return toast(`Already tagged ${guess}`);
   post.brand = guess;
@@ -1114,7 +1115,7 @@ async function autoDetectBrand(postId) {
   }
 }
 function generateClientOptions(post) {
-  const brand = post.brand || classifyBrand([post.emailSubject, post.caption, post.emailBody, post.source].filter(Boolean).join(" ")) || "TLC";
+  const brand = post.brand || classifyBrand([post.emailSubject, post.emailSubject, post.emailSubject, post.caption, post.emailBody, post.source].filter(Boolean).join(" ")) || "TLC";
   const tags = brandMeta[brand]?.hashtags || brandMeta.TLC.hashtags;
   const media = post.media || [];
   const imageUrl = media.find(item => item.type === "image")?.url || null;

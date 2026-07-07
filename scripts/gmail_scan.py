@@ -184,7 +184,7 @@ def scan() -> int:
             atts = _attachments(payload)
             received = _epoch_iso(msg.get("internalDate"))
 
-            brand = generate.classify_brand(" ".join([subject, body]))
+            brand = generate.classify_email(subject, body)
             post_id = f"intake-{msg_id[:12]}"
 
             # Download the first image attachment (if any) and commit it into
