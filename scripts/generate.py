@@ -118,3 +118,8 @@ def _llm_options(brand: str, subject: str, body: str) -> list[dict] | None:
 
 def classify_brand(text: str) -> str:
     return brandmod.classify(text, default="TLC")
+
+
+def classify_email(subject: str, body: str) -> str:
+    """Subject-weighted brand classification for intake emails."""
+    return brandmod.classify_email(subject, body, default="TLC")

@@ -18,7 +18,8 @@ BRAND_SIGNALS: dict[str, list[tuple[str, int]]] = {
         (r"we deliver\.? you fill it", 6), (r"\bron ?jon", 2),
     ],
     "Keli": [
-        (r"\bkeli\b", 10), (r"\blynch\b", 6), (r"kw premier", 8), (r"kwpremier", 8),
+        (r"\bkeli\b", 10), (r"\blynch\b", 6), (r"keller williams", 9), (r"\bkeller\b", 6),
+        (r"kw premier", 8), (r"kwpremier", 8),
         (r"609[\s.-]*273[\s.-]*5747", 9), (r"\brealtor\b", 5), (r"real estate", 4),
         (r"under contract", 4), (r"\blisting\b", 3), (r"closing day", 3),
         (r"buyers? (?:and|&) sellers?", 3), (r"long beach island", 1),
@@ -51,6 +52,22 @@ def classify(text: str, default: str | None = None) -> str | None:
         return default
     scores = score(text)
     brand, best = max(scores.items(), key=lambda kv: kv[1])
+    return brand if best > 0 else default
+
+
+SUBJECT_WEIGHT = 3
+
+
+def classify_email(subject: str, body: str, default: str = "TLC") -> str:
+    """Classify an intake email, weighting the SUBJECT far above the body.
+
+    Forwarded emails from socialmedia@tlcnj.com carry a tlcnj.com footer/signature
+    in the body, which otherwise skews every draft to TLC. The subject line
+    (e.g. "FW: surfbox dog post") is the real signal, so it counts 3x.
+    """
+    subj, bod = score(subject or ""), score(body or "")
+    combined = {b: subj[b] * SUBJECT_WEIGHT + bod.get(b, 0) for b in BRAND_SIGNALS}
+    brand, best = max(combined.items(), key=lambda kv: kv[1])
     return brand if best > 0 else default
 
 

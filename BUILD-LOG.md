@@ -9,6 +9,29 @@ This log records the targeted rebuild work. It is appended to over time — newe
 
 ---
 
+## 2026-07-07 — Live intake, classifier fix for forwarded email, UI cleanup
+
+- **Email intake is LIVE.** Gmail auth fixed (honor the token's own scope; label best-effort)
+  and the empty-`INTAKE_SENDER` bug fixed (`get() or default`, since Actions passes empty
+  strings for unset repo vars — it had pulled 25 arbitrary inbox emails). Intake now correctly
+  ingests only `socialmedia@tlcnj.com` and runs on the 30-min cron.
+- **Brand classifier fix for forwarded email.** Forwarded emails carry a `tlcnj.com`
+  footer/signature that skewed every draft to TLC. Added `classify_email(subject, body)` that
+  weights the subject 3× over the body, plus Keller Williams signals for Keli. Mirrored in the
+  dashboard (`classifyBrand` + subject weighting in auto-detect/generation). Re-tagged existing
+  drafts (surfbox subjects now correctly → Surfbox).
+- **Dashboard readability.** Removed the tall hero/summary block (it duplicated the tab counts
+  and pushed every draft below the fold). Widened the container to `min(1600px, 96vw)`, made
+  the treatment carousel show two options side-by-side on desktop, and capped slide media at
+  `46vh` — so drafts and their options are visible without scrolling past filler. Verified with
+  desktop + phone screenshots.
+
+Known follow-up: template captions currently echo the raw forwarded email body (signature/tel
+links) — this cleans up automatically once the free vision/caption model (Gemini) is wired into
+intake.
+
+---
+
 ## 2026-07-06 — Production renderer + swipe carousel + Sign of the Week
 
 - **`scripts/render.py`** — production image renderer. 5 treatments (clean_feed,
