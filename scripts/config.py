@@ -34,9 +34,13 @@ GMAIL_TOKEN_JSON = os.environ.get("GMAIL_TOKEN_JSON", "")             # authoriz
 #   Groq:        https://api.groq.com/openai/v1   model e.g. llama-3.3-70b-versatile
 #   OpenRouter:  https://openrouter.ai/api/v1     model e.g. meta-llama/llama-3.1-8b-instruct:free
 # If unset, generation falls back to deterministic templates (no network).
-LLM_BASE_URL = os.environ.get("LLM_BASE_URL", "")
+# Default to Google Gemini's free OpenAI-compatible endpoint, so the ONLY thing
+# that has to be provisioned is the LLM_API_KEY secret. Override the URL/model
+# via env to switch providers (e.g. Groq) — the code is provider-agnostic.
+# Generation stays on templates until LLM_API_KEY is set (safe no-op).
+LLM_BASE_URL = os.environ.get("LLM_BASE_URL") or "https://generativelanguage.googleapis.com/v1beta/openai"
 LLM_API_KEY = os.environ.get("LLM_API_KEY", "")
-LLM_MODEL = os.environ.get("LLM_MODEL", "")
+LLM_MODEL = os.environ.get("LLM_MODEL") or "gemini-2.5-flash"
 
 # Models we must never use for generation (cost guardrail). Checked in generate.py.
 BANNED_MODEL_MARKERS = ("claude", "opus", "sonnet", "haiku", "gpt-4", "gpt-5", "o1", "o3")

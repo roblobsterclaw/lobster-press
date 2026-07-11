@@ -8,7 +8,10 @@ templates so intake still produces usable drafts — never a silent blank.
 """
 from __future__ import annotations
 
+import base64
 import json
+import mimetypes
+import os
 
 import brand as brandmod
 import brands as brand_charter
@@ -113,6 +116,125 @@ def _llm_options(brand: str, subject: str, body: str) -> list[dict] | None:
         return cleaned or None
     except Exception as exc:
         log.error("LLM generation failed, using templates: %s", exc)
+        return None
+
+
+# --- Treatment copy (caption + the short strings render.py overlays) ----------
+
+COPY_KEYS = ("caption", "headline", "subhead", "quote", "stamp", "chip_label",
+             "chip_value", "fun")
+
+
+def generate_treatment_copy(brand: str, subject: str, body: str,
+                            image_path: str | None = None) -> dict:
+    """Produce the copy render.py needs for the 5 treatments.
+
+    With a FREE vision model configured, the model actually LOOKS at the photo
+    and writes an on-brand caption + short overlay strings. Otherwise it falls
+    back to deterministic templates (never a blank).
+    """
+    b = brand_charter.get(brand)
+    copy = None
+    if config.LLM_BASE_URL and config.LLM_API_KEY:
+        copy = _vision_copy(b, subject, body, image_path)
+    if not copy:
+        copy = _template_copy(b, subject, body)
+
+    copy.setdefault("cta", b["primary_cta"])
+    copy.setdefault("attribution", f"— {b['display_name']}")
+    # Append the brand's hashtags to the caption (once).
+    tags = " ".join(b["hashtags"])
+    caption = (copy.get("caption") or "").rstrip()
+    if tags and "#" not in caption:
+        caption = f"{caption}\n\n{tags}".strip()
+    copy["caption"] = caption
+    return copy
+
+
+def _template_copy(b: dict, subject: str, body: str) -> dict:
+    context = " ".join(x for x in (subject, body) if x).strip()[:180] or "a fresh update from the team"
+    opener = {
+        "Tuckerton Lumber Company": "Tuckerton Lumber Company has helped local builders and homeowners get it done since 1932.",
+        "Surfbox Storage": "Surfbox makes portable storage simple across the Jersey Shore.",
+        "Keli Lynch · Keller Williams": "Keli Lynch brings steady local guidance to every real estate move.",
+    }.get(b["display_name"], f"An update from {b['display_name']}.")
+    short = b["short_name"].upper()
+    return {
+        "caption": f"{opener}\n\n{b['primary_cta']}",
+        "headline": short,
+        "subhead": context,
+        "quote": opener,
+        "stamp": short,
+        "chip_label": "LOCAL",
+        "chip_value": b["short_name"],
+        "fun": f"Stop by and say hi — {b['short_name']}.",
+    }
+
+
+def _vision_copy(b: dict, subject: str, body: str, image_path: str | None) -> dict | None:
+    """Ask a FREE vision model to look at the photo and write copy. None on failure."""
+    model = config.LLM_MODEL or "gemini-2.5-flash"
+    try:
+        assert_free_model(model)
+    except config.ConfigError as exc:
+        log.error("%s", exc)
+        return None
+
+    prompt = (
+        f"You write social posts for {b['display_name']}, a Jersey Shore small business.\n"
+        f"VOICE (follow strictly): {brand_charter.VOICE}\n"
+        f"GOAL of the post: {b['goal']}\n"
+        f"Look at the attached photo (if any) and the email context, then write post copy.\n"
+        f"Return ONLY JSON with EXACTLY these keys:\n"
+        f'{{"caption": "2-4 short paragraphs in the brand voice, ending with this exact '
+        f'call to action: {b["primary_cta"]} — no hashtags",'
+        f'"headline": "punchy 2-4 word hook",'
+        f'"subhead": "one short sentence",'
+        f'"quote": "one short quotable line, max ~12 words",'
+        f'"stamp": "1-3 word badge",'
+        f'"chip_label": "1-2 word label like IN STOCK or STATUS",'
+        f'"chip_value": "2-4 word value",'
+        f'"fun": "one playful casual one-liner"}}\n'
+        f"Email subject: {subject}\nEmail notes: {(body or '')[:800]}"
+    )
+
+    content = [{"type": "text", "text": prompt}]
+    data_url = _image_data_url(image_path)
+    if data_url:
+        content.append({"type": "image_url", "image_url": {"url": data_url}})
+
+    try:
+        import requests
+
+        resp = requests.post(
+            f"{config.LLM_BASE_URL.rstrip('/')}/chat/completions",
+            headers={"Authorization": f"Bearer {config.LLM_API_KEY}"},
+            json={
+                "model": model,
+                "messages": [{"role": "user", "content": content}],
+                "temperature": 0.8,
+                "response_format": {"type": "json_object"},
+            },
+            timeout=90,
+        )
+        resp.raise_for_status()
+        raw = json.loads(resp.json()["choices"][0]["message"]["content"])
+        copy = {k: str(raw[k]).strip() for k in COPY_KEYS if raw.get(k)}
+        return copy if copy.get("caption") else None
+    except Exception as exc:
+        log.error("Vision copy generation failed, using templates: %s", exc)
+        return None
+
+
+def _image_data_url(image_path: str | None) -> str | None:
+    if not (image_path and os.path.exists(image_path)):
+        return None
+    try:
+        mime = mimetypes.guess_type(image_path)[0] or "image/jpeg"
+        with open(image_path, "rb") as fh:
+            b64 = base64.b64encode(fh.read()).decode("ascii")
+        return f"data:{mime};base64,{b64}"
+    except OSError:
         return None
 
 

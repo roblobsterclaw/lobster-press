@@ -9,6 +9,28 @@ This log records the targeted rebuild work. It is appended to over time — newe
 
 ---
 
+## 2026-07-11 — Gemini vision + renderer wired into intake
+
+Intake now produces the full "5 choices" experience for photo emails:
+- `generate.generate_treatment_copy(brand, subject, body, image_path)` — with a FREE
+  vision model configured, the model **looks at the actual photo** and writes an on-brand
+  caption + the short overlay strings (headline/subhead/quote/stamp/chip/fun). Falls back to
+  deterministic templates otherwise. Sends the image as a base64 data URL (OpenAI vision
+  format), so it works with any OpenAI-compatible vision endpoint.
+- `gmail_scan._build_options()` — for a photo email, renders the 5 treatments via
+  `render.py` and attaches them as the draft's options (New-tab swipe carousel). `render` is
+  imported lazily so the pure-stdlib `smoke_test.py` / `validate.yml` CI stays dependency-free.
+  Text-only fallback for emails without a usable image.
+- `config.py` — defaults the LLM to **Gemini's free OpenAI-compatible endpoint**
+  (`gemini-2.5-flash`), so the only thing to provision is the `LLM_API_KEY` secret. Provider
+  is overridable via env (e.g. Groq) — the code is provider-agnostic. Generation stays on
+  templates until the key is set (safe no-op).
+
+Verified: compiles, smoke green, template-copy path produces valid fields, and the full
+`_build_options` path renders all 5 treatments locally.
+
+---
+
 ## 2026-07-07 — Live intake, classifier fix for forwarded email, UI cleanup
 
 - **Email intake is LIVE.** Gmail auth fixed (honor the token's own scope; label best-effort)

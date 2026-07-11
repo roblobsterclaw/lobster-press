@@ -153,6 +153,47 @@ def _save_image_attachment(service, msg_id: str, att: dict, post_id: str) -> str
     return f"images/{filename}"
 
 
+_TREATMENT_LABELS = {
+    "clean_feed": "Clean Feed", "headline_story": "Headline Story",
+    "quote_card": "Quote Card", "badge_callout": "Badge / Callout",
+    "fun_casual": "Fun / Casual",
+}
+_OPTION_IDS = ["A", "B", "C", "D", "E"]
+
+
+def _build_options(brand: str, post_id: str, subject: str, body: str,
+                   image_local: str | None, image_url: str | None) -> list[dict]:
+    """Build the draft's option list. With a photo, generate on-brand copy
+    (vision model → caption + overlay strings) and render the 5 treatments so
+    the New tab shows the swipe carousel. Without a photo, fall back to
+    text-only caption options."""
+    if image_local and os.path.exists(image_local):
+        copy = generate.generate_treatment_copy(brand, subject, body, image_local)
+        try:
+            import render  # lazy: keeps the pure-stdlib smoke test dependency-free
+
+            results = render.render_treatments(image_local, brand, copy, config.IMAGES_DIR, post_id)
+            base = config.PAGES_BASE_URL.rstrip("/")
+            options = []
+            for i, r in enumerate(results):
+                fname = os.path.basename(r["path"])
+                options.append({
+                    "optionId": _OPTION_IDS[i % 5],
+                    "treatment": r["treatment"],
+                    "tone": _TREATMENT_LABELS.get(r["treatment"], r["treatment"]),
+                    "format": r["format"],
+                    "caption": copy["caption"],
+                    "imageUrl": f"{base}/images/{fname}",
+                    "hashtags": [],
+                    "platform": "Facebook",
+                })
+            return options
+        except Exception as exc:
+            notify.log.error("Treatment render failed for %s; using text options: %s", post_id, exc)
+
+    return generate.generate_options(brand, subject, body, image_url=image_url)
+
+
 def scan() -> int:
     """Process new intake emails. Returns the number of drafts created."""
     with notify.guard("gmail-intake"):
@@ -196,8 +237,9 @@ def scan() -> int:
                 if image_path:
                     break
             image_url = f"{config.PAGES_BASE_URL.rstrip('/')}/{image_path}" if image_path else None
+            image_local = os.path.join(config.REPO_ROOT, image_path) if image_path else None
 
-            options = generate.generate_options(brand, subject, body, image_url=image_url)
+            options = _build_options(brand, post_id, subject, body, image_local, image_url)
 
             posts_data["posts"].insert(0, {
                 "id": post_id,
