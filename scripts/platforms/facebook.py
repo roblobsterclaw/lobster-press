@@ -16,13 +16,15 @@ class FacebookAdapter(PlatformAdapter):
     name = "Facebook"
 
     def is_configured(self) -> bool:
-        return bool(config.FB_PAGE_ID and config.FB_PAGE_ACCESS_TOKEN)
+        return config.fb_any_configured()
 
     def publish(self, post: dict) -> PublishResult:
         import requests
 
-        base = f"https://graph.facebook.com/{config.GRAPH_API_VERSION}/{config.FB_PAGE_ID}"
-        token = config.FB_PAGE_ACCESS_TOKEN
+        page_id, token = config.fb_page(post.get("brand"))
+        if not (page_id and token):
+            return PublishResult.skip(self.code, f"No Facebook page configured for brand {post.get('brand')}")
+        base = f"https://graph.facebook.com/{config.GRAPH_API_VERSION}/{page_id}"
         caption = (post.get("editedCaption") or post.get("caption") or "").strip()
         image_url = _image_url(post)
 
@@ -55,9 +57,20 @@ class FacebookAdapter(PlatformAdapter):
             return PublishResult.failure(self.code, str(exc))
 
 
+def _selected_option(post: dict) -> dict:
+    sel = post.get("selectedOption")
+    if isinstance(sel, dict):
+        return sel
+    options = post.get("options") or []
+    if isinstance(sel, str):
+        return next((o for o in options if o.get("optionId") == sel), {})
+    return {}
+
+
 def _image_url(post: dict) -> str | None:
-    """Resolve an absolute, publicly reachable image URL for the post."""
-    url = post.get("imageUrl")
+    """Resolve an absolute, publicly reachable image URL. Prefer the approved
+    treatment's rendered image over the raw source photo."""
+    url = _selected_option(post).get("imageUrl") or post.get("imageUrl")
     if not url:
         return None
     if url.startswith("http://") or url.startswith("https://"):
