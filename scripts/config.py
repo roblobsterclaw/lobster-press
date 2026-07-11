@@ -46,9 +46,35 @@ LLM_MODEL = os.environ.get("LLM_MODEL") or "gemini-2.5-flash"
 BANNED_MODEL_MARKERS = ("claude", "opus", "sonnet", "haiku", "gpt-4", "gpt-5", "o1", "o3")
 
 # --- Publishing platforms -----------------------------------------------------
+# Each business has its OWN Facebook Page. Per-brand secrets:
+#   FB_PAGE_ID_TLC / FB_PAGE_TOKEN_TLC     (Tuckerton Lumber)
+#   FB_PAGE_ID_SURFBOX / FB_PAGE_TOKEN_SURFBOX
+#   FB_PAGE_ID_KELI / FB_PAGE_TOKEN_KELI
+# FB_PAGE_ID / FB_PAGE_ACCESS_TOKEN act as a single-page fallback (handy for a
+# first test with just one business).
 FB_PAGE_ID = os.environ.get("FB_PAGE_ID", "")
 FB_PAGE_ACCESS_TOKEN = os.environ.get("FB_PAGE_ACCESS_TOKEN", "")
 GRAPH_API_VERSION = os.environ.get("GRAPH_API_VERSION", "v21.0")
+_FB_BRAND_CODES = ("TLC", "SURFBOX", "KELI")
+
+
+def fb_page(brand_code: str):
+    """Return (page_id, page_token) for a brand, falling back to the single
+    default page when a per-brand page isn't configured."""
+    code = (brand_code or "").upper()
+    page_id = os.environ.get(f"FB_PAGE_ID_{code}") or FB_PAGE_ID
+    token = os.environ.get(f"FB_PAGE_TOKEN_{code}") or FB_PAGE_ACCESS_TOKEN
+    return page_id, token
+
+
+def fb_any_configured() -> bool:
+    """True if at least one Facebook page (default or per-brand) is set."""
+    if FB_PAGE_ID and FB_PAGE_ACCESS_TOKEN:
+        return True
+    return any(
+        os.environ.get(f"FB_PAGE_ID_{c}") and os.environ.get(f"FB_PAGE_TOKEN_{c}")
+        for c in _FB_BRAND_CODES
+    )
 
 IG_USER_ID = os.environ.get("IG_USER_ID", "")
 IG_ACCESS_TOKEN = os.environ.get("IG_ACCESS_TOKEN", "")
