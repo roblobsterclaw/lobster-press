@@ -96,21 +96,13 @@ def _llm_options(brand: str, subject: str, body: str) -> list[dict] | None:
         f"Subject: {subject}\nDetails: {body}"
     )
     try:
-        import requests
-
-        resp = requests.post(
-            f"{config.LLM_BASE_URL.rstrip('/')}/chat/completions",
-            headers={"Authorization": f"Bearer {config.LLM_API_KEY}"},
-            json={
-                "model": model,
-                "messages": [{"role": "user", "content": prompt}],
-                "temperature": 0.8,
-                "response_format": {"type": "json_object"},
-            },
-            timeout=60,
-        )
-        resp.raise_for_status()
-        content = resp.json()["choices"][0]["message"]["content"]
+        data = _post_chat({
+            "model": model,
+            "messages": [{"role": "user", "content": prompt}],
+            "temperature": 0.8,
+            "response_format": {"type": "json_object"},
+        }, timeout=60)
+        content = data["choices"][0]["message"]["content"]
         options = json.loads(content).get("options", [])
         cleaned = [{"tone": o.get("tone"), "caption": o["caption"]} for o in options if o.get("caption")]
         return cleaned or None
@@ -171,6 +163,34 @@ def _template_copy(b: dict, subject: str, body: str) -> dict:
     }
 
 
+def _post_chat(payload: dict, timeout: int = 90) -> dict:
+    """POST to the OpenAI-compatible chat endpoint with retries on transient
+    errors (429/5xx/network). Free-tier Gemini occasionally returns 503, and a
+    single miss would otherwise leave a draft stuck on the template caption."""
+    import time
+
+    import requests
+
+    url = f"{config.LLM_BASE_URL.rstrip('/')}/chat/completions"
+    headers = {"Authorization": f"Bearer {config.LLM_API_KEY}"}
+    last = None
+    for attempt in range(4):
+        try:
+            resp = requests.post(url, headers=headers, json=payload, timeout=timeout)
+            if resp.status_code in (429, 500, 502, 503, 504):
+                last = f"{resp.status_code} {resp.reason}"
+                log.warning("LLM %s (attempt %d/4), retrying...", last, attempt + 1)
+                time.sleep(2 * (attempt + 1))
+                continue
+            resp.raise_for_status()
+            return resp.json()
+        except requests.RequestException as exc:
+            last = str(exc)
+            log.warning("LLM request error (attempt %d/4): %s", attempt + 1, exc)
+            time.sleep(2 * (attempt + 1))
+    raise RuntimeError(f"LLM request failed after retries: {last}")
+
+
 def _vision_copy(b: dict, subject: str, body: str, image_path: str | None) -> dict | None:
     """Ask a FREE vision model to look at the photo and write copy. None on failure."""
     model = config.LLM_MODEL or "gemini-2.5-flash"
@@ -204,21 +224,13 @@ def _vision_copy(b: dict, subject: str, body: str, image_path: str | None) -> di
         content.append({"type": "image_url", "image_url": {"url": data_url}})
 
     try:
-        import requests
-
-        resp = requests.post(
-            f"{config.LLM_BASE_URL.rstrip('/')}/chat/completions",
-            headers={"Authorization": f"Bearer {config.LLM_API_KEY}"},
-            json={
-                "model": model,
-                "messages": [{"role": "user", "content": content}],
-                "temperature": 0.8,
-                "response_format": {"type": "json_object"},
-            },
-            timeout=90,
-        )
-        resp.raise_for_status()
-        raw = json.loads(resp.json()["choices"][0]["message"]["content"])
+        data = _post_chat({
+            "model": model,
+            "messages": [{"role": "user", "content": content}],
+            "temperature": 0.8,
+            "response_format": {"type": "json_object"},
+        })
+        raw = json.loads(data["choices"][0]["message"]["content"])
         copy = {k: str(raw[k]).strip() for k in COPY_KEYS if raw.get(k)}
         return copy if copy.get("caption") else None
     except Exception as exc:
