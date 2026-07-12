@@ -40,12 +40,6 @@ class FacebookAdapter(PlatformAdapter):
             return f"{brand_code}: ERROR — {exc}"
 
     def publish(self, post: dict) -> PublishResult:
-        import requests
-
-        page_id, token = config.fb_page(post.get("brand"))
-        if not (page_id and token):
-            return PublishResult.skip(self.code, f"No Facebook page configured for brand {post.get('brand')}")
-        base = f"https://graph.facebook.com/{config.GRAPH_API_VERSION}/{page_id}"
         caption = (post.get("editedCaption") or post.get("caption") or "").strip()
         image_url = _image_url(post)
 
@@ -54,6 +48,50 @@ class FacebookAdapter(PlatformAdapter):
         if post.get("videoAttachment") or post.get("videoUrl"):
             return PublishResult.skip(self.code, "Video posts not yet supported on Facebook adapter")
 
+        # A post can target several brand Pages at once (crossposting). A dog in
+        # a SurfBox hat sitting in the Tuckerton yard belongs on both walls.
+        targets = _target_brands(post)
+        already = set(post.get("postedPages") or [])
+        remaining = [b for b in targets if b not in already]
+        if not remaining:
+            return PublishResult.skip(self.code, "Already posted to every target page")
+
+        posted_now: list[str] = []
+        errors: list[str] = []
+        first_url = None
+        first_id = None
+        for brand in remaining:
+            ok, url, pid, err = self._post_to_page(brand, caption, image_url)
+            if ok:
+                posted_now.append(brand)
+                first_url = first_url or url
+                first_id = first_id or pid
+            else:
+                errors.append(f"{brand}: {err}")
+
+        # Record which Pages actually took the post so a retry never double-posts
+        # to a Page that already succeeded — only the failed Pages are re-tried.
+        if posted_now:
+            post["postedPages"] = sorted(already | set(posted_now))
+
+        if errors:
+            detail = "; ".join(errors)
+            if posted_now:
+                detail = f"posted to {', '.join(posted_now)}; FAILED — {detail}"
+            return PublishResult(
+                platform=self.code, ok=False, url=first_url,
+                platform_post_id=first_id, error=detail,
+            )
+        return PublishResult.success(self.code, url=first_url, post_id=first_id)
+
+    def _post_to_page(self, brand_code, caption, image_url):
+        """Publish to one brand's Page. Returns (ok, url, post_id, error)."""
+        import requests
+
+        page_id, token = config.fb_page(brand_code)
+        if not (page_id and token):
+            return False, None, None, "no Page configured"
+        base = f"https://graph.facebook.com/{config.GRAPH_API_VERSION}/{page_id}"
         try:
             if image_url:
                 resp = requests.post(
@@ -70,12 +108,28 @@ class FacebookAdapter(PlatformAdapter):
             payload = resp.json() if resp.content else {}
             if resp.status_code >= 400 or "error" in payload:
                 err = payload.get("error", {}).get("message") or f"HTTP {resp.status_code}"
-                return PublishResult.failure(self.code, f"Graph API: {err}")
+                return False, None, None, f"Graph API: {err}"
             post_id = payload.get("post_id") or payload.get("id")
             url = f"https://www.facebook.com/{post_id}" if post_id else None
-            return PublishResult.success(self.code, url=url, post_id=post_id)
+            return True, url, post_id, None
         except Exception as exc:
-            return PublishResult.failure(self.code, str(exc))
+            return False, None, None, str(exc)
+
+
+def _target_brands(post: dict) -> list[str]:
+    """Which brand Pages this post should go to. `crosspostBrands` (a list of
+    brand codes) lets one approved item hit several Pages; absent that, it goes
+    to the post's own `brand`. Order preserved, duplicates dropped, blanks
+    ignored."""
+    raw = post.get("crosspostBrands")
+    codes = raw if isinstance(raw, list) and raw else [post.get("brand")]
+    seen: set[str] = set()
+    out: list[str] = []
+    for code in codes:
+        if code and code not in seen:
+            seen.add(code)
+            out.append(code)
+    return out
 
 
 def _selected_option(post: dict) -> dict:
