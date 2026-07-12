@@ -288,9 +288,11 @@ def scan() -> int:
             created += 1
             time.sleep(0.1)  # be gentle on the API
 
-        store.save_posts(posts_data)
-        store.save_inbox(inbox_data)
+        # Only write (and thus commit) when something actually changed —
+        # otherwise every cron run would commit a no-op meta.lastUpdated bump.
         if created:
+            store.save_posts(posts_data)
+            store.save_inbox(inbox_data)
             notify.notify(f"Intake created {created} new draft(s).")
         return created
 
