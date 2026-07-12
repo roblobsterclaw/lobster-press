@@ -18,6 +18,27 @@ class FacebookAdapter(PlatformAdapter):
     def is_configured(self) -> bool:
         return config.fb_any_configured()
 
+    def verify_page(self, brand_code: str) -> str:
+        """Read-only token check: fetch the page name. No posting."""
+        import requests
+
+        page_id, token = config.fb_page(brand_code)
+        if not (page_id and token):
+            return f"{brand_code}: no page configured"
+        try:
+            resp = requests.get(
+                f"https://graph.facebook.com/{config.GRAPH_API_VERSION}/{page_id}",
+                params={"fields": "name", "access_token": token},
+                timeout=30,
+            )
+            payload = resp.json() if resp.content else {}
+            if resp.status_code >= 400 or "error" in payload:
+                err = payload.get("error", {}).get("message") or f"HTTP {resp.status_code}"
+                return f"{brand_code}: ERROR — {err}"
+            return f"{brand_code}: OK → '{payload.get('name')}' (page {page_id})"
+        except Exception as exc:
+            return f"{brand_code}: ERROR — {exc}"
+
     def publish(self, post: dict) -> PublishResult:
         import requests
 
