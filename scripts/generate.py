@@ -88,6 +88,7 @@ def _llm_options(brand: str, subject: str, body: str) -> list[dict] | None:
         f"You write social captions for {b['display_name']}, a Jersey Shore small business.\n"
         f"VOICE (follow strictly): {brand_charter.VOICE}\n"
         f"GOAL of every post: {b['goal']}\n"
+        f"TIMING: {_date_context()}\n"
         f"Always end with this call to action: {b['primary_cta']}\n"
         f"Write 3 caption options (Professional, Punchy, Community tones). "
         f"Return ONLY JSON: "
@@ -141,6 +142,21 @@ def generate_treatment_copy(brand: str, subject: str, body: str,
         caption = f"{caption}\n\n{tags}".strip()
     copy["caption"] = caption
     return copy
+
+
+def _date_context() -> str:
+    """Give the model today's date + a gentle nudge to use timely hooks when they
+    genuinely fit — so a photo taken on the 4th naturally gets a 4th-of-July angle."""
+    import datetime
+
+    today = datetime.date.today()
+    parts = [f"Today's date is {today.strftime('%A, %B %d, %Y')}."]
+    if today.year == 2026:
+        parts.append("2026 is the United States' 250th anniversary (the Semiquincentennial) "
+                     "— a strong hook whenever patriotic or American-made themes fit.")
+    parts.append("Only work in a holiday, season, or timely angle when it genuinely fits "
+                 "the photo and the moment; otherwise ignore it.")
+    return " ".join(parts)
 
 
 def _template_copy(b: dict, subject: str, body: str) -> dict:
@@ -204,6 +220,7 @@ def _vision_copy(b: dict, subject: str, body: str, image_path: str | None) -> di
         f"You write social posts for {b['display_name']}, a Jersey Shore small business.\n"
         f"VOICE (follow strictly): {brand_charter.VOICE}\n"
         f"GOAL of the post: {b['goal']}\n"
+        f"TIMING: {_date_context()}\n"
         f"Look at the attached photo (if any) and the email context, then write post copy.\n"
         f"Return ONLY JSON with EXACTLY these keys:\n"
         f'{{"caption": "2-4 short paragraphs in the brand voice, ending with this exact '
