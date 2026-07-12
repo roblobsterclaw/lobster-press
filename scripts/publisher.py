@@ -90,8 +90,20 @@ def publish_post(post: dict) -> tuple[bool, list[str], list[str]]:
     return bool(live), live, errors
 
 
+def verify_pages() -> None:
+    """Read-only check that each brand's Facebook Page token is valid. Logs the
+    page name (no posting). Used in DRY_RUN to confirm setup before going live."""
+    from platforms import get_adapter
+
+    fb = get_adapter("FB")
+    for code in ("TLC", "Surfbox", "Keli"):
+        notify.log.info("FB page check — %s", fb.verify_page(code))
+
+
 def main() -> int:
     with notify.guard("publisher"):
+        if DRY_RUN:
+            verify_pages()
         data = store.load_posts()
         now = datetime.datetime.now(datetime.timezone.utc)
         due = [p for p in data["posts"] if is_due(p, now)]
