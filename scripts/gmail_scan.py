@@ -145,8 +145,17 @@ def _save_image_attachment(service, msg_id: str, att: dict, post_id: str) -> str
     os.makedirs(config.IMAGES_DIR, exist_ok=True)
     dest = os.path.join(config.IMAGES_DIR, filename)
     try:
-        with open(dest, "wb") as fh:
-            fh.write(raw)
+        # Auto-orient via EXIF so phone photos aren't stored sideways. Fall back
+        # to the raw bytes if it isn't a Pillow-decodable image.
+        try:
+            import io
+
+            from PIL import Image, ImageOps
+
+            ImageOps.exif_transpose(Image.open(io.BytesIO(raw))).convert("RGB").save(dest, quality=92)
+        except Exception:
+            with open(dest, "wb") as fh:
+                fh.write(raw)
     except OSError as exc:
         notify.log.error("Failed to write attachment %s: %s", filename, exc)
         return None

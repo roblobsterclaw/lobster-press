@@ -23,7 +23,7 @@ from __future__ import annotations
 
 import os
 
-from PIL import Image, ImageDraw, ImageFont, ImageFilter
+from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageOps
 
 import brands
 
@@ -211,6 +211,7 @@ def render_treatments(src_path: str, brand_code: str, copy: dict,
     """Render all 5 treatments for one photo. Returns metadata per output."""
     b = brands.get(brand_code)
     src = Image.open(src_path)
+    src = ImageOps.exif_transpose(src)  # respect phone-photo orientation (no more sideways)
     os.makedirs(out_dir, exist_ok=True)
     results = []
     for name, fmt, fn in TREATMENTS:
