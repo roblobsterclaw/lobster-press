@@ -330,3 +330,18 @@ present in this repository snapshot — it is the dashboard/data tier only. The 
 depend on those files (Gmail `gmail.modify` scope + `LobsterPress/Processed` label;
 publisher token checks; cron env vars) are documented above and should be applied to the
 backend repo/tier when it is connected. Flag to the owner if you expected those files here.
+
+## 2026-07-12 — Orientation fix + crossposting
+
+- **Sideways photos fixed.** Phone cameras store the sensor frame plus an EXIF
+  orientation flag instead of rotating pixels; Pillow was ignoring the flag, so
+  a portrait photo (EXIF orientation 6) rendered rotated 90°. The surf-dog draft
+  came out lying on its side. `render.py` and `gmail_scan.py` now call
+  `ImageOps.exif_transpose` (idempotent — a no-op once an image carries no EXIF
+  tag, so there is no double-rotation).
+- **Crossposting.** A post can now carry `crosspostBrands` (a list of brand
+  codes); the Facebook adapter posts the one approved item to each brand's Page
+  and records `postedPages`, so a retry only re-hits Pages that haven't
+  succeeded — never a double-post. Absent `crosspostBrands`, behavior is
+  unchanged (post → its own brand's Page). The surf-dog draft is set to
+  crosspost to Surfbox + Tuckerton Lumber.
