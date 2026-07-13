@@ -258,43 +258,51 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
   }
-  /* Swipeable treatment carousel (New tab) — native touch scroll, no library */
+  /* Gallery carousel (New tab) — swipe edge-to-edge designs, dots for position */
   .carousel {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 4px;
   }
-  .carousel::-webkit-scrollbar { height: 6px; }
-  .carousel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 6px; }
+  .carousel::-webkit-scrollbar { height: 0; }
   .slide {
-    flex: 0 0 100%;
-    scroll-snap-align: center;
+    flex: 0 0 92%;
+    scroll-snap-align: start;
     border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: rgba(255,255,255,.02);
+    border-radius: 14px;
+    background: var(--panel-2);
     overflow: hidden;
   }
-  .slide-media { background: var(--media-bg); display: grid; place-items: center; }
-  .slide-media img, .slide-media video {
+  @media (min-width: 760px) { .slide { flex-basis: 60%; } }
+  .stage { position: relative; background: var(--media-bg); }
+  .stage a { display: block; line-height: 0; }
+  .stage img, .stage video {
     width: 100%;
-    max-height: 42vh;
+    height: min(56vh, 520px);
     object-fit: contain;
     display: block;
     background: var(--media-bg);
   }
-  @media (min-width: 760px) { .slide { flex-basis: 48%; } }
-  .carousel-nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 8px;
+  .stage-top {
+    position: absolute; left: 0; right: 0; top: 0;
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 12px 24px;
+    background: linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,0));
+    pointer-events: none;
   }
-  .carousel-nav .counter { color: var(--muted); font-size: 13px; min-width: 108px; text-align: center; }
+  .stage-lab { font-weight: 800; font-size: 14px; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.8); }
+  .stage-fmt { font-size: 11px; color: #fff; background: rgba(255,255,255,.2); border-radius: 6px; padding: 2px 7px; }
+  .stage-num { margin-left: auto; font-size: 12px; color: #fff; background: rgba(0,0,0,.5); border-radius: 999px; padding: 3px 9px; }
+  .gcap { padding: 10px 14px; color: var(--muted); font-size: 14px; line-height: 1.4; height: 44px; overflow: hidden; }
+  .gacts { display: flex; gap: 8px; padding: 0 12px 12px; }
+  .gacts button { flex: 1; min-height: 44px; }
+  .gacts .use { flex: 1.5; background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 700; }
+  .gdots { display: flex; gap: 7px; justify-content: center; padding: 12px 0 2px; }
+  .gdots i { width: 7px; height: 7px; border-radius: 999px; background: var(--border); cursor: pointer; transition: width .2s, background .2s; }
+  .gdots i.on { width: 22px; background: var(--accent); }
   .option, .single-post {
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -779,17 +787,15 @@ function renderByStatus(post) {
 }
 function renderPending(post) {
   const options = normalizeOptions(post);
-  const nav = options.length > 1 ? `
-    <div class="carousel-nav">
-      <button class="small" onclick="carScroll('${attr(post.id)}',-1)">‹ Prev</button>
-      <span class="counter" id="cnt-${attr(post.id)}">Design 1 of ${options.length}</span>
-      <button class="small" onclick="carScroll('${attr(post.id)}',1)">Next ›</button>
+  const dots = options.length > 1 ? `
+    <div class="gdots" id="dots-${attr(post.id)}">
+      ${options.map((_, i) => `<i class="${i === 0 ? "on" : ""}" onclick="goSlide('${attr(post.id)}',${i})"></i>`).join("")}
     </div>` : "";
   return `
     <div class="carousel" id="car-${attr(post.id)}" onscroll="updateCarCounter('${attr(post.id)}')">
       ${options.map((option, index) => renderSlide(post, option, index, options.length)).join("")}
     </div>
-    ${nav}
+    ${dots}
     <div class="item-actions">
       <button class="small" onclick="autoDetectBrand('${attr(post.id)}')">Auto-detect brand</button>
       <button class="bad" onclick="openReject('${attr(post.id)}')">Reject</button>
@@ -798,19 +804,18 @@ function renderPending(post) {
 }
 function renderSlide(post, option, index, total) {
   const label = esc(option.tone || option.optionId || `Option ${index + 1}`);
-  const fmt = option.format ? ` · ${esc(option.format)}` : "";
+  const fmt = option.format ? `<span class="stage-fmt">${esc(option.format)}</span>` : "";
   return `
     <section class="slide">
-      <div class="option-head">
-        <div class="tone">${label}${fmt}</div>
-        <span class="badge">${index + 1}/${total}</span>
+      <div class="stage">
+        ${slideMedia(option)}
+        <div class="stage-top"><span class="stage-lab">${label}</span>${fmt}<span class="stage-num">${index + 1} / ${total}</span></div>
       </div>
-      <div class="slide-media">${slideMedia(option)}</div>
-      <div class="caption">${esc(option.caption)}</div>
-      <div class="actions">
-        <button class="good" onclick="confirmApprove('${attr(post.id)}','${attr(option.optionId)}')">Use this</button>
+      <div class="gcap">${esc(option.caption || "")}</div>
+      <div class="gacts">
+        <button class="use" onclick="confirmApprove('${attr(post.id)}','${attr(option.optionId)}')">✓ Use this</button>
         <button onclick="previewPost('${attr(post.id)}','${attr(option.optionId)}')">Preview</button>
-        <button onclick="openSchedule('${attr(post.id)}','${attr(option.optionId)}',true)">Edit</button>
+        <button onclick="openSchedule('${attr(post.id)}','${attr(option.optionId)}',true)">Schedule</button>
       </div>
     </section>
   `;
@@ -824,17 +829,23 @@ function slideMedia(option) {
   }
   return `<div class="media-note">No media attached</div>`;
 }
-function carScroll(postId, dir) {
+function _slideStride(car) {
+  const slides = car.querySelectorAll(".slide");
+  if (slides.length > 1) return slides[1].offsetLeft - slides[0].offsetLeft;
+  return car.clientWidth;
+}
+function goSlide(postId, i) {
   const car = document.getElementById("car-" + postId);
-  if (car) car.scrollBy({ left: dir * car.clientWidth, behavior: "smooth" });
+  if (car) car.scrollTo({ left: i * _slideStride(car), behavior: "smooth" });
 }
 function updateCarCounter(postId) {
   const car = document.getElementById("car-" + postId);
-  const counter = document.getElementById("cnt-" + postId);
-  if (!car || !counter) return;
-  const total = car.querySelectorAll(".slide").length;
-  const index = Math.min(total, Math.round(car.scrollLeft / car.clientWidth) + 1);
-  counter.textContent = `Design ${index} of ${total}`;
+  const dots = document.getElementById("dots-" + postId);
+  if (!car || !dots) return;
+  const slides = car.querySelectorAll(".slide");
+  if (!slides.length) return;
+  const idx = Math.max(0, Math.min(slides.length - 1, Math.round(car.scrollLeft / _slideStride(car))));
+  dots.querySelectorAll("i").forEach((d, i) => d.classList.toggle("on", i === idx));
 }
 function renderApproved(post) {
   const option = selectedOption(post);
