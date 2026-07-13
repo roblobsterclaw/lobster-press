@@ -104,15 +104,19 @@ def _draw_wrapped(draw, x, y, text, f, fill, max_w, leading=None):
 def _clean_feed(src, b, copy):
     W = H = 1080
     img = _fill(src, W, H).convert("RGBA")
-    bar = 132
+    # Slimmer footer + smaller type so it sits low and doesn't crop the subject
+    # (a napping dog's nose was disappearing behind the old 132px bar).
+    bar = 92
+    fs = 29
     d = ImageDraw.Draw(img)
     d.rounded_rectangle((0, H - bar, W, H), radius=0, fill=INK + (235,))
-    d.rectangle((0, H - bar, W, H - bar + 8), fill=b["color_rgb"])
-    d.text((48, H - bar + 34), b["display_name"].upper(), font=_font(True, 32), fill=WHITE)
+    d.rectangle((0, H - bar, W, H - bar + 6), fill=b["color_rgb"])
+    ty = H - bar + (bar - fs) // 2 + 2  # vertically centered in the slim bar
+    d.text((48, ty), b["display_name"].upper(), font=_font(True, fs), fill=WHITE)
     contact = b.get("contact", "")
     if contact:
-        cf = _font(True, 32)
-        d.text((W - 48 - d.textlength(contact, font=cf), H - bar + 34), contact, font=cf, fill=b["color_rgb"])
+        cf = _font(True, fs)
+        d.text((W - 48 - d.textlength(contact, font=cf), ty), contact, font=cf, fill=b["color_rgb"])
     return img
 
 
@@ -184,16 +188,18 @@ def _badge_callout(src, b, copy):
 def _fun_casual(src, b, copy):
     W = H = 1080
     img = _fill(src, W, H).convert("RGBA")
-    img.alpha_composite(_scrim(W, 440, 0, 210), dest=(0, H - 440))
+    # Shorter, lighter scrim + smaller caption sitting lower on the frame, so a
+    # subject in the lower third (a dog's face) stays fully visible above it.
+    img.alpha_composite(_scrim(W, 360, 0, 200), dest=(0, H - 360))
     d = ImageDraw.Draw(img)
     line = copy.get("fun") or copy.get("headline", "")
-    f = _fit(d, line.split("\n")[0], True, W - 120, 74, min_size=44)
+    f = _fit(d, line.split("\n")[0], True, W - 120, 56, min_size=34)
     lines = _wrap(d, line, f, W - 120)
-    y = H - 60 - len(lines) * (f.size + 14)
+    y = H - 38 - len(lines) * (f.size + 12)
     for ln in lines:
         d.text((60, y), ln, font=f, fill=WHITE)
-        y += f.size + 14
-    d.rectangle((60, H - 44, 220, H - 34), fill=b["color_rgb"])
+        y += f.size + 12
+    d.rectangle((60, H - 28, 196, H - 20), fill=b["color_rgb"])
     return img
 
 
