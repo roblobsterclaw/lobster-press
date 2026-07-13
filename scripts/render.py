@@ -123,23 +123,21 @@ def _clean_feed(src, b, copy):
 def _headline_story(src, b, copy):
     W, H = 1080, 1920
     img = _fill(src, W, H).convert("RGBA")
-    img.alpha_composite(_scrim(W, 640, 215, 0))
-    img.alpha_composite(_scrim(W, 720, 0, 235), dest=(0, H - 720))
+    # Facebook overlays the page name + caption across the BOTTOM of tall (9:16)
+    # feed images. So all our text lives up TOP (above that overlay, where it
+    # stays sharp) and the bottom is left clear — no duplicate branding, no
+    # collision with FB's own label. Top scrim only.
+    img.alpha_composite(_scrim(W, 820, 225, 0))
     d = ImageDraw.Draw(img)
     d.rectangle((72, 120, 192, 132), fill=b["color_rgb"])
     hf = _fit(d, copy["headline"], True, W - 144, 150)
     y = _draw_wrapped(d, 72, 168, copy["headline"], hf, WHITE, W - 144, hf.size + 6)
-    _draw_wrapped(d, 72, y + 18, copy.get("subhead", ""), _font(False, 46), (235, 238, 245), W - 144, 58)
-    # CTA — now wraps/fits instead of running off the edge (the old bug)
+    y = _draw_wrapped(d, 72, y + 18, copy.get("subhead", ""), _font(False, 46), (235, 238, 245), W - 144, 58)
+    # CTA sits just under the subhead — still in the top safe zone
     cta = copy.get("cta") or b["primary_cta"]
-    cf = _fit(d, cta, True, W - 144, 52, min_size=34)
-    cta_lines = _wrap(d, cta, cf, W - 144)
-    cta_y = H - 210 - (len(cta_lines) - 1) * (cf.size + 8)
-    _draw_wrapped(d, 72, cta_y, cta, cf, WHITE, W - 144, cf.size + 8)
-    d.rectangle((72, H - 150, 202, H - 138), fill=b["color_rgb"])
-    d.text((72, H - 120), b["display_name"].upper(), font=_font(True, 32), fill=WHITE)
-    if b.get("contact"):
-        d.text((72, H - 74), b["contact"], font=_font(True, 38), fill=b["color_rgb"])
+    cf = _fit(d, cta, True, W - 144, 46, min_size=32)
+    y = _draw_wrapped(d, 72, y + 22, cta, cf, WHITE, W - 144, cf.size + 8)
+    d.rectangle((72, y + 10, 178, y + 20), fill=b["color_rgb"])
     return img
 
 
