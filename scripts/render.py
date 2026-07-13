@@ -120,24 +120,41 @@ def _clean_feed(src, b, copy):
     return img
 
 
-def _headline_story(src, b, copy):
-    W, H = 1080, 1920
-    img = _fill(src, W, H).convert("RGBA")
-    # Facebook overlays the page name + caption across the BOTTOM of tall (9:16)
-    # feed images. So all our text lives up TOP (above that overlay, where it
-    # stays sharp) and the bottom is left clear — no duplicate branding, no
-    # collision with FB's own label. Top scrim only.
-    img.alpha_composite(_scrim(W, 820, 225, 0))
-    d = ImageDraw.Draw(img)
+def _headline_text(d, b, copy):
+    """Headline + subhead + CTA block, top-anchored (Facebook's safe zone)."""
+    W = 1080
     d.rectangle((72, 120, 192, 132), fill=b["color_rgb"])
     hf = _fit(d, copy["headline"], True, W - 144, 150)
     y = _draw_wrapped(d, 72, 168, copy["headline"], hf, WHITE, W - 144, hf.size + 6)
     y = _draw_wrapped(d, 72, y + 18, copy.get("subhead", ""), _font(False, 46), (235, 238, 245), W - 144, 58)
-    # CTA sits just under the subhead — still in the top safe zone
     cta = copy.get("cta") or b["primary_cta"]
     cf = _fit(d, cta, True, W - 144, 46, min_size=32)
     y = _draw_wrapped(d, 72, y + 22, cta, cf, WHITE, W - 144, cf.size + 8)
     d.rectangle((72, y + 10, 178, y + 20), fill=b["color_rgb"])
+
+
+def _headline_story(src, b, copy):
+    W, H = 1080, 1920
+    src_rgb = src.convert("RGB")
+    # Facebook overlays the page name + caption across the BOTTOM of tall (9:16)
+    # feed images, so all our text lives up TOP where it stays sharp and the
+    # bottom is left clear (no duplicate branding, no collision).
+    if src_rgb.width > src_rgb.height:
+        # WIDE photo: cropping to 9:16 would trim the sides off (e.g. the flag).
+        # Keep the whole scene — blurred cover backdrop with the full photo
+        # pinned lower-middle and the headline up top.
+        img = _fill(src_rgb, W, H).filter(ImageFilter.GaussianBlur(30)).convert("RGBA")
+        img.alpha_composite(Image.new("RGBA", (W, H), (8, 10, 14, 140)))
+        ph = round(src_rgb.height * (W / src_rgb.width))
+        py = 700
+        img.alpha_composite(src_rgb.resize((W, ph)).convert("RGBA"), dest=(0, py))
+        img.alpha_composite(_scrim(W, py + 40, 205, 0))  # darken the headline zone
+    else:
+        # Tall/square photo: fill the frame; top scrim carries the headline.
+        img = _fill(src_rgb, W, H).convert("RGBA")
+        img.alpha_composite(_scrim(W, 820, 225, 0))
+    d = ImageDraw.Draw(img)
+    _headline_text(d, b, copy)
     return img
 
 
