@@ -799,6 +799,7 @@ function renderApproved(post) {
       <div class="caption">${esc(caption)}</div>
       ${renderMedia(post, option)}
       <div class="actions">
+        <button class="good" onclick="markPostNow('${attr(post.id)}')">Post Now</button>
         <button class="primary" onclick="openSchedule('${attr(post.id)}','${attr(option.optionId || 'A')}',true)">Schedule</button>
         <button onclick="previewPost('${attr(post.id)}','${attr(option.optionId || 'A')}')">Preview</button>
         <button onclick="sendBackToPending('${attr(post.id)}')">Send back</button>
