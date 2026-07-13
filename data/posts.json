@@ -102,7 +102,7 @@
     },
     {
       "id": "surfdog-tlc-001",
-      "status": "new",
+      "status": "approved",
       "brand": "TLC",
       "crosspostBrands": [
         "TLC"
@@ -171,13 +171,15 @@
       "emailBody": "Tuckerton-branded twin of the surf-dog post. Approve/Post when ready.",
       "processedAt": "2026-07-13T12:19:54Z",
       "createdAt": "2026-07-13T12:19:54Z",
-      "updatedAt": "2026-07-13T12:19:54Z",
+      "updatedAt": "2026-07-13T15:16:09.647Z",
       "source": "Held Tuckerton version of surf-dog",
-      "notes": "Held for later — approve to post the Tuckerton Lumber version to the TLC page."
+      "notes": "Held for later — approve to post the Tuckerton Lumber version to the TLC page.",
+      "rejectedAt": null,
+      "rejectedReason": null
     },
     {
       "id": "intake-19f573b46eaa",
-      "status": "posted",
+      "status": "post_now",
       "brand": "TLC",
       "caption": "250 years of American independence — and we're proud to fly it high here on the Jersey Shore. 🇺🇸\n\nFrom all of us at Tuckerton Lumber: thank you to everyone who's built, served, and called this country home. We've supplied local builders and homeowners since 1932 — and we're just getting started.\n\nStop in — Tuckerton & Surf City.\n\n#TuckertonLumber #250Years #AmericaThe250 #JerseyShore #LBI #ShopLocal #Since1932",
       "options": [
@@ -250,22 +252,13 @@
       "emailReceivedAt": "2026-07-12T16:48:42Z",
       "processedAt": "2026-07-12T16:49:45Z",
       "createdAt": "2026-07-12T16:49:45Z",
-      "updatedAt": "2026-07-13T15:01:10Z",
+      "updatedAt": "2026-07-13T14:58:13.166Z",
       "source": "Gmail intake — FW: flag2",
       "notes": "Re-rendered with July 4th / America's 250th theme.",
       "editedCaption": "250 years of American independence — and we're proud to fly it high here on the Jersey Shore. 🇺🇸\n\nFrom all of us at Tuckerton Lumber: thank you to everyone who's built, served, and called this country home. We've supplied local builders and homeowners since 1932 — and we're just getting started.\n\nStop in — Tuckerton & Surf City.\n\n#TuckertonLumber #250Years #AmericaThe250 #JerseyShore #LBI #ShopLocal #Since1932",
       "selectedOption": "B",
       "rejectedAt": null,
-      "rejectedReason": null,
-      "postedPages": [
-        "TLC"
-      ],
-      "postedAt": "2026-07-13T15:01:10Z",
-      "postedPlatforms": [
-        "Facebook"
-      ],
-      "postedUrl": "https://www.facebook.com/49018048817_1550884913715492",
-      "publishedUrl": "https://www.facebook.com/49018048817_1550884913715492"
+      "rejectedReason": null
     },
     {
       "id": "intake-19d97c2b82da",
@@ -2103,7 +2096,7 @@
     }
   ],
   "meta": {
-    "lastUpdated": "2026-07-13T15:01:10Z",
+    "lastUpdated": "2026-07-13T15:16:10.473Z",
     "version": "3.0.0"
   }
 }
