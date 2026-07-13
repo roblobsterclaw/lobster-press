@@ -621,6 +621,25 @@ async function loadPosts() {
     render();
   }
 }
+// Merge the client's list onto the freshest server list so a stale in-memory
+// copy can NEVER clobber the publisher's work. Rules:
+//  - a post the publisher already marked "posted" on the server is authoritative
+//    (never let a stale client turn it back into a draft → prevents re-posting)
+//  - server posts the client hasn't seen yet (new email drafts) are kept
+//  - otherwise the client's version wins (that's the edit the user just made)
+function reconcilePosts(serverPosts, clientPosts) {
+  const clientById = new Map((clientPosts || []).map(p => [p.id, p]));
+  const seen = new Set();
+  const out = [];
+  for (const sp of (serverPosts || [])) {
+    seen.add(sp.id);
+    const cp = clientById.get(sp.id);
+    if (!cp || sp.status === "posted") out.push(sp);
+    else out.push(cp);
+  }
+  for (const cp of (clientPosts || [])) if (!seen.has(cp.id)) out.push(cp);
+  return out;
+}
 async function savePosts() {
   if (!token()) {
     openSettings();
@@ -629,12 +648,15 @@ async function savePosts() {
   if (state.saveBusy) return;
   state.saveBusy = true;
   try {
-    if (!state.sha) {
-      const fresh = await apiFetch(DATA_PATH);
-      state.sha = fresh.sha;
-    }
+    // Always re-read the live file first and reconcile onto it.
+    const fresh = await apiFetch(DATA_PATH);
+    state.sha = fresh.sha;
+    let serverPosts = [];
+    try { serverPosts = (JSON.parse(decodeBase64Utf8(fresh.content)).posts) || []; } catch (e) {}
+    const merged = reconcilePosts(serverPosts, state.posts);
+    state.posts = merged;
     const payload = {
-      posts: state.posts,
+      posts: merged,
       meta: { lastUpdated: nowIso(), version: "3.0.0" }
     };
     const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${DATA_PATH}`, {
@@ -653,14 +675,14 @@ async function savePosts() {
       })
     });
     if (res.status === 409) {
-      const fresh = await apiFetch(DATA_PATH);
-      state.sha = fresh.sha;
+      // someone committed between our read and write — redo the reconcile
       state.saveBusy = false;
       return savePosts();
     }
     if (!res.ok) throw new Error(`GitHub save failed (${res.status})`);
     const saved = await res.json();
     state.sha = saved.content.sha;
+    render();
     toast("Saved");
   } finally {
     state.saveBusy = false;
