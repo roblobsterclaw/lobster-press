@@ -386,6 +386,19 @@
   .fbprev-photo { width: 100%; display: block; background: #000; }
   .fbprev-stats { display: flex; justify-content: space-between; padding: 10px 12px; font-size: 13px; color: #65676b; border-bottom: 1px solid #ced0d4; }
   .fbprev-bar { display: flex; justify-content: space-around; padding: 8px 0; font-size: 14px; color: #65676b; font-weight: 600; }
+  /* scroll (immersive) mode — Facebook overlays the label + caption on the image */
+  .fbprev-immersive { position: relative; line-height: 0; }
+  .fbprev-ov { position: absolute; left: 0; right: 0; bottom: 0; padding: 40px 12px 12px; line-height: 1.35;
+    background: linear-gradient(rgba(0,0,0,0) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,.82) 100%); color: #fff; }
+  .fbprev-ov-hd { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .fbprev-av-sm { width: 30px; height: 30px; border-radius: 50%; color: #fff; font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+  .fbprev-ov-pg { font-weight: 700; font-size: 15px; }
+  .fbprev-ov-time { font-size: 12px; color: #dfe2e8; }
+  .fbprev-ov .fbprev-cap { padding: 0; color: #fff; font-size: 15px; }
+  .fbprev-ov .fbprev-more { padding: 2px 0 0; color: #dfe2e8; }
+  .fbprev-toggle { display: flex; gap: 6px; justify-content: center; margin-bottom: 4px; }
+  .fbprev-toggle button { border: 1px solid var(--border); background: var(--panel); color: var(--text); border-radius: 999px; padding: 6px 14px; font-size: 13px; cursor: pointer; }
+  .fbprev-toggle button.on { background: var(--accent); border-color: var(--accent); color: #0b0d12; font-weight: 700; }
   .toast {
     position: fixed;
     left: 50%;
@@ -1196,44 +1209,78 @@ function openModal(html) {
 }
 function closeModal() { $("modalHost").innerHTML = ""; }
 
-// Facebook preview — shows exactly how a post will look in-feed before it goes
-// live. For a crosspost, one card per target Page, each with its own branding.
-function previewPost(postId, optionId) {
+// Facebook preview — shows exactly how a post will look before it goes live.
+// Two modes: "scroll" = how it looks while scrolling the feed (Facebook lays
+// the page name + caption OVER the bottom of a tall image), and "tap" = the
+// clean full-screen view after you tap the photo. For a crosspost, one card
+// per target Page, each with its own branding.
+function previewPost(postId, optionId, mode) {
   const post = state.posts.find(p => p.id === postId);
   if (!post) return;
+  mode = mode || "scroll";
   const options = normalizeOptions(post);
   const option = optionId ? (options.find(o => o.optionId === optionId) || selectedOption(post)) : selectedOption(post);
   const caption = post.editedCaption || option.caption || post.caption || "";
   const image = option.imageUrl || post.imageUrl || "";
   const targets = (Array.isArray(post.crosspostBrands) && post.crosspostBrands.length)
     ? post.crosspostBrands : [post.brand || "TLC"];
-  const cards = targets.map(code => fbCard(code, caption, image)).join("");
+  const oid = optionId || "";
+  const cards = targets.map(code => fbCard(code, caption, image, mode)).join("");
+  const toggle = `
+    <div class="fbprev-toggle">
+      <button class="${mode === "scroll" ? "on" : ""}" onclick="previewPost('${attr(postId)}','${attr(oid)}','scroll')">While scrolling</button>
+      <button class="${mode === "tap" ? "on" : ""}" onclick="previewPost('${attr(postId)}','${attr(oid)}','tap')">Tapped open</button>
+    </div>`;
   openModal(`
     <div class="modal-head"><strong>Facebook preview</strong><button class="small" onclick="closeModal()">Close</button></div>
-    <div class="modal-body fbprev-body">${cards}</div>
+    <div class="modal-body fbprev-body">${toggle}${cards}</div>
     <div class="modal-foot"><button onclick="closeModal()">Done</button></div>
   `);
 }
-function fbCard(code, caption, image) {
+function fbCard(code, caption, image, mode) {
   const b = brandMeta[code] || brandMeta.TLC;
   const capId = "cap-" + Math.random().toString(36).slice(2);
   const long = String(caption).length > 140;
+  const img = image
+    ? `<img class="fbprev-photo" src="${attr(image)}" alt="preview" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'media-note',textContent:'Image failed to load'}))">`
+    : `<div class="media-note">No image attached</div>`;
+  const bar = `<div class="fbprev-bar"><span>👍 Like</span><span>💬 Comment</span><span>↪ Share</span></div>`;
+  const capBlock = `<div class="fbprev-cap${long ? " clamp" : ""}" id="${capId}">${esc(caption)}</div>${long ? `<div class="fbprev-more" onclick="toggleCap('${capId}')">See more</div>` : ""}`;
+
+  if (mode === "scroll") {
+    // Facebook's immersive feed: page name + caption overlaid on the image bottom
+    return `
+    <div class="fbprev">
+      <div class="fbprev-tag">${esc(b.pageName)} — while scrolling</div>
+      <div class="fbprev-card">
+        <div class="fbprev-immersive">
+          ${img}
+          <div class="fbprev-ov">
+            <div class="fbprev-ov-hd">
+              <div class="fbprev-av-sm" style="background:${b.color}">${esc(b.initials)}</div>
+              <span class="fbprev-ov-pg">${esc(b.pageName)}</span><span class="fbprev-ov-time"> · 5m · 🌐</span>
+            </div>
+            ${capBlock}
+          </div>
+        </div>
+        ${bar}
+      </div>
+    </div>`;
+  }
+  // Tapped-open: clean card, caption below the image
   return `
     <div class="fbprev">
-      <div class="fbprev-tag">${esc(b.pageName)} page</div>
+      <div class="fbprev-tag">${esc(b.pageName)} — tapped open</div>
       <div class="fbprev-card">
         <div class="fbprev-hd">
           <div class="fbprev-av" style="background:${b.color}">${esc(b.initials)}</div>
           <div class="fbprev-meta"><div class="fbprev-pg">${esc(b.pageName)}</div><div class="fbprev-sub">Just now · 🌐</div></div>
           <div class="fbprev-dots">···</div>
         </div>
-        <div class="fbprev-cap${long ? " clamp" : ""}" id="${capId}">${esc(caption)}</div>
-        ${long ? `<div class="fbprev-more" onclick="toggleCap('${capId}')">See more</div>` : ""}
-        ${image
-          ? `<img class="fbprev-photo" src="${attr(image)}" alt="preview" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'media-note',textContent:'Image failed to load'}))">`
-          : `<div class="media-note">No image attached</div>`}
+        ${capBlock}
+        ${img}
         <div class="fbprev-stats"><span>👍 ❤️ 42</span><span>7 comments · 3 shares</span></div>
-        <div class="fbprev-bar"><span>👍 Like</span><span>💬 Comment</span><span>↪ Share</span></div>
+        ${bar}
       </div>
     </div>`;
 }
