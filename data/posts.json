@@ -102,14 +102,14 @@
     },
     {
       "id": "surfdog-tlc-001",
-      "status": "approved",
+      "status": "scheduled",
       "brand": "TLC",
       "crosspostBrands": [
         "TLC"
       ],
       "selectedOption": "B",
       "caption": "Looks like our shop dog took \"beach bum\" a little too seriously today. 🐾☀️\n\nEven the hardest workers need a little downtime when the Jersey Shore summer heats up. While this guy catches some Zs, the Tuckerton Lumber crew is wide awake and ready — homeowner weekend project or contractor delivery, we've got the right stuff, right when you need it.\n\nStop in — Tuckerton & Surf City.\n\n#TuckertonLumber #ShopLocal #Since1932 #JerseyShore #LBI",
-      "editedCaption": "Looks like our shop dog took \"beach bum\" a little too seriously today. 🐾☀️\n\nEven the hardest workers need a little downtime when the Jersey Shore summer heats up. While this guy catches some Zs, the Tuckerton Lumber crew is wide awake and ready — homeowner weekend project or contractor delivery, we've got the right stuff, right when you need it.\n\nStop in — Tuckerton & Surf City.\n\n#TuckertonLumber #ShopLocal #Since1932 #JerseyShore #LBI",
+      "editedCaption": null,
       "options": [
         {
           "optionId": "A",
@@ -171,11 +171,12 @@
       "emailBody": "Tuckerton-branded twin of the surf-dog post. Approve/Post when ready.",
       "processedAt": "2026-07-13T12:19:54Z",
       "createdAt": "2026-07-13T12:19:54Z",
-      "updatedAt": "2026-07-13T15:16:09.647Z",
+      "updatedAt": "2026-07-13T15:17:16.846Z",
       "source": "Held Tuckerton version of surf-dog",
       "notes": "Held for later — approve to post the Tuckerton Lumber version to the TLC page.",
       "rejectedAt": null,
-      "rejectedReason": null
+      "rejectedReason": null,
+      "scheduledAt": "2026-07-14T18:00:00.000Z"
     },
     {
       "id": "intake-19f573b46eaa",
@@ -2096,7 +2097,7 @@
     }
   ],
   "meta": {
-    "lastUpdated": "2026-07-13T15:16:10.473Z",
+    "lastUpdated": "2026-07-13T15:17:16.846Z",
     "version": "3.0.0"
   }
 }
