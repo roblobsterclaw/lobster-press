@@ -369,6 +369,23 @@
   }
   .modal-foot { border-bottom: 0; border-top: 1px solid var(--border); justify-content: flex-end; }
   .modal-body { padding: 14px; display: grid; gap: 12px; }
+  /* Facebook feed preview — how a post will actually look once published */
+  .fbprev-body { background: #e4e6eb; }
+  .fbprev { margin-bottom: 6px; }
+  .fbprev-tag { text-align: center; font-weight: 700; color: #444; font-size: 13px; margin-bottom: 6px; }
+  .fbprev-card { background: #fff; border-radius: 10px; overflow: hidden; color: #050505; box-shadow: 0 1px 3px rgba(0,0,0,.2); font-family: Helvetica, Arial, sans-serif; }
+  .fbprev-hd { display: flex; align-items: center; gap: 10px; padding: 12px 12px 8px; }
+  .fbprev-av { width: 42px; height: 42px; border-radius: 50%; color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+  .fbprev-meta { flex: 1; }
+  .fbprev-pg { font-weight: 700; font-size: 15px; }
+  .fbprev-sub { font-size: 12px; color: #65676b; }
+  .fbprev-dots { color: #65676b; font-size: 20px; }
+  .fbprev-cap { padding: 4px 12px 8px; font-size: 15px; line-height: 1.35; white-space: pre-wrap; }
+  .fbprev-cap.clamp { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+  .fbprev-more { padding: 0 12px 10px; color: #65676b; font-weight: 600; cursor: pointer; font-size: 14px; }
+  .fbprev-photo { width: 100%; display: block; background: #000; }
+  .fbprev-stats { display: flex; justify-content: space-between; padding: 10px 12px; font-size: 13px; color: #65676b; border-bottom: 1px solid #ced0d4; }
+  .fbprev-bar { display: flex; justify-content: space-around; padding: 8px 0; font-size: 14px; color: #65676b; font-weight: 600; }
   .toast {
     position: fixed;
     left: 50%;
@@ -467,9 +484,9 @@ const tabs = [
   { id: "rejected", label: "Rejected" }
 ];
 const brandMeta = {
-  TLC: { label: "TLC", cls: "tlc", hashtags: ["#TuckertonLumber", "#LBI", "#LocalBusiness"] },
-  Surfbox: { label: "Surfbox", cls: "surfbox", hashtags: ["#Surfbox", "#PortableStorage", "#JerseyShore"] },
-  Keli: { label: "Keli", cls: "keli", hashtags: ["#KeliLynch", "#LBIRealEstate", "#NJRealEstate"] }
+  TLC: { label: "TLC", cls: "tlc", pageName: "Tuckerton Lumber Company", color: "#c41e2a", contact: "tlcnj.com", initials: "TL", hashtags: ["#TuckertonLumber", "#LBI", "#LocalBusiness"] },
+  Surfbox: { label: "Surfbox", cls: "surfbox", pageName: "Surfbox Storage", color: "#1c7bd6", contact: "(855) SURFBOX", initials: "SB", hashtags: ["#Surfbox", "#PortableStorage", "#JerseyShore"] },
+  Keli: { label: "Keli", cls: "keli", pageName: "Keli Lynch — Keller Williams", color: "#c8102e", contact: "kelilynchhomes.com", initials: "KL", hashtags: ["#KeliLynch", "#LBIRealEstate", "#NJRealEstate"] }
 };
 const state = {
   posts: [],
@@ -730,6 +747,7 @@ function renderSlide(post, option, index, total) {
       <div class="caption">${esc(option.caption)}</div>
       <div class="actions">
         <button class="good" onclick="confirmApprove('${attr(post.id)}','${attr(option.optionId)}')">Use this</button>
+        <button onclick="previewPost('${attr(post.id)}','${attr(option.optionId)}')">Preview</button>
         <button onclick="openSchedule('${attr(post.id)}','${attr(option.optionId)}',true)">Edit</button>
       </div>
     </section>
@@ -769,6 +787,7 @@ function renderApproved(post) {
       ${renderMedia(post, option)}
       <div class="actions">
         <button class="primary" onclick="openSchedule('${attr(post.id)}','${attr(option.optionId || 'A')}',true)">Schedule</button>
+        <button onclick="previewPost('${attr(post.id)}','${attr(option.optionId || 'A')}')">Preview</button>
         <button onclick="sendBackToPending('${attr(post.id)}')">Send back</button>
       </div>
     </section>
@@ -828,6 +847,7 @@ function renderScheduled(post) {
       ${renderMedia(post, option)}
       <div class="actions">
         <button class="primary" onclick="markPostNow('${attr(post.id)}')">Post Now</button>
+        <button onclick="previewPost('${attr(post.id)}','${attr(option.optionId || 'A')}')">Preview</button>
         <button onclick="openReschedule('${attr(post.id)}')">Reschedule</button>
         <button class="bad" onclick="cancelScheduled('${attr(post.id)}')">Cancel</button>
       </div>
@@ -1175,6 +1195,55 @@ function openModal(html) {
   $("modalHost").innerHTML = `<div class="modal-backdrop"><div class="modal">${html}</div></div>`;
 }
 function closeModal() { $("modalHost").innerHTML = ""; }
+
+// Facebook preview — shows exactly how a post will look in-feed before it goes
+// live. For a crosspost, one card per target Page, each with its own branding.
+function previewPost(postId, optionId) {
+  const post = state.posts.find(p => p.id === postId);
+  if (!post) return;
+  const options = normalizeOptions(post);
+  const option = optionId ? (options.find(o => o.optionId === optionId) || selectedOption(post)) : selectedOption(post);
+  const caption = post.editedCaption || option.caption || post.caption || "";
+  const image = option.imageUrl || post.imageUrl || "";
+  const targets = (Array.isArray(post.crosspostBrands) && post.crosspostBrands.length)
+    ? post.crosspostBrands : [post.brand || "TLC"];
+  const cards = targets.map(code => fbCard(code, caption, image)).join("");
+  openModal(`
+    <div class="modal-head"><strong>Facebook preview</strong><button class="small" onclick="closeModal()">Close</button></div>
+    <div class="modal-body fbprev-body">${cards}</div>
+    <div class="modal-foot"><button onclick="closeModal()">Done</button></div>
+  `);
+}
+function fbCard(code, caption, image) {
+  const b = brandMeta[code] || brandMeta.TLC;
+  const capId = "cap-" + Math.random().toString(36).slice(2);
+  const long = String(caption).length > 140;
+  return `
+    <div class="fbprev">
+      <div class="fbprev-tag">${esc(b.pageName)} page</div>
+      <div class="fbprev-card">
+        <div class="fbprev-hd">
+          <div class="fbprev-av" style="background:${b.color}">${esc(b.initials)}</div>
+          <div class="fbprev-meta"><div class="fbprev-pg">${esc(b.pageName)}</div><div class="fbprev-sub">Just now · 🌐</div></div>
+          <div class="fbprev-dots">···</div>
+        </div>
+        <div class="fbprev-cap${long ? " clamp" : ""}" id="${capId}">${esc(caption)}</div>
+        ${long ? `<div class="fbprev-more" onclick="toggleCap('${capId}')">See more</div>` : ""}
+        ${image
+          ? `<img class="fbprev-photo" src="${attr(image)}" alt="preview" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'media-note',textContent:'Image failed to load'}))">`
+          : `<div class="media-note">No image attached</div>`}
+        <div class="fbprev-stats"><span>👍 ❤️ 42</span><span>7 comments · 3 shares</span></div>
+        <div class="fbprev-bar"><span>👍 Like</span><span>💬 Comment</span><span>↪ Share</span></div>
+      </div>
+    </div>`;
+}
+function toggleCap(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const clamped = el.classList.toggle("clamp");
+  const more = el.parentElement.querySelector(".fbprev-more");
+  if (more) more.textContent = clamped ? "See more" : "See less";
+}
 
 $("loginBtn").addEventListener("click", doLogin);
 $("password").addEventListener("keydown", event => { if (event.key === "Enter") doLogin(); });
