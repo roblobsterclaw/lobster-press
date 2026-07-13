@@ -399,6 +399,11 @@
   .fbprev-toggle { display: flex; gap: 6px; justify-content: center; margin-bottom: 4px; }
   .fbprev-toggle button { border: 1px solid var(--border); background: var(--panel); color: var(--text); border-radius: 999px; padding: 6px 14px; font-size: 13px; cursor: pointer; }
   .fbprev-toggle button.on { background: var(--accent); border-color: var(--accent); color: #0b0d12; font-weight: 700; }
+  /* queued/scheduled status note + badge */
+  .post-status { background: rgba(232,86,42,.12); border: 1px solid rgba(232,86,42,.35); color: var(--text); border-radius: 8px; padding: 9px 11px; font-size: 13px; line-height: 1.4; margin: 4px 0 2px; }
+  .post-status.err { background: rgba(220,60,60,.12); border-color: rgba(220,60,60,.4); }
+  .badge.live { background: var(--accent); color: #0b0d12; }
+  .actions button[disabled] { opacity: .7; cursor: default; }
   .toast {
     position: fixed;
     left: 50%;
@@ -848,23 +853,38 @@ function renderMediaItem(item) {
   }
   return `<a class="media-box" href="${url}" target="_blank" rel="noopener"><div class="media-note">${name}</div></a>`;
 }
+function targetPageNames(post) {
+  const codes = (Array.isArray(post.crosspostBrands) && post.crosspostBrands.length)
+    ? post.crosspostBrands : [post.brand || "TLC"];
+  return codes.map(c => (brandMeta[c] || brandMeta.TLC).pageName).join(" + ");
+}
 function renderScheduled(post) {
   const option = selectedOption(post);
   const caption = post.editedCaption || option.caption || post.caption || "";
+  const preview = `<button onclick="previewPost('${attr(post.id)}','${attr(option.optionId || 'A')}')">Preview</button>`;
+  const cancel = `<button class="bad" onclick="cancelScheduled('${attr(post.id)}')">Cancel</button>`;
+  let head, note, actions;
+  if (post.status === "post_now") {
+    // Queued and on its way — make it unmistakable so nobody taps twice.
+    head = `<div class="tone">⏳ Queued to post</div><span class="badge live">Going live</span>`;
+    note = `<div class="post-status">Publishing to <strong>${esc(targetPageNames(post))}</strong> on the next publish run (within ~15 min). <strong>No need to tap again</strong> — this turns into “Posted” with a link once it's live.</div>`;
+    actions = `<button class="good" disabled>⏳ Queued…</button>${preview}${cancel}`;
+  } else if (post.status === "failed") {
+    head = `<div class="tone" style="color:var(--red)">Publish failed</div><span class="badge">Needs retry</span>`;
+    note = `<div class="post-status err">${esc(post.failureReason || "Unknown error")}</div>`;
+    actions = `<button class="good" onclick="markPostNow('${attr(post.id)}')">Retry post</button>${preview}${cancel}`;
+  } else {
+    head = `<div class="tone">Scheduled — ${prettyDate(post.scheduledAt)}</div><span class="badge">${esc(option.tone || "Approved")}</span>`;
+    note = `<div class="post-status">Goes live automatically at the scheduled time to <strong>${esc(targetPageNames(post))}</strong>.</div>`;
+    actions = `<button class="good" onclick="markPostNow('${attr(post.id)}')">Post Now</button>${preview}<button onclick="openReschedule('${attr(post.id)}')">Reschedule</button>${cancel}`;
+  }
   return `
     <section class="single-post">
-      <div class="option-head">
-        <div class="tone">${post.status === "post_now" ? "Post Now" : post.status === "failed" ? "Publish Failed" : "Scheduled"} - ${prettyDate(post.scheduledAt)}</div>
-        <span class="badge">${esc(option.tone || "Approved")}</span>
-      </div>
+      <div class="option-head">${head}</div>
+      ${note}
       <div class="caption">${esc(caption)}</div>
       ${renderMedia(post, option)}
-      <div class="actions">
-        <button class="primary" onclick="markPostNow('${attr(post.id)}')">Post Now</button>
-        <button onclick="previewPost('${attr(post.id)}','${attr(option.optionId || 'A')}')">Preview</button>
-        <button onclick="openReschedule('${attr(post.id)}')">Reschedule</button>
-        <button class="bad" onclick="cancelScheduled('${attr(post.id)}')">Cancel</button>
-      </div>
+      <div class="actions">${actions}</div>
     </section>
   `;
 }
@@ -1033,7 +1053,11 @@ async function markPostNow(postId) {
   const post = state.posts.find(item => item.id === postId);
   post.status = "post_now";
   post.updatedAt = nowIso();
-  try { await savePosts(); render(); } catch (err) { toast(err.message); }
+  try {
+    await savePosts();
+    render();
+    toast("Queued ✓ — going live on the next publish run (within ~15 min)");
+  } catch (err) { toast(err.message); }
 }
 async function sendBackToPending(postId) {
   const post = state.posts.find(item => item.id === postId);
