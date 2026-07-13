@@ -345,3 +345,24 @@ backend repo/tier when it is connected. Flag to the owner if you expected those 
   succeeded — never a double-post. Absent `crosspostBrands`, behavior is
   unchanged (post → its own brand's Page). The surf-dog draft is set to
   crosspost to Surfbox + Tuckerton Lumber.
+
+## 2026-07-13 — First live posts + app UX pass
+
+- **First automated posts went live**: surf-dog → Surfbox, and the 250th
+  flag/truck → Tuckerton Lumber, both via the approve → Post Now flow.
+- **Facebook Preview** button (New/Approved/Scheduled) with two modes:
+  "while scrolling" (Facebook overlays page name + caption on tall images) and
+  "tapped open" (clean). Catches overlay collisions before posting.
+- **Headline Story** reworked: text lives top-only (FB owns the bottom of tall
+  feed images); wide/landscape photos keep the whole scene (blurred backdrop +
+  full photo) instead of cropping the sides.
+- **Crossposting** (`crosspostBrands`) with idempotent per-Page tracking.
+- **Light/dark theme toggle** (persisted) via CSS variables + `data-theme`.
+- **Gallery** New-tab layout: swipe edge-to-edge designs, dot indicators,
+  peek of the next design, slim action pills.
+- **Clear queued/scheduled status** so Post Now is unmistakable.
+- **Stale-save fix**: `savePosts` now reconciles against the live server list
+  before writing — a browser tab loaded before a publish can no longer clobber
+  a "posted" status (which had briefly re-queued the flag for a duplicate) or
+  drop new email drafts.
+- **Next**: Step 2 — talk-to-the-app reimagine (Nano Banana / OpenAI images).
