@@ -2,7 +2,7 @@
   "posts": [
     {
       "id": "intake-19f577e64410",
-      "status": "post_now",
+      "status": "posted",
       "brand": "Surfbox",
       "caption": "Looks like our newest SurfBox \"driver\" took the phrase \"beach bum\" a little too seriously today. Even the hardest workers need a little downtime, especially with this Jersey Shore summer heating up fast.\n\nBut don't you worry. While this guy's catching some Zs, the rest of the Tuckerton Lumber crew is wide awake and ready to help. We're dedicated to getting you squared away, whether you're a homeowner tackling a weekend project or a contractor needing a full lumber delivery.\n\nWe're proud of our service, and that means making sure you get the right stuff, right when you need it. No fuss, no delays. Just honest, reliable service from folks who know their stuff.\nStop in — Tuckerton & Surf City.\n\n#TuckertonLumber #ShopLocal #Since1932 #ContractorSupply #LumberDelivery #JerseyShore #LBI #OceanCounty #CentralJersey #AtlanticCity #Trenton #Princeton #RedBank #MonmouthCounty",
       "options": [
@@ -82,14 +82,23 @@
       "emailReceivedAt": "2026-07-12T18:02:01Z",
       "processedAt": "2026-07-12T18:05:15Z",
       "createdAt": "2026-07-12T18:05:15Z",
-      "updatedAt": "2026-07-13T12:19:54Z",
+      "updatedAt": "2026-07-13T12:21:07Z",
       "source": "Gmail intake — FW: surf dog",
       "notes": "Surfbox-only. Tuckerton version held separately (surfdog-tlc-001).",
       "crosspostBrands": [
         "Surfbox"
       ],
       "selectedOption": "B",
-      "editedCaption": "Looks like our newest \"driver\" took \"beach bum\" a little too seriously today. 🐾☀️\n\nEven the hardest workers need some downtime when the Jersey Shore summer heats up. While this guy catches a few Zs, the Surfbox crew is wide awake — we drop a clean, secure storage box right in your driveway and grab it when you're done. Keep it on-site or we'll haul it to our yard. Easy.\n\nCall (855) SURFBOX or book at surfboxstorage.com.\n\n#Surfbox #PortableStorage #JerseyShore #LBI #DogsOfSummer"
+      "editedCaption": "Looks like our newest \"driver\" took \"beach bum\" a little too seriously today. 🐾☀️\n\nEven the hardest workers need some downtime when the Jersey Shore summer heats up. While this guy catches a few Zs, the Surfbox crew is wide awake — we drop a clean, secure storage box right in your driveway and grab it when you're done. Keep it on-site or we'll haul it to our yard. Easy.\n\nCall (855) SURFBOX or book at surfboxstorage.com.\n\n#Surfbox #PortableStorage #JerseyShore #LBI #DogsOfSummer",
+      "postedPages": [
+        "Surfbox"
+      ],
+      "postedAt": "2026-07-13T12:21:07Z",
+      "postedPlatforms": [
+        "Facebook"
+      ],
+      "postedUrl": "https://www.facebook.com/111893171556934_1032126559575121",
+      "publishedUrl": "https://www.facebook.com/111893171556934_1032126559575121"
     },
     {
       "id": "surfdog-tlc-001",
@@ -2081,7 +2090,7 @@
     }
   ],
   "meta": {
-    "lastUpdated": "2026-07-13T12:19:54Z",
+    "lastUpdated": "2026-07-13T12:21:07Z",
     "version": "3.0.0"
   }
 }
