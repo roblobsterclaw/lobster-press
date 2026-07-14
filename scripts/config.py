@@ -45,6 +45,20 @@ LLM_MODEL = os.environ.get("LLM_MODEL") or "gemini-2.5-flash"
 # Models we must never use for generation (cost guardrail). Checked in generate.py.
 BANNED_MODEL_MARKERS = ("claude", "opus", "sonnet", "haiku", "gpt-4", "gpt-5", "o1", "o3")
 
+# --- Layer B: generative image editing ("Reimagine") --------------------------
+# Optional, opt-in, pay-per-image. The primary engine edits a REAL photo per a
+# text instruction; the other is an automatic backup if the primary errors.
+# Flip IMAGE_ENGINE to switch the default any time ("gemini" or "openai").
+#   Nano Banana = Google's gemini-2.5-flash-image (reuses the Gemini key)
+#   OpenAI      = gpt-image-1 via the images API
+# Unset keys simply disable that engine (Reimagine stays off until a key exists).
+IMAGE_ENGINE = (os.environ.get("IMAGE_ENGINE") or "gemini").lower()
+GEMINI_API_BASE = os.environ.get("GEMINI_API_BASE") or "https://generativelanguage.googleapis.com/v1beta"
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY") or LLM_API_KEY  # Nano Banana shares the Gemini key
+GEMINI_IMAGE_MODEL = os.environ.get("GEMINI_IMAGE_MODEL") or "gemini-2.5-flash-image"
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")
+OPENAI_IMAGE_MODEL = os.environ.get("OPENAI_IMAGE_MODEL") or "gpt-image-1"
+
 # --- Publishing platforms -----------------------------------------------------
 # Each business has its OWN Facebook Page. Per-brand secrets:
 #   FB_PAGE_ID_TLC / FB_PAGE_TOKEN_TLC     (Tuckerton Lumber)
