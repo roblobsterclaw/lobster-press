@@ -102,7 +102,7 @@
     },
     {
       "id": "surfdog-tlc-001",
-      "status": "scheduled",
+      "status": "posted",
       "brand": "TLC",
       "crosspostBrands": [
         "TLC"
@@ -171,12 +171,21 @@
       "emailBody": "Tuckerton-branded twin of the surf-dog post. Approve/Post when ready.",
       "processedAt": "2026-07-13T12:19:54Z",
       "createdAt": "2026-07-13T12:19:54Z",
-      "updatedAt": "2026-07-13T15:17:16.846Z",
+      "updatedAt": "2026-07-14T18:36:45Z",
       "source": "Held Tuckerton version of surf-dog",
       "notes": "Held for later — approve to post the Tuckerton Lumber version to the TLC page.",
       "rejectedAt": null,
       "rejectedReason": null,
-      "scheduledAt": "2026-07-14T18:00:00.000Z"
+      "scheduledAt": "2026-07-14T18:00:00.000Z",
+      "postedPages": [
+        "TLC"
+      ],
+      "postedAt": "2026-07-14T18:36:45Z",
+      "postedPlatforms": [
+        "Facebook"
+      ],
+      "postedUrl": "https://www.facebook.com/49018048817_1551939346943382",
+      "publishedUrl": "https://www.facebook.com/49018048817_1551939346943382"
     },
     {
       "id": "intake-19f573b46eaa",
@@ -2106,7 +2115,7 @@
     }
   ],
   "meta": {
-    "lastUpdated": "2026-07-13T15:32:03Z",
+    "lastUpdated": "2026-07-14T18:36:45Z",
     "version": "3.0.0"
   }
 }
